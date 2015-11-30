@@ -39,18 +39,18 @@ public class InfoActivity extends AppCompatActivity {
         });
     }
 
-    private void play() {
-        mp = MediaPlayer.create(this, R.raw.sound_file_1);
-        mp.start();
-    }
-
-    private void stop() {
-        mp.stop();
-    }
-
-    private Uri load(File file) {
-        Uri uri = Uri.fromFile(file);
-        return uri;
-    }
+//    private void play() {
+//        mp = MediaPlayer.create(this, R.raw.sound_file_1);
+//        mp.start();
+//    }
+//
+//    private void stop() {
+//        mp.stop();
+//    }
+//
+//    private Uri load(File file) {
+//        Uri uri = Uri.fromFile(file);
+//        return uri;
+//    }
 
 }
