@@ -2,4 +2,21 @@
     <string name="app_name">rechordly</string>
     <string name="hello_round">Hello Round World!</string>
     <string name="hello_square">Hello Square World!</string>
+    <string name="title_activity_done">doneActivity</string>
+    <string name="done_placeholder">Done Screen Here!</string>
+    <string name="vol_act_placeholder">Volume Button Here!</string>
+    <string name="vol_placeholder">Volume Screen Here!</string>
+    <string name="crop_act_placeholder">Crop Button Here!</string>
+    <string name="effects_act_placeholder">Effects Button Here!</string>
+    <string name="effects_placeholder">Effects Screen Here!</string>
+    <string name="crop_placeholder">Crop Screen Here!</string>
+    <string name="save_retry_placeholder">Save Retry Screen Here!</string>
+    <string name="title_activity_crop_chooser">cropChooserActivity</string>
+    <string name="title_activity_volume_chooser">VolumeChooserActivity</string>
+    <string name="title_activity_crop">CropActivity</string>
+    <string name="title_activity_volume">VolumeActivity</string>
+    <string name="title_activity_save_retry">SaveRetryActivity</string>
+    <string name="title_activity_effects_chooser">EffectsChooserActivity</string>
+    <string name="title_activity_effects">EffectsActivity</string>
+    <string name="long_press_intro">Long Press Intro</string>
 </resources>

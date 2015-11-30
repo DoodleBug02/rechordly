@@ -3,33 +3,42 @@ package me.chrisvle.rechordly;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.wearable.view.DismissOverlayView;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class WatchMain extends Activity {
+public class cropChooserActivity extends Activity {
 
     private TextView mTextView;
-    private DismissOverlayView mDismissOverlay;
+    private ImageButton mImageButton;
     private GestureDetector mDetector;
     private static final String DEBUG_TAG = "Gestures";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_crop_chooser);
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
                 mTextView = (TextView) stub.findViewById(R.id.text);
-                // Obtain the DismissOverlayView element
-                mDismissOverlay = (DismissOverlayView) findViewById(R.id.dismiss_overlay);
-                mDismissOverlay.setIntroText(R.string.long_press_intro);
-                mDismissOverlay.showIntroIfNecessary();
+                mImageButton = (ImageButton) stub.findViewById(R.id.imageButton);
+                mImageButton.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (mDetector.onTouchEvent(event)) {
+                            Log.d("Event: ", "onTouchEvent Fired!");
+//                            finish();
+                            return true;
+                        }
+                        return false;
+                    }
+                });
             }
         });
 
@@ -38,8 +47,17 @@ public class WatchMain extends Activity {
 
             @Override
             public void onLongPress(MotionEvent event) {
-                mDismissOverlay.show();
+//                mDismissOverlay.show();
                 Log.d(DEBUG_TAG, " onLongPress: " + event.toString());
+            }
+
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent event) {
+                Log.d("Event: ", "onSingleTapEvent Fired!");
+                Intent intent = new Intent(getBaseContext(), CropActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
             }
 
             @Override
@@ -47,17 +65,26 @@ public class WatchMain extends Activity {
                                     float distanceY) {
                 Log.d(DEBUG_TAG, "onScroll: Distance: " + String.valueOf(distanceX) + ", " + String.valueOf(distanceY));
                 if (distanceX > 5.0) {
-                    Intent intent = new Intent(getBaseContext(), cropChooserActivity.class);
+                    Log.d("Event: ", "onScrollEvent Fired!");
+                    Intent intent = new Intent(getBaseContext(), VolumeChooserActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    return true;
+                }
+                if (distanceX < -5.0) {
+                    Log.d("Event: ", "onScrollEvent Fired!");
+                    Intent intent = new Intent(getBaseContext(), WatchMain.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    return true;
                 }
                 Log.d(DEBUG_TAG, " onScroll: " + e1.toString()+e2.toString());
-                return true;
+                return false;
             }
         });
     }
 
-    // Capture long presses
+    // Capture long presses / scrolls
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         return mDetector.onTouchEvent(ev) || super.onTouchEvent(ev);

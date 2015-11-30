@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="me.chrisvle.rechordly.SaveRetryActivity"
+    tools:deviceIds="wear_round">
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="160px"
+        android:contentDescription="@string/save_retry_placeholder"
+        android:id="@+id/imageButton"
+        android:layout_centerVertical="false"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="170px"
+        android:layout_below="@+id/imageButton"
+        android:contentDescription="@string/save_retry_placeholder"
+        android:id="@+id/imageButtonRetry"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Save Retry Chooser" />
+</RelativeLayout>
