@@ -3,7 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/mobile/mobile.iml" filepath="$PROJECT_DIR$/mobile/mobile.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rechordly.iml" filepath="$PROJECT_DIR$/rechordly.iml" />
+      <module fileurl="file://$PROJECT_DIR$/musicg-1.4.2.0/musicg-1.4.2.0.iml" filepath="$PROJECT_DIR$/musicg-1.4.2.0/musicg-1.4.2.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rechordly_app.iml" filepath="$PROJECT_DIR$/rechordly_app.iml" />
       <module fileurl="file://$PROJECT_DIR$/wear/wear.iml" filepath="$PROJECT_DIR$/wear/wear.iml" />
     </modules>
   </component>

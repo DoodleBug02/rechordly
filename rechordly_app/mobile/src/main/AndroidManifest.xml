@@ -7,7 +7,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme.NoActionBar" >
         <activity
             android:name=".PhoneMain"
             android:label="@string/app_name"
@@ -17,6 +17,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".InfoActivity"
+            android:label="@string/title_activity_info"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".TranscribingActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name=".EditActivity" >
         </activity>
     </application>
 
