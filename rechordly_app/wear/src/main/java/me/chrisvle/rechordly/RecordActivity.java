@@ -2,6 +2,7 @@ package me.chrisvle.rechordly;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -65,6 +66,9 @@ public class RecordActivity extends Activity {
         mSoundRecorder.stopRecording();
         File file = new File(this.getFilesDir(), "audiorecord.pcm");
         Log.d("Long", String.valueOf(file.length()));
+        Intent intent = new Intent("/new_recording");
+        intent.putExtra("message", "this is a test");
+        sendBroadcast(intent);
 
     }
 
