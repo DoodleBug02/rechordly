@@ -17,6 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.wearable.ChannelApi;
+
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
@@ -66,8 +68,9 @@ public class RecordActivity extends Activity {
         mSoundRecorder.stopRecording();
         File file = new File(this.getFilesDir(), "audiorecord.pcm");
         Log.d("Long", String.valueOf(file.length()));
+        Log.d("dir", String.valueOf(this.getFilesDir()));
         Intent intent = new Intent("/new_recording");
-        intent.putExtra("message", "this is a test");
+        intent.putExtra("message", VOICE_FILE_NAME);
         sendBroadcast(intent);
 
     }
