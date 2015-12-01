@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.chrisvle.rechordly" >
+    package="me.chrisvle.rechordly">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar" >
+        android:theme="@style/AppTheme.NoActionBar">
+
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
         <activity
             android:name=".PhoneMain"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,23 +24,25 @@
         <activity
             android:name=".InfoActivity"
             android:label="@string/title_activity_info"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".TranscribingActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-        <activity android:name=".EditActivity" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".EditActivity"></activity>
 
         <service
             android:name=".PhoneListener"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".PlaybackActivity"
+            android:label="@string/title_activity_playback"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

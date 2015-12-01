@@ -1,6 +1,6 @@
 package me.chrisvle.rechordly;
 
-import android.media.MediaPlayer;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +13,6 @@ import com.google.android.gms.wearable.WearableListenerService;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 public class PhoneListener extends WearableListenerService {
@@ -82,7 +81,9 @@ public class PhoneListener extends WearableListenerService {
         channel.close(mApiClient);
         Log.d("PhoneListener", String.valueOf(file.length()));
         Log.d("PhoneListener", "Channel Closed!");
-
+        Intent play = new Intent(this, PlaybackActivity.class);
+        play.putExtra("Path", file.getAbsolutePath());
+        startActivity(play);
     }
 
     @Override
