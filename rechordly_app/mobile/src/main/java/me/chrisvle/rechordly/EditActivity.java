@@ -15,6 +15,7 @@ public class EditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         outFolder = "out";
+        Wave wave = new Wave();
     }
 
     private static void trim(Wave wave) {

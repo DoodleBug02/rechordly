@@ -2,20 +2,22 @@ package me.chrisvle.rechordly;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
-
-import java.io.File;
+import android.widget.ToggleButton;
 
 public class InfoActivity extends AppCompatActivity {
 
     private static MediaPlayer mp;
+    private static int pos = 0;
+
+    ToggleButton t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +39,32 @@ public class InfoActivity extends AppCompatActivity {
                 startActivity(lyrics);
             }
         });
+        mp = new MediaPlayer();
+        mp = MediaPlayer.create(this, R.raw.completed);
+
+        t = (ToggleButton) findViewById(R.id.playback);
+        t.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is play
+                    play();
+                } else {
+                    // The toggle is pause
+                    pause();
+                }
+            }
+        });
+
+
     }
 
-//    private void play() {
-//        mp = MediaPlayer.create(this, R.raw.sound_file_1);
-//        mp.start();
-//    }
-//
-//    private void stop() {
-//        mp.stop();
-//    }
+    private void play() {
+        mp.start();
+    }
+
+    private void pause() {
+        mp.pause();
+    }
 //
 //    private Uri load(File file) {
 //        Uri uri = Uri.fromFile(file);
