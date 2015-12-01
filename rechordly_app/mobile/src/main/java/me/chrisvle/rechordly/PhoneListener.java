@@ -1,5 +1,6 @@
 package me.chrisvle.rechordly;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Log;
 
@@ -11,6 +12,7 @@ import com.google.android.gms.wearable.WearableListenerService;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 public class PhoneListener extends WearableListenerService {
@@ -48,8 +50,7 @@ public class PhoneListener extends WearableListenerService {
         Log.d("PhoneListener", "Channel established");
         if (channel.getPath().equals("/new_recording")) {
 
-            file = new File(this.getFilesDir(), "file.pcm");
-
+            file = new File(this.getFilesDir(), "file2.pcm");
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -65,6 +66,10 @@ public class PhoneListener extends WearableListenerService {
     @Override
     public void onInputClosed(Channel channel, int int0, int int1) {
         Log.d("PhoneListener", "File Received!!");
+        channel.close(mApiClient);
+        Log.d("PhoneListener", String.valueOf(file.length()));
+        Log.d("PhoneListener", "Channel Closed!");
+
     }
 
     @Override

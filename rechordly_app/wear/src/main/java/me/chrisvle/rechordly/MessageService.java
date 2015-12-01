@@ -41,7 +41,7 @@ public class MessageService extends Service implements ChannelApi.ChannelListene
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(Bundle connectionHint) {
-                        /* Successfully connected */
+
                     }
 
                     @Override
@@ -94,6 +94,7 @@ public class MessageService extends Service implements ChannelApi.ChannelListene
 
     @Override
     public void onInputClosed(Channel channel, int int0, int int1) {
+        Log.d("MessageService", "Input Closed");
 
     }
 
@@ -105,6 +106,7 @@ public class MessageService extends Service implements ChannelApi.ChannelListene
 
     @Override
     public void onChannelOpened(Channel channel) {
+        Log.d("MessageService", "Output Opened");
 
     }
 
