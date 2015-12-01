@@ -1,6 +1,8 @@
 package me.chrisvle.rechordly;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -11,6 +13,7 @@ import com.google.android.gms.wearable.WearableListenerService;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 public class PhoneListener extends WearableListenerService {
@@ -24,6 +27,17 @@ public class PhoneListener extends WearableListenerService {
         super.onCreate();
         mApiClient = new GoogleApiClient.Builder( this )
                 .addApi( Wearable.API )
+                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                    @Override
+                    public void onConnected(Bundle connectionHint) {
+
+                    }
+
+                    @Override
+                    public void onConnectionSuspended(int cause) {
+                        /* Connection was interrupted */
+                    }
+                })
                 .build();
 
         mApiClient.connect();
@@ -48,14 +62,14 @@ public class PhoneListener extends WearableListenerService {
         Log.d("PhoneListener", "Channel established");
         if (channel.getPath().equals("/new_recording")) {
 
-            file = new File(this.getFilesDir(), "file.pcm");
-
+            file = new File(this.getFilesDir(), "file2.pcm");
             try {
                 file.createNewFile();
             } catch (IOException e) {
                 //handle error
             }
             Log.d("PhoneListener", "Trying to receive file");
+
             channel.receiveFile(mApiClient, Uri.fromFile(file), false);
             Log.d("PhoneListener", "DONE");
         }
@@ -65,6 +79,10 @@ public class PhoneListener extends WearableListenerService {
     @Override
     public void onInputClosed(Channel channel, int int0, int int1) {
         Log.d("PhoneListener", "File Received!!");
+        channel.close(mApiClient);
+        Log.d("PhoneListener", String.valueOf(file.length()));
+        Log.d("PhoneListener", "Channel Closed!");
+
     }
 
     @Override
@@ -72,4 +90,5 @@ public class PhoneListener extends WearableListenerService {
         super.onDestroy();
         mApiClient.disconnect();
     }
+
 }
