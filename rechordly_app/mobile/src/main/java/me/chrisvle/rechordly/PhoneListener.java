@@ -2,6 +2,7 @@ package me.chrisvle.rechordly;
 
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -26,6 +27,17 @@ public class PhoneListener extends WearableListenerService {
         super.onCreate();
         mApiClient = new GoogleApiClient.Builder( this )
                 .addApi( Wearable.API )
+                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                    @Override
+                    public void onConnected(Bundle connectionHint) {
+
+                    }
+
+                    @Override
+                    public void onConnectionSuspended(int cause) {
+                        /* Connection was interrupted */
+                    }
+                })
                 .build();
 
         mApiClient.connect();
@@ -57,6 +69,7 @@ public class PhoneListener extends WearableListenerService {
                 //handle error
             }
             Log.d("PhoneListener", "Trying to receive file");
+
             channel.receiveFile(mApiClient, Uri.fromFile(file), false);
             Log.d("PhoneListener", "DONE");
         }
@@ -77,4 +90,5 @@ public class PhoneListener extends WearableListenerService {
         super.onDestroy();
         mApiClient.disconnect();
     }
+
 }
