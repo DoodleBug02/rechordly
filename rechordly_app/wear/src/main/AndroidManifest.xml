@@ -3,8 +3,12 @@
     package="me.chrisvle.rechordly" >
 
     <uses-feature android:name="android.hardware.type.watch" />
+
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-library android:name="com.google.android.wearable" android:required="false" />
+
+    <uses-library
+        android:name="com.google.android.wearable"
+        />
 
     <application
         android:allowBackup="true"
@@ -65,6 +69,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".MessageService"
+            android:label="Rechordly" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

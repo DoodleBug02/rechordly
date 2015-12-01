@@ -33,6 +33,8 @@ public class WatchMain extends Activity {
                 mDismissOverlay.showIntroIfNecessary();
             }
         });
+        Intent i = new Intent(this, MessageService.class);
+        startService(i);
     }
 
     public void recordLyrics(View v) {
