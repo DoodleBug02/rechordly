@@ -7,15 +7,16 @@ import android.support.wearable.view.DismissOverlayView;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ImageButton;
 
 public class WatchMain extends Activity {
 
-    private TextView mTextView;
     private DismissOverlayView mDismissOverlay;
     private GestureDetector mDetector;
+    private ImageButton music_btn;
+    private ImageButton lyric_btn;
+
     private static final String DEBUG_TAG = "Gestures";
 
     @Override
@@ -26,11 +27,12 @@ public class WatchMain extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                mTextView = (TextView) stub.findViewById(R.id.text);
                 // Obtain the DismissOverlayView element
-                mDismissOverlay = (DismissOverlayView) findViewById(R.id.dismiss_overlay);
-                mDismissOverlay.setIntroText(R.string.long_press_intro);
-                mDismissOverlay.showIntroIfNecessary();
+//                mDismissOverlay = (DismissOverlayView) findViewById(R.id.dismiss_overlay);
+//                mDismissOverlay.setIntroText(R.string.long_press_intro);
+//                mDismissOverlay.showIntroIfNecessary();
+
+                music_btn = (ImageButton) findViewById(R.id.music_btn);
             }
         });
         Intent i = new Intent(this, MessageService.class);
