@@ -32,7 +32,7 @@
             android:name=".doneActivity"
             android:label="@string/title_activity_done" />
         <activity
-            android:name=".cropChooserActivity"
+            android:name=".CropFbActivity"
             android:label="@string/title_activity_crop_chooser" />
         <activity
             android:name=".VolumeChooserActivity"
@@ -111,6 +111,15 @@
         <activity
             android:name=".NameActivity"
             android:label="@string/title_activity_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ResumeActivity"
+            android:label="@string/title_activity_resume">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
