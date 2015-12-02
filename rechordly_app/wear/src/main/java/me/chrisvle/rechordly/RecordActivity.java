@@ -138,6 +138,4 @@ public class RecordActivity extends Activity {
         super.onStop();
     }
 
-
-
 }

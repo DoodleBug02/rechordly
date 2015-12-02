@@ -1,6 +1,7 @@
 package me.chrisvle.rechordly;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.ToggleButton;
 public class InfoActivity extends AppCompatActivity {
 
     ToggleButton t;
+    private static MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,25 +33,44 @@ public class InfoActivity extends AppCompatActivity {
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent lyrics = new Intent(getBaseContext(), TranscribingActivity.class);
-                startActivity(lyrics);
+                Intent crop = new Intent(getBaseContext(), CropActivity.class);
+                startActivity(crop);
             }
         });
+
+        mp = new MediaPlayer();
+        mp = MediaPlayer.create(this, R.raw.completed);
 
         t = (ToggleButton) findViewById(R.id.playback);
         t.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // The toggle is play
-//                    play();
+//                    Intent playback = new Intent(getBaseContext(), PlaybackActivity.class);
+//                    startActivity(playback);
+//                    Intent play = new Intent("Playback");
+//                    play.putExtra("Command", "play");
+//                    sendBroadcast(play);
+                    play();
                 } else {
                     // The toggle is pause
-//                    pause();
+//                  Intent pause = new Intent("Playback");
+//                    pause.putExtra("Command", "pause");
+//                    sendBroadcast(pause);
+                    pause();
                 }
             }
         });
 
 
+    }
+
+    private void play() {
+        mp.start();
+    }
+
+    private void pause() {
+        mp.pause();
     }
 
 //    private Uri load(File file) {
