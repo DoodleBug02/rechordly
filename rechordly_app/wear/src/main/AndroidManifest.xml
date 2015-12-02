@@ -5,6 +5,8 @@
     <uses-feature android:name="android.hardware.type.watch" />
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
 
     <uses-library android:name="com.google.android.wearable" />
 
@@ -69,6 +71,8 @@
         </service>
 
         <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2" >
             android:name=".StopActivity"
             android:label="@string/title_activity_stop">
             <intent-filter>
