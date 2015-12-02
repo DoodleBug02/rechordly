@@ -4,14 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 public class EffectsActivity extends Activity {
 
-    private TextView mTextView;
     private ImageButton mImageButton;
+    private GestureDetector mDetector;
+    private GestureDetector tapDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,17 +24,60 @@ public class EffectsActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                mTextView = (TextView) stub.findViewById(R.id.text);
-                mImageButton = (ImageButton) stub.findViewById(R.id.imageButton);
-                mImageButton.setOnClickListener(new View.OnClickListener() {
+                mImageButton = (ImageButton) stub.findViewById(R.id.effect_btn);
+                mImageButton.setOnTouchListener(new View.OnTouchListener() {
                     @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(v.getContext(), EffectsChooserActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                    public boolean onTouch(View v, MotionEvent e) {
+                        if (tapDetector.onTouchEvent(e)) {
+                            // single tap
+                            return true;
+                        } else {
+                            return mDetector.onTouchEvent(e);
+                        }
                     }
                 });
+
             }
         });
+
+        //Configure single tap detector
+        tapDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent event) {
+                return true;
+            }
+        });
+
+        mDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+                                    float distanceY) {
+                if (distanceX < -5.0) {
+                    Log.d("Event: ", "onScrollEvent Fired!");
+                    Intent intent = new Intent(getBaseContext(), VolumeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    overridePendingTransition(android.R.anim.slide_in_left, 0);
+                    return true;
+                }
+                if (distanceX > 5.0) {
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        return mDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
+    }
+
+    public void onClick(View v) {
+        Intent intent = new Intent(v.getContext(), EffectsChooserActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+
     }
 }

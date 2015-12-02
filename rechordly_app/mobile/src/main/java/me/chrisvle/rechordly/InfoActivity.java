@@ -19,7 +19,6 @@ public class InfoActivity extends AppCompatActivity {
     ToggleButton t;
     private static MediaPlayer mp;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +47,32 @@ public class InfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 play();
+                Intent crop = new Intent(getBaseContext(), CropActivity.class);
+                startActivity(crop);
+            }
+        });
+
+        mp = new MediaPlayer();
+        mp = MediaPlayer.create(this, R.raw.completed);
+
+        t = (ToggleButton) findViewById(R.id.playback);
+        t.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is play
+//                    Intent playback = new Intent(getBaseContext(), PlaybackActivity.class);
+//                    startActivity(playback);
+//                    Intent play = new Intent("Playback");
+//                    play.putExtra("Command", "play");
+//                    sendBroadcast(play);
+                    play();
+                } else {
+                    // The toggle is pause
+//                  Intent pause = new Intent("Playback");
+//                    pause.putExtra("Command", "pause");
+//                    sendBroadcast(pause);
+                    pause();
+                }
             }
         });
 

@@ -29,6 +29,7 @@
     <string name="title_activity_pause">PauseActivity</string>
     <string name="title_activity_name">NameActivity</string>
     <string name="title_activity_home_vocals_music">HomeVocalsMusicActivity</string>
+    <string name="title_activity_resume">ResumeActivity</string>
 
 </resources>
 

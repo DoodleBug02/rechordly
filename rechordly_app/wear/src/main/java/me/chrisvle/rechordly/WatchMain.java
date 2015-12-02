@@ -44,6 +44,7 @@ public class WatchMain extends Activity {
         Intent intent = new Intent(getBaseContext(), Main2Activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
     public void recordMusic(View v) {
@@ -51,6 +52,7 @@ public class WatchMain extends Activity {
         Intent intent = new Intent(getBaseContext(), Main2Activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        overridePendingTransition(0,0);
     }
 
 }

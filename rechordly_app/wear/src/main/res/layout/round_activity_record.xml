@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="me.chrisvle.rechordly.RecordActivity"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context="me.chrisvle.rechordly.RecordActivity"
     tools:deviceIds="wear_round">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Recording"
-        android:id="@+id/button3"
+    <ImageButton
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:src="@drawable/record_btn"
+        android:id="@+id/start_record"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:onClick="startRecording" />
 
-    <Button
+   <!--  <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Stop Recording"
         android:id="@+id/button4"
         android:layout_below="@+id/button3"
         android:layout_centerHorizontal="true"
-        android:onClick="stopRecording"/>
+        android:onClick="stopRecording"/> -->
 </RelativeLayout>
