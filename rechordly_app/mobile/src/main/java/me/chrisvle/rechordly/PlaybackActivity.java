@@ -42,7 +42,7 @@ public class PlaybackActivity extends AppCompatActivity {
         Log.d("fileLen", String.valueOf(f.length()));
 
         mp = new MediaPlayer();
-        //mp = MediaPlayer.create(this, Uri.fromFile(f));
+        mp = MediaPlayer.create(this, R.raw.completed);
     }
 
     private void play() {
