@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -29,6 +30,8 @@ public class Main2Activity extends Activity {
     private int bufferSize = 0;
     private Thread recordingThread = null;
     private boolean isRecording = false;
+    private String fileName;
+    private String filePath;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +67,7 @@ public class Main2Activity extends Activity {
         }
 
         File tempFile = new File(filepath, AUDIO_RECORDER_TEMP_FILE);
-
+        filePath = file.getAbsolutePath();
         if(tempFile.exists())
             tempFile.delete();
 
@@ -135,7 +138,7 @@ public class Main2Activity extends Activity {
             recorder = null;
             recordingThread = null;
         }
-
+        fileName = getFilename();
         copyWaveFile(getTempFilename(),getFilename());
         deleteTempFile();
     }
@@ -246,6 +249,10 @@ public class Main2Activity extends Activity {
                 }
                 case R.id.btnStop:{
                     stopRecording();
+                    Intent intent = new Intent("/new_recording");
+                    intent.putExtra("message", fileName);
+                    intent.putExtra("Path", filePath );
+                    sendBroadcast(intent);
 
                     break;
                 }

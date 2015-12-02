@@ -23,6 +23,12 @@
     <string name="exiting_for_permissions">Recording Audio permission is required, exiting now!</string>
     <string name="no_speaker_supported">Speaker is not supported</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_stop">StopActivity</string>
+    <string name="title_activity_save">SaveActivity</string>
+    <string name="title_activity_playback">PlaybackActivity</string>
+    <string name="title_activity_pause">PauseActivity</string>
+    <string name="title_activity_name">NameActivity</string>
+    <string name="title_activity_home_vocals_music">HomeVocalsMusicActivity</string>
 
 </resources>
 
