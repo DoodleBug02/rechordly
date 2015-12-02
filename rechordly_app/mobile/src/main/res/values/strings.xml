@@ -4,4 +4,5 @@
     <string name="title_activity_info">InfoActivity</string>
     <string name="title_activity_edit">EditActivity</string>
     <string name="title_activity_playback">PlaybackActivity</string>
+    <string name="title_activity_crop">CropActivity</string>
 </resources>
