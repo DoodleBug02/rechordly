@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#000000"
     tools:context=".MainActivity"
     tools:deviceIds="wear_round">
 
@@ -27,7 +28,7 @@
         android:src="@drawable/record_lyrics_btn"
         android:layout_gravity="center"
         android:layout_marginStart="35dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="27dp"
         android:onClick="recordLyrics"/>
 
     <ImageButton
@@ -40,7 +41,7 @@
         android:src="@drawable/record_music_btn"
         android:layout_gravity="center"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:onClick="recordMusic"/>
 
 </LinearLayout>

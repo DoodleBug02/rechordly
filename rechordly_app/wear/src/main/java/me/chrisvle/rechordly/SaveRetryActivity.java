@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 public class SaveRetryActivity extends Activity {
 
-    private TextView mTextView;
+
     private ImageButton mImageButton;
     private ImageButton mImageButtonRery;
 
@@ -21,8 +20,7 @@ public class SaveRetryActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                mTextView = (TextView) stub.findViewById(R.id.text);
-                mImageButton = (ImageButton) stub.findViewById(R.id.imageButton);
+                mImageButton = (ImageButton) stub.findViewById(R.id.retry_btn);
                 mImageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -31,7 +29,7 @@ public class SaveRetryActivity extends Activity {
 //                        startActivity(intent);
                     }
                 });
-                mImageButton = (ImageButton) stub.findViewById(R.id.imageButtonRetry);
+                mImageButton = (ImageButton) stub.findViewById(R.id.save_btn);
                 mImageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
