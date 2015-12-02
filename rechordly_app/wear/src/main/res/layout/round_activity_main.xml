@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context=".MainActivity" tools:deviceIds="wear_round">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    tools:deviceIds="wear_round">
 
 
-    <android.support.wearable.view.DismissOverlayView
+   <!-- <android.support.wearable.view.DismissOverlayView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/dismiss_overlay"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+        -->
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="lyrics"
-        android:id="@+id/button"
-        android:layout_below="@+id/dismiss_overlay"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="98dp"
+    <ImageButton
+        android:layout_width="320dp"
+        android:layout_height="70dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitStart"
+        android:id="@+id/lyric_btn"
+        android:background="@android:color/transparent"
+        android:src="@drawable/record_lyrics_btn"
+        android:layout_gravity="center"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="25dp"
         android:onClick="recordLyrics"/>
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="music"
-        android:id="@+id/button2"
-        android:layout_below="@+id/button"
-        android:layout_alignEnd="@+id/button"
-        android:layout_marginTop="131dp"
+    <ImageButton
+        android:layout_width="320dp"
+        android:layout_height="70dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitStart"
+        android:id="@+id/music_btn"
+        android:background="@android:color/transparent"
+        android:src="@drawable/record_music_btn"
+        android:layout_gravity="center"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="25dp"
         android:onClick="recordMusic"/>
-</RelativeLayout>
+
+</LinearLayout>
