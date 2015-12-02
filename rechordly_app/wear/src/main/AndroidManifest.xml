@@ -6,9 +6,7 @@
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-    <uses-library
-        android:name="com.google.android.wearable"
-        />
+    <uses-library android:name="com.google.android.wearable" />
 
     <application
         android:allowBackup="true"
@@ -77,6 +75,16 @@
                 <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

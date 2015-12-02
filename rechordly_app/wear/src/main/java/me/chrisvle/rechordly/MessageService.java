@@ -60,6 +60,8 @@ public class MessageService extends Service implements ChannelApi.ChannelListene
             public void onReceive(Context context, Intent intent) {
                 Log.d("MessageService", "Received");
                 String message  = intent.getStringExtra("message");
+                Log.d("DIR", String.valueOf(getFilesDir()));
+                Log.d("MESSAGE", message);
                 audioFile = new File(getFilesDir(), message);
                 Log.d("file length", String.valueOf(audioFile.length()));
                 sendFile("/new_recording");

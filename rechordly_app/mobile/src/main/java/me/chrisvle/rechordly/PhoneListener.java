@@ -81,8 +81,11 @@ public class PhoneListener extends WearableListenerService {
         channel.close(mApiClient);
         Log.d("PhoneListener", String.valueOf(file.length()));
         Log.d("PhoneListener", "Channel Closed!");
+        Log.d("PATH", file.getAbsolutePath());
         Intent play = new Intent(this, PlaybackActivity.class);
         play.putExtra("Path", file.getAbsolutePath());
+        play.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
         startActivity(play);
     }
 
@@ -91,5 +94,6 @@ public class PhoneListener extends WearableListenerService {
         super.onDestroy();
         mApiClient.disconnect();
     }
+
 
 }

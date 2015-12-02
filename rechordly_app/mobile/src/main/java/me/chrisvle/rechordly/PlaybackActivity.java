@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.io.File;
 
@@ -36,10 +37,12 @@ public class PlaybackActivity extends AppCompatActivity {
 
         Intent play = getIntent();
         filepath = play.getStringExtra("Path");
+        Log.d("PATH", filepath);
         File f = new File(filepath);
+        Log.d("fileLen", String.valueOf(f.length()));
 
         mp = new MediaPlayer();
-        mp = MediaPlayer.create(this, Uri.fromFile(f));
+        //mp = MediaPlayer.create(this, Uri.fromFile(f));
     }
 
     private void play() {
