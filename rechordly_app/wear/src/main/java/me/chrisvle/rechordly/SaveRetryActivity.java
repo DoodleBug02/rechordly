@@ -1,6 +1,7 @@
 package me.chrisvle.rechordly;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
 import android.view.View;
@@ -20,22 +21,25 @@ public class SaveRetryActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                mImageButton = (ImageButton) stub.findViewById(R.id.retry_btn);
-                mImageButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-//                        Intent intent = new Intent(v.getContext(), SaveActivity.class);
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                        startActivity(intent);
-                    }
-                });
                 mImageButton = (ImageButton) stub.findViewById(R.id.save_btn);
                 mImageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent intent = new Intent(v.getContext(), RetryActivity.class);
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                        startActivity(intent);
+                        Intent intent = new Intent(v.getContext(), SaveActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
+                    }
+                });
+                mImageButton = (ImageButton) stub.findViewById(R.id.retry_btn);
+                mImageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), WatchMain.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                       // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        //FIXME need code to erase prior recording
+                        startActivity(intent);
                     }
                 });
             }

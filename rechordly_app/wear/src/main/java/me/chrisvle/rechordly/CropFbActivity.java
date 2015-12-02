@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class cropChooserActivity extends Activity {
+public class CropFbActivity extends Activity {
 
     private TextView mTextView;
     private ImageButton mImageButton;
@@ -21,13 +21,13 @@ public class cropChooserActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crop_chooser);
+        setContentView(R.layout.activity_crop_fb);
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
                 mTextView = (TextView) stub.findViewById(R.id.text);
-                mImageButton = (ImageButton) stub.findViewById(R.id.imageButton);
+                mImageButton = (ImageButton) stub.findViewById(R.id.front_btn);
                 mImageButton.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
@@ -88,5 +88,13 @@ public class cropChooserActivity extends Activity {
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         return mDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
+    }
+
+    public void front_click(View v) {
+        //FIXME
+    }
+
+    public void back_click(View v) {
+        //FIXME
     }
 }

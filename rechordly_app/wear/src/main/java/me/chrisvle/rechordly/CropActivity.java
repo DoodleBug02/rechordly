@@ -80,8 +80,9 @@ public class CropActivity extends Activity {
     }
 
     public void onClick(View v) {
-        Intent intent = new Intent(v.getContext(), cropChooserActivity.class);
+        Intent intent = new Intent(v.getContext(), CropFbActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }
 }

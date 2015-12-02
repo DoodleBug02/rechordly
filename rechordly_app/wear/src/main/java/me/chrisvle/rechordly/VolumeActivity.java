@@ -81,6 +81,7 @@ public class VolumeActivity extends Activity {
     public void onClick(View v) {
         Intent intent = new Intent(v.getContext(), VolumeChooserActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }
 
