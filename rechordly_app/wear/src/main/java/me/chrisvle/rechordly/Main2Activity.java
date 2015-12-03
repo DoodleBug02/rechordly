@@ -269,7 +269,7 @@ public class Main2Activity extends Activity {
             }
         }
 
-    private static int[] mSampleRates = new int[] { 44100, 11025, 22050, 8000 };
+    private static int[] mSampleRates = new int[] { 8000, 44100, 22050, 8000 };
     public AudioRecord findAudioRecord() {
         Log.d("STEREONUMBER", String.valueOf(AudioFormat.CHANNEL_IN_STEREO));
         for (int rate : mSampleRates) {
