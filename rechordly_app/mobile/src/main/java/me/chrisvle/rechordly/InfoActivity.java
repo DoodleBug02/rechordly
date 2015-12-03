@@ -44,7 +44,6 @@ public class InfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String path = intent.getStringExtra("path");
         mp = new MediaPlayer();
-        Log.d("PATH", path);
         Uri uri = Uri.parse(path);
         mp = MediaPlayer.create(this, uri);
         Button b = (Button) findViewById(R.id.playback);

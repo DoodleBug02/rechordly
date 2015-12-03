@@ -22,7 +22,7 @@ public class Main2Activity extends Activity {
     private static final String AUDIO_RECORDER_FILE_EXT_WAV = ".wav";
     private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
     private static final String AUDIO_RECORDER_TEMP_FILE = "record_temp.raw";
-    private static final int RECORDER_SAMPLERATE = 8000;
+    private static  int RECORDER_SAMPLERATE = 0;
     private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_STEREO;
     private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 
@@ -141,7 +141,7 @@ public class Main2Activity extends Activity {
         }
         fileName = getFilename();
         Log.d("FILENAME FINAL", fileName);
-        copyWaveFile(getTempFilename(),fileName);
+        copyWaveFile(getTempFilename(), fileName);
         deleteTempFile();
     }
 
@@ -157,7 +157,7 @@ public class Main2Activity extends Activity {
         long totalAudioLen = 0;
         long totalDataLen = totalAudioLen + 36;
         long longSampleRate = RECORDER_SAMPLERATE;
-        int channels = 2;
+        int channels = 1;
         long byteRate = RECORDER_BPP * RECORDER_SAMPLERATE * channels/8;
 
         byte[] data = new byte[bufferSize];
@@ -267,8 +267,9 @@ public class Main2Activity extends Activity {
             }
         }
 
-    private static int[] mSampleRates = new int[] { 8000, 11025, 22050, 44100 };
+    private static int[] mSampleRates = new int[] { 44100, 11025, 22050, 8000 };
     public AudioRecord findAudioRecord() {
+        Log.d("STEREONUMBER", String.valueOf(AudioFormat.CHANNEL_IN_STEREO));
         for (int rate : mSampleRates) {
             for (short audioFormat : new short[] { AudioFormat.ENCODING_PCM_8BIT, AudioFormat.ENCODING_PCM_16BIT }) {
                 for (short channelConfig : new short[] { AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_STEREO }) {
@@ -282,6 +283,8 @@ public class Main2Activity extends Activity {
                             AudioRecord recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, rate, channelConfig, audioFormat, bufferSize);
 
                             if (recorder.getState() == AudioRecord.STATE_INITIALIZED)
+                                RECORDER_SAMPLERATE = rate;
+                                Log.d("RATE", String.valueOf(rate));
                                 return recorder;
                         }
                     } catch (Exception e) {
