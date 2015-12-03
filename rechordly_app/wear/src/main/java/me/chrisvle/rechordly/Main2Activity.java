@@ -1,6 +1,7 @@
 package me.chrisvle.rechordly;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -9,6 +10,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -43,11 +46,19 @@ public class Main2Activity extends Activity {
     private RelativeLayout parentView;
     private ImageView sliders;
     private TextView text;
+    private TextView time;
+
+    private GestureDetector mDetector;
+    private GestureDetector tapDetector;
+    private ImageButton mImageButton;
+    private Context t;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        t=this;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
@@ -58,13 +69,86 @@ public class Main2Activity extends Activity {
                 parentView = (RelativeLayout) findViewById(R.id.record_screen);
                 sliders = (ImageView) findViewById(R.id.sliders);
                 text = (TextView) findViewById(R.id.record_text);
+                time = (TextView) findViewById(R.id.record_time);
+
+
+                startBtn.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent e) {
+                        if (tapDetector.onTouchEvent(e)) {
+                            return true;
+                        } else {
+                            return mDetector.onTouchEvent(e);
+                        }
+                    }
+                });
+
+                stopBtn.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent e) {
+                        if (tapDetector.onTouchEvent(e)) {
+                            return true;
+                        } else {
+                            return mDetector.onTouchEvent(e);
+                        }
+                    }
+                });
+            }
+
+
+        });
+
+        //Configure single tap detector
+        tapDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent event) {
+                return true;
             }
         });
 
+        // Configure a gesture detector
+        mDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
 
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+                                    float distanceY) {
+                if(sliders.getVisibility() == View.INVISIBLE) {
+                    return true;
+                }
+                if (distanceX > 5.0) {
+                    Intent intent = new Intent(getBaseContext(), doneActivity.class);
+                    startActivity(intent);
+                }
+                if (distanceX < -5.0) {
+                    Intent intent = new Intent(t, PlaybackActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(android.R.anim.slide_in_left, 0);
+                    return true;
+                }
+                return true;
+            }
+        });
     }
 
 
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+            return mDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.getStringExtra("swipe").equals("left")) {
+            overridePendingTransition(android.R.anim.slide_in_left, 0);
+        }
+    }
+
+
+
+    /** Recording Logic starts here */
 
 
     private String getFilename(){
@@ -266,8 +350,8 @@ public class Main2Activity extends Activity {
     }
 
     public void btnClick(View v) {
-            switch(v.getId()){
-                case R.id.btnStart:{
+        switch(v.getId()){
+            case R.id.btnStart:{
 
                     stopBtn.bringToFront();
                     sliders.setVisibility(View.INVISIBLE);

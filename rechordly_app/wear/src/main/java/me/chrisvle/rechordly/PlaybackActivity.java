@@ -9,11 +9,20 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class PlaybackActivity extends Activity {
     private ImageView mImageButton;
     private GestureDetector tapDetector;
     private GestureDetector mDetector;
+
+    private ImageView playBtn;
+    private ImageView pauseBtn;
+    private RelativeLayout parentView;
+
+    private boolean swipe = true;
+    private ImageView swipeRight;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +43,10 @@ public class PlaybackActivity extends Activity {
                         }
                     }
                 });
+                playBtn = (ImageView) findViewById(R.id.play_btn);
+                pauseBtn = (ImageView) findViewById(R.id.pause_btn);
+                parentView = (RelativeLayout) findViewById(R.id.play_screen);
+                swipeRight = (ImageView) findViewById(R.id.swipe_play);
             }
         });
 
@@ -57,9 +70,13 @@ public class PlaybackActivity extends Activity {
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
                                     float distanceY) {
+                if (!swipe) {
+                    return true;
+                }
                 if (distanceX > 5.0) {
-                    Intent intent = new Intent(getBaseContext(), ResumeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    Intent intent = new Intent(getBaseContext(), Main2Activity.class);
+                    intent.putExtra("swipe", "right");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
                 }
                 return true;
@@ -73,12 +90,24 @@ public class PlaybackActivity extends Activity {
         return mDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
     }
 
-    public void play(View v) {
-        Intent intent = new Intent(this, PauseActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
+    public void play_click(View v) {
+        swipe = false;
+        pauseBtn.bringToFront();
+        swipeRight.setVisibility(View.INVISIBLE);
+        parentView.invalidate();
+
         //FIXME add play music service logic
+
+    }
+
+    public void pause_click(View v) {
+        swipe = true;
+        playBtn.bringToFront();
+        swipeRight.setVisibility(View.VISIBLE);
+        parentView.invalidate();
+
+        //FIXME add play music service logic
+
     }
 
 }

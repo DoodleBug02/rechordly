@@ -73,15 +73,16 @@ public class doneActivity extends Activity {
                 if (distanceX > 5.0) {
                     Log.d("Event: ", "onScrollEvent Fired!");
                     Intent intent = new Intent(getBaseContext(), CropActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    intent.putExtra("swipe", "right");
                     startActivity(intent);
                 }
                 if (distanceX < -5.0) {
                     Log.d("Event: ", "onScrollEvent Fired!");
-                    Intent intent = new Intent(getBaseContext(), ResumeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    Intent intent = new Intent(getBaseContext(), Main2Activity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    intent.putExtra("swipe", "left");
                     startActivity(intent);
-                    overridePendingTransition(android.R.anim.slide_in_left, 0);
                     return true;
                 }
                 Log.d(DEBUG_TAG, " onScroll: " + e1.toString()+e2.toString());
