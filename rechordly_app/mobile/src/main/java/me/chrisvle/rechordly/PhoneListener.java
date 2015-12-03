@@ -64,13 +64,17 @@ public class PhoneListener extends WearableListenerService {
             file = new File(this.getFilesDir(), "file2.pcm");
             try {
                 file.createNewFile();
+                Log.d("PhoneListener", "Trying to receive file");
+
+                channel.receiveFile(mApiClient, Uri.fromFile(file), false);
+                Log.d("PhoneListener", "DONE");
             } catch (IOException e) {
                 //handle error
+            } finally {
+                channel.close(mApiClient);
+                Log.d("PhoneListener", "Channel Closed");
             }
-            Log.d("PhoneListener", "Trying to receive file");
 
-            channel.receiveFile(mApiClient, Uri.fromFile(file), false);
-            Log.d("PhoneListener", "DONE");
         }
 
     }
