@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 public class Main2Activity extends Activity {
@@ -22,7 +23,7 @@ public class Main2Activity extends Activity {
     private static final String AUDIO_RECORDER_FILE_EXT_WAV = ".wav";
     private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
     private static final String AUDIO_RECORDER_TEMP_FILE = "record_temp.raw";
-    private static final int RECORDER_SAMPLERATE = 44100;
+    private static  int RECORDER_SAMPLERATE = 0;
     private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_STEREO;
     private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 
@@ -37,9 +38,8 @@ public class Main2Activity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-
-        bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE,RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING);
     }
 
 
@@ -48,10 +48,14 @@ public class Main2Activity extends Activity {
     private String getFilename(){
         String filepath = Environment.getExternalStorageDirectory().getPath();
         File file = new File(filepath, AUDIO_RECORDER_FOLDER);
+        Log.d("FilePath", filepath);
 
         if(!file.exists()){
             file.mkdirs();
         }
+        Log.d("main2path", file.getAbsolutePath());
+        Log.d("filename",file.getAbsolutePath() + "/" + System.currentTimeMillis() + AUDIO_RECORDER_FILE_EXT_WAV);
+        filePath = file.getAbsolutePath();
 
         return (file.getAbsolutePath() + "/" + System.currentTimeMillis() + AUDIO_RECORDER_FILE_EXT_WAV);
     }
@@ -67,16 +71,15 @@ public class Main2Activity extends Activity {
         }
 
         File tempFile = new File(filepath, AUDIO_RECORDER_TEMP_FILE);
-        filePath = file.getAbsolutePath();
         if(tempFile.exists())
             tempFile.delete();
-
+        Log.d("main2path", file.getAbsolutePath());
+        Log.d("filename", file.getAbsolutePath() + "/" + AUDIO_RECORDER_TEMP_FILE );
         return (file.getAbsolutePath() + "/" + AUDIO_RECORDER_TEMP_FILE);
     }
 
     private void startRecording(){
-        recorder = new AudioRecord(MediaRecorder.AudioSource.MIC,
-                RECORDER_SAMPLERATE, RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING, bufferSize);
+        recorder = findAudioRecord();
 
         recorder.startRecording();
 
@@ -139,7 +142,8 @@ public class Main2Activity extends Activity {
             recordingThread = null;
         }
         fileName = getFilename();
-        copyWaveFile(getTempFilename(),getFilename());
+        Log.d("FILENAME FINAL", fileName);
+        copyWaveFile(getTempFilename(), fileName);
         deleteTempFile();
     }
 
@@ -155,7 +159,7 @@ public class Main2Activity extends Activity {
         long totalAudioLen = 0;
         long totalDataLen = totalAudioLen + 36;
         long longSampleRate = RECORDER_SAMPLERATE;
-        int channels = 2;
+        int channels = 1;
         long byteRate = RECORDER_BPP * RECORDER_SAMPLERATE * channels/8;
 
         byte[] data = new byte[bufferSize];
@@ -250,12 +254,48 @@ public class Main2Activity extends Activity {
                 case R.id.btnStop:{
                     stopRecording();
                     Intent intent = new Intent("/new_recording");
+                    File f = new File(filePath);
+
                     intent.putExtra("message", fileName);
                     intent.putExtra("Path", filePath );
                     sendBroadcast(intent);
+                    File fe = new File(fileName);
+                    Log.d("FILEPATH", fileName);
+                    Log.d("FILE?", String.valueOf(fe.length()));
+                    Log.d("EXISTS?", String.valueOf((fe.exists())));
 
                     break;
                 }
             }
         }
+
+    private static int[] mSampleRates = new int[] { 44100, 11025, 22050, 8000 };
+    public AudioRecord findAudioRecord() {
+        Log.d("STEREONUMBER", String.valueOf(AudioFormat.CHANNEL_IN_STEREO));
+        for (int rate : mSampleRates) {
+            for (short audioFormat : new short[] { AudioFormat.ENCODING_PCM_8BIT, AudioFormat.ENCODING_PCM_16BIT }) {
+                for (short channelConfig : new short[] { AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_STEREO }) {
+                    try {
+                        Log.d("Attempt", "Attempting rate " + rate + "Hz, bits: " + audioFormat + ", channel: "
+                                + channelConfig);
+                         bufferSize = AudioRecord.getMinBufferSize(rate, channelConfig, audioFormat);
+
+                        if (bufferSize != AudioRecord.ERROR_BAD_VALUE) {
+                            // check if we can instantiate and have a success
+                            AudioRecord recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, rate, channelConfig, audioFormat, bufferSize);
+
+                            if (recorder.getState() == AudioRecord.STATE_INITIALIZED)
+                                RECORDER_SAMPLERATE = rate;
+                                Log.d("RATE", String.valueOf(rate));
+                                return recorder;
+                        }
+                    } catch (Exception e) {
+                        Log.e("Attempt", rate + "Exception, keep trying.",e);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
 }
