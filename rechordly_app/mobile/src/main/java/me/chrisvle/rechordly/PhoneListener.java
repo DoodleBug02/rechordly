@@ -79,8 +79,6 @@ public class PhoneListener extends WearableListenerService {
     @Override
     public void onInputClosed(Channel channel, int int0, int int1) {
         Log.d("PhoneListener", "File Received!!");
-        channel.close(mApiClient);
-        Log.d("PhoneListener", String.valueOf(file.length()));
         Log.d("PhoneListener", "Channel Closed!");
         Log.d("PATH", file.getAbsolutePath());
         Intent play = new Intent(this, InfoActivity.class);
