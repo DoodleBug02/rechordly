@@ -1,22 +1,29 @@
 package me.chrisvle.rechordly;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class Main2Activity extends Activity {
     private static final int RECORDER_BPP = 16;
@@ -34,15 +41,114 @@ public class Main2Activity extends Activity {
     private String fileName;
     private String filePath;
 
+    private ImageButton startBtn;
+    private ImageButton stopBtn;
+    private RelativeLayout parentView;
+    private ImageView sliders;
+    private TextView text;
+    private TextView time;
+
+    private GestureDetector mDetector;
+    private GestureDetector tapDetector;
+    private ImageButton mImageButton;
+    private Context t;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        t=this;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
+        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
+            @Override
+            public void onLayoutInflated(WatchViewStub stub) {
+                startBtn = (ImageButton) findViewById(R.id.btnStart);
+                stopBtn = (ImageButton) findViewById(R.id.btnStop);
+                parentView = (RelativeLayout) findViewById(R.id.record_screen);
+                sliders = (ImageView) findViewById(R.id.sliders);
+                text = (TextView) findViewById(R.id.record_text);
+                time = (TextView) findViewById(R.id.record_time);
 
+
+                startBtn.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent e) {
+                        if (tapDetector.onTouchEvent(e)) {
+                            return true;
+                        } else {
+                            return mDetector.onTouchEvent(e);
+                        }
+                    }
+                });
+
+                stopBtn.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent e) {
+                        if (tapDetector.onTouchEvent(e)) {
+                            return true;
+                        } else {
+                            return mDetector.onTouchEvent(e);
+                        }
+                    }
+                });
+            }
+
+
+        });
+
+        //Configure single tap detector
+        tapDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent event) {
+                return true;
+            }
+        });
+
+        // Configure a gesture detector
+        mDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+                                    float distanceY) {
+                if(sliders.getVisibility() == View.INVISIBLE) {
+                    return true;
+                }
+                if (distanceX > 5.0) {
+                    Intent intent = new Intent(getBaseContext(), doneActivity.class);
+                    startActivity(intent);
+                }
+                if (distanceX < -5.0) {
+                    Intent intent = new Intent(t, PlaybackActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(android.R.anim.slide_in_left, 0);
+                    return true;
+                }
+                return true;
+            }
+        });
     }
 
 
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+            return mDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.getStringExtra("swipe").equals("left")) {
+            overridePendingTransition(android.R.anim.slide_in_left, 0);
+        }
+    }
+
+
+
+    /** Recording Logic starts here */
 
 
     private String getFilename(){
@@ -244,14 +350,20 @@ public class Main2Activity extends Activity {
     }
 
     public void btnClick(View v) {
-            switch(v.getId()){
-                case R.id.btnStart:{
+        switch(v.getId()){
+            case R.id.btnStart:{
 
+                    stopBtn.bringToFront();
+                    sliders.setVisibility(View.INVISIBLE);
+                    parentView.invalidate();
                     startRecording();
 
                     break;
                 }
                 case R.id.btnStop:{
+                    startBtn.bringToFront();
+                    sliders.setVisibility(View.VISIBLE);
+                    parentView.invalidate();
                     stopRecording();
                     Intent intent = new Intent("/new_recording");
                     File f = new File(filePath);
