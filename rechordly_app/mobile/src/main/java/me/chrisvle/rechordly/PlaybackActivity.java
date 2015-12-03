@@ -40,23 +40,15 @@ public class PlaybackActivity extends AppCompatActivity {
         filter.addAction("Playback");
         registerReceiver(mReceiver, filter);
 
-<<<<<<< HEAD
 //        Intent play = getIntent();
 //        filepath = play.getStringExtra("Playback");
 //        File f = new File(filepath);
 
-        mp = new MediaPlayer();
-        mp = MediaPlayer.create(this, R.raw.completed2);
-=======
         Intent play = getIntent();
-        filepath = play.getStringExtra("Path");
-        Log.d("PATH", filepath);
-        File f = new File(filepath);
-        Log.d("fileLen", String.valueOf(f.length()));
 
         mp = new MediaPlayer();
+        mp = MediaPlayer.create(this, R.raw.completed);
         //mp = MediaPlayer.create(this, Uri.fromFile(f));
->>>>>>> c766e309623b1c92fa0fc3e9e539cfe4547831f5
     }
 
     private void play() {
