@@ -1,24 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="me.chrisvle.rechordly.VolumeChooserActivity"
-    tools:deviceIds="wear_round">
-
-    <ImageButton
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/vol_act_placeholder"
-        android:id="@+id/imageButton"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        tools:context="me.chrisvle.rechordly.VolumeChooserActivity"
+        tools:deviceIds="wear_round"
+        android:background="#000000">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Volume Chooser" />
-</RelativeLayout>
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:circular="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rel_circular">
+
+            <me.chrisvle.rechordly.VolumeSliderView
+                android:id="@+id/circular"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                circular:angle="3.14"
+                circular:start_angle="0"
+                circular:border_color="#17013f"
+                circular:border_thickness="20dp"
+                circular:thumb_color="#1939cc"
+                circular:thumb_size="15dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/Volume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:paddingBottom="0dp"
+                android:text="50"
+                android:textColor="#4b96ec"
+                android:textSize="30pt"
+                >
+            </TextView>
+
+            <ImageButton
+                android:id="@+id/volume_done"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitStart"
+                android:layout_gravity="center"
+                android:paddingTop="0dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/done_btn_sm"
+                android:background="@android:color/transparent"
+                />
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
