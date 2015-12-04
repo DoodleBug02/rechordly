@@ -1,28 +1,36 @@
 package me.chrisvle.rechordly;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.view.WindowManager;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class Main2Activity extends Activity {
     private static final int RECORDER_BPP = 16;
     private static final String AUDIO_RECORDER_FILE_EXT_WAV = ".wav";
     private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
     private static final String AUDIO_RECORDER_TEMP_FILE = "record_temp.raw";
-    private static final int RECORDER_SAMPLERATE = 44100;
+    private static  int RECORDER_SAMPLERATE = 0;
     private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_STEREO;
     private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 
@@ -33,25 +41,127 @@ public class Main2Activity extends Activity {
     private String fileName;
     private String filePath;
 
+    private ImageButton startBtn;
+    private ImageButton stopBtn;
+    private RelativeLayout parentView;
+    private ImageView sliders;
+    private TextView text;
+    private TextView time;
+
+    private GestureDetector mDetector;
+    private GestureDetector tapDetector;
+    private ImageButton mImageButton;
+    private Context t;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        t=this;
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
+        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
+            @Override
+            public void onLayoutInflated(WatchViewStub stub) {
+                startBtn = (ImageButton) findViewById(R.id.btnStart);
+                stopBtn = (ImageButton) findViewById(R.id.btnStop);
+                parentView = (RelativeLayout) findViewById(R.id.record_screen);
+                sliders = (ImageView) findViewById(R.id.sliders);
+                text = (TextView) findViewById(R.id.record_text);
+                time = (TextView) findViewById(R.id.record_time);
 
 
-        bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE,RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING);
+                startBtn.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent e) {
+                        if (tapDetector.onTouchEvent(e)) {
+                            return true;
+                        } else {
+                            return mDetector.onTouchEvent(e);
+                        }
+                    }
+                });
+
+                stopBtn.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent e) {
+                        if (tapDetector.onTouchEvent(e)) {
+                            return true;
+                        } else {
+                            return mDetector.onTouchEvent(e);
+                        }
+                    }
+                });
+            }
+
+
+        });
+
+        //Configure single tap detector
+        tapDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent event) {
+                return true;
+            }
+        });
+
+        // Configure a gesture detector
+        mDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+                                    float distanceY) {
+                if(sliders.getVisibility() == View.INVISIBLE) {
+                    return true;
+                }
+                if (distanceX > 5.0) {
+                    Intent intent = new Intent(getBaseContext(), doneActivity.class);
+                    startActivity(intent);
+                }
+                if (distanceX < -5.0) {
+                    Intent intent = new Intent(t, PlaybackActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(android.R.anim.slide_in_left, 0);
+                    return true;
+                }
+                return true;
+            }
+        });
     }
 
 
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+            return mDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.getStringExtra("swipe").equals("left")) {
+            overridePendingTransition(android.R.anim.slide_in_left, 0);
+        }
+    }
+
+
+
+    /** Recording Logic starts here */
 
 
     private String getFilename(){
         String filepath = Environment.getExternalStorageDirectory().getPath();
         File file = new File(filepath, AUDIO_RECORDER_FOLDER);
+        Log.d("FilePath", filepath);
 
         if(!file.exists()){
             file.mkdirs();
         }
+        Log.d("main2path", file.getAbsolutePath());
+        Log.d("filename",file.getAbsolutePath() + "/" + System.currentTimeMillis() + AUDIO_RECORDER_FILE_EXT_WAV);
+        filePath = file.getAbsolutePath();
 
         return (file.getAbsolutePath() + "/" + System.currentTimeMillis() + AUDIO_RECORDER_FILE_EXT_WAV);
     }
@@ -67,16 +177,15 @@ public class Main2Activity extends Activity {
         }
 
         File tempFile = new File(filepath, AUDIO_RECORDER_TEMP_FILE);
-        filePath = file.getAbsolutePath();
         if(tempFile.exists())
             tempFile.delete();
-
+        Log.d("main2path", file.getAbsolutePath());
+        Log.d("filename", file.getAbsolutePath() + "/" + AUDIO_RECORDER_TEMP_FILE );
         return (file.getAbsolutePath() + "/" + AUDIO_RECORDER_TEMP_FILE);
     }
 
     private void startRecording(){
-        recorder = new AudioRecord(MediaRecorder.AudioSource.MIC,
-                RECORDER_SAMPLERATE, RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING, bufferSize);
+        recorder = findAudioRecord();
 
         recorder.startRecording();
 
@@ -139,7 +248,8 @@ public class Main2Activity extends Activity {
             recordingThread = null;
         }
         fileName = getFilename();
-        copyWaveFile(getTempFilename(),getFilename());
+        Log.d("FILENAME FINAL", fileName);
+        copyWaveFile(getTempFilename(), fileName);
         deleteTempFile();
     }
 
@@ -155,7 +265,7 @@ public class Main2Activity extends Activity {
         long totalAudioLen = 0;
         long totalDataLen = totalAudioLen + 36;
         long longSampleRate = RECORDER_SAMPLERATE;
-        int channels = 2;
+        int channels = 1;
         long byteRate = RECORDER_BPP * RECORDER_SAMPLERATE * channels/8;
 
         byte[] data = new byte[bufferSize];
@@ -240,22 +350,64 @@ public class Main2Activity extends Activity {
     }
 
     public void btnClick(View v) {
-            switch(v.getId()){
-                case R.id.btnStart:{
+        switch(v.getId()){
+            case R.id.btnStart:{
 
+                    stopBtn.bringToFront();
+                    sliders.setVisibility(View.INVISIBLE);
+                    parentView.invalidate();
                     startRecording();
 
                     break;
                 }
                 case R.id.btnStop:{
+                    startBtn.bringToFront();
+                    sliders.setVisibility(View.VISIBLE);
+                    parentView.invalidate();
                     stopRecording();
                     Intent intent = new Intent("/new_recording");
+                    File f = new File(filePath);
+
                     intent.putExtra("message", fileName);
                     intent.putExtra("Path", filePath );
                     sendBroadcast(intent);
+                    File fe = new File(fileName);
+                    Log.d("FILEPATH", fileName);
+                    Log.d("FILE?", String.valueOf(fe.length()));
+                    Log.d("EXISTS?", String.valueOf((fe.exists())));
 
                     break;
                 }
             }
         }
+
+    private static int[] mSampleRates = new int[] { 8000, 44100, 22050, 8000 };
+    public AudioRecord findAudioRecord() {
+        Log.d("STEREONUMBER", String.valueOf(AudioFormat.CHANNEL_IN_STEREO));
+        for (int rate : mSampleRates) {
+            for (short audioFormat : new short[] { AudioFormat.ENCODING_PCM_8BIT, AudioFormat.ENCODING_PCM_16BIT }) {
+                for (short channelConfig : new short[] { AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_STEREO }) {
+                    try {
+                        Log.d("Attempt", "Attempting rate " + rate + "Hz, bits: " + audioFormat + ", channel: "
+                                + channelConfig);
+                         bufferSize = AudioRecord.getMinBufferSize(rate, channelConfig, audioFormat);
+
+                        if (bufferSize != AudioRecord.ERROR_BAD_VALUE) {
+                            // check if we can instantiate and have a success
+                            AudioRecord recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, rate, channelConfig, audioFormat, bufferSize);
+
+                            if (recorder.getState() == AudioRecord.STATE_INITIALIZED)
+                                RECORDER_SAMPLERATE = rate;
+                                Log.d("RATE", String.valueOf(rate));
+                                return recorder;
+                        }
+                    } catch (Exception e) {
+                        Log.e("Attempt", rate + "Exception, keep trying.",e);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
 }

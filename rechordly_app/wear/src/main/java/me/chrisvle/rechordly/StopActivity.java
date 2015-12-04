@@ -1,13 +1,13 @@
 package me.chrisvle.rechordly;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
-import android.widget.TextView;
+import android.view.View;
 
 public class StopActivity extends Activity {
 
-    private TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,8 +17,16 @@ public class StopActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                mTextView = (TextView) stub.findViewById(R.id.text);
+
             }
         });
+    }
+
+    public void stopRecording(View v) {
+        Intent intent = new Intent(this, ResumeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+        //FIXME add recording service logic
+
     }
 }

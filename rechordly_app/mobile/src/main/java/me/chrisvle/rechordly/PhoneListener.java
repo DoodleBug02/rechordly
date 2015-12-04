@@ -3,10 +3,12 @@ package me.chrisvle.rechordly;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.Channel;
+import com.google.android.gms.wearable.ChannelApi;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Wearable;
 import com.google.android.gms.wearable.WearableListenerService;
@@ -15,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class PhoneListener extends WearableListenerService {
+public class PhoneListener extends WearableListenerService implements GoogleApiClient.ConnectionCallbacks, ChannelApi.ChannelListener {
 
     private static final String new_recording = "/new_recording";
     public File file;
@@ -23,20 +25,11 @@ public class PhoneListener extends WearableListenerService {
 
     @Override
     public void onCreate() {
+        Log.d("OK", "OK");
         super.onCreate();
         mApiClient = new GoogleApiClient.Builder( this )
                 .addApi( Wearable.API )
-                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
-                    @Override
-                    public void onConnected(Bundle connectionHint) {
-
-                    }
-
-                    @Override
-                    public void onConnectionSuspended(int cause) {
-                        /* Connection was interrupted */
-                    }
-                })
+                .addConnectionCallbacks(this)
                 .build();
 
         mApiClient.connect();
@@ -61,7 +54,8 @@ public class PhoneListener extends WearableListenerService {
         Log.d("PhoneListener", "Channel established");
         if (channel.getPath().equals("/new_recording")) {
 
-            file = new File(this.getFilesDir(), "file2.pcm");
+            file = new File(Environment.getExternalStorageDirectory().getPath(), "file4.wav");
+            Log.d("this", String.valueOf(this.getFilesDir()));
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -78,15 +72,26 @@ public class PhoneListener extends WearableListenerService {
     @Override
     public void onInputClosed(Channel channel, int int0, int int1) {
         Log.d("PhoneListener", "File Received!!");
-        channel.close(mApiClient);
-        Log.d("PhoneListener", String.valueOf(file.length()));
         Log.d("PhoneListener", "Channel Closed!");
-        Log.d("PATH", file.getAbsolutePath());
-        Intent play = new Intent(this, PlaybackActivity.class);
-        play.putExtra("Path", file.getAbsolutePath());
-        play.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Log.d("LEN", String.valueOf(file.length()));
+            Log.d("PATH", file.getAbsolutePath());
+            Intent play = new Intent(this, InfoActivity.class);
+            play.putExtra("path", file.getAbsolutePath());
+            play.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        startActivity(play);
+            startActivity(play);
+    }
+
+
+
+    @Override
+    public void onConnected(final Bundle connectionHint) {
+        Wearable.ChannelApi.addListener(mApiClient, this);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i0) {
+        Wearable.ChannelApi.removeListener(mApiClient, this);
     }
 
     @Override

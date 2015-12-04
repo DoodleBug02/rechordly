@@ -2,12 +2,15 @@ package me.chrisvle.rechordly;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
@@ -33,13 +36,17 @@ public class InfoActivity extends AppCompatActivity {
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent crop = new Intent(getBaseContext(), CropActivity.class);
-                startActivity(crop);
+                Intent lyrics = new Intent(getBaseContext(), TranscribingActivity.class);
+                startActivity(lyrics);
+
             }
         });
-
+        Intent intent = getIntent();
+        String path = intent.getStringExtra("path");
         mp = new MediaPlayer();
-        mp = MediaPlayer.create(this, R.raw.completed);
+        Uri uri = Uri.parse(path);
+        mp = MediaPlayer.create(this, uri);
+        Button b = (Button) findViewById(R.id.playback);
 
         t = (ToggleButton) findViewById(R.id.playback);
         t.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -73,9 +80,7 @@ public class InfoActivity extends AppCompatActivity {
         mp.pause();
     }
 
-//    private Uri load(File file) {
-//        Uri uri = Uri.fromFile(file);
-//        return uri;
-//    }
 
 }
+
+

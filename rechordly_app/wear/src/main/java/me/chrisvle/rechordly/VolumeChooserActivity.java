@@ -73,7 +73,7 @@ public class VolumeChooserActivity extends Activity {
                 }
                 if (distanceX < -5.0) {
                     Log.d("Event: ", "onScrollEvent Fired!");
-                    Intent intent = new Intent(getBaseContext(), cropChooserActivity.class);
+                    Intent intent = new Intent(getBaseContext(), CropFbActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     return true;
