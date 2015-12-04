@@ -24,7 +24,7 @@
                 circular:border_color="#17013f"
                 circular:border_thickness="20dp"
                 circular:thumb_color="#1939cc"
-                circular:thumb_size="15dp" />
+                circular:thumb_size="18dp" />
 
         </RelativeLayout>
 
@@ -33,7 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
 
             <TextView
                 android:id="@+id/Volume"

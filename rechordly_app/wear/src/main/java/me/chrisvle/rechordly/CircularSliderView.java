@@ -43,7 +43,7 @@ public class CircularSliderView extends View {
     protected int mThumbSize;
     private int mThumbColor;
     private int mBorderColor;
-    private int mBorderThickness;
+    protected int mBorderThickness;
     protected double mStartAngle;
     protected double mAngle = mStartAngle;
     protected boolean mIsThumbSelected = false;
@@ -74,7 +74,7 @@ public class CircularSliderView extends View {
 
 
     // common initializer method
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    protected void init(Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircularSliderView, defStyleAttr, 0);
 
         // read all available attributes
