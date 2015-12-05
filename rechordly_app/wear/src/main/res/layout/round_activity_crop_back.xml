@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity3"
+    tools:deviceIds="wear_round"
+    android:background="#000000">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:circular="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rel_crop_b_circular">
+
+        <me.chrisvle.rechordly.CropSliderViewBack
+            android:id="@+id/crop_b_slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            circular:angle="1.57"
+            circular:start_angle="0"
+            circular:border_color="#17013f"
+            circular:border_thickness="20dp"
+            circular:thumb_color="#1939cc"
+            circular:thumb_size="20dp"
+            circular:black_outline="25dp"
+            circular:soundwave="@drawable/default_wave"
+            circular:time="300"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/timeB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="38dp"
+            android:paddingBottom="0dp"
+            android:text="00:00"
+            android:textColor="#4b96ec"
+            android:textSize="10pt"
+            >
+        </TextView>
+
+        <ImageButton
+            android:id="@+id/crop_b_done"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitStart"
+            android:layout_gravity="center"
+            android:paddingTop="0dp"
+            android:layout_marginTop="75dp"
+            android:src="@drawable/done_btn_sm"
+            android:background="@android:color/transparent"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+
+

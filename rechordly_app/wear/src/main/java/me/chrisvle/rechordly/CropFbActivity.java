@@ -18,10 +18,14 @@ public class CropFbActivity extends Activity {
     private GestureDetector mDetector;
     private static final String DEBUG_TAG = "Gestures";
 
+    private String time;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_fb);
+
+        time = getIntent().getStringExtra("time");
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
@@ -44,21 +48,6 @@ public class CropFbActivity extends Activity {
 
         // Configure a gesture detector
         mDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
-
-            @Override
-            public void onLongPress(MotionEvent event) {
-//                mDismissOverlay.show();
-                Log.d(DEBUG_TAG, " onLongPress: " + event.toString());
-            }
-
-            @Override
-            public boolean onSingleTapConfirmed(MotionEvent event) {
-                Log.d("Event: ", "onSingleTapEvent Fired!");
-                Intent intent = new Intent(getBaseContext(), CropActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                return true;
-            }
 
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
@@ -91,10 +80,18 @@ public class CropFbActivity extends Activity {
     }
 
     public void front_click(View v) {
+        Intent intent = new Intent(this, CropFrontActivity.class);
+    //    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.putExtra("time", time);
+        startActivity(intent);
         //FIXME
     }
 
     public void back_click(View v) {
         //FIXME
+        Intent intent = new Intent(this, CropBackActivity.class);
+    //    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.putExtra("time", time);
+        startActivity(intent);
     }
 }

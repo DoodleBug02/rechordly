@@ -17,10 +17,14 @@ public class CropActivity extends Activity {
     private GestureDetector mDetector;
     private GestureDetector tapDetector;
 
+    private String time;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop);
+        time = getIntent().getStringExtra("time");
+
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
@@ -81,8 +85,8 @@ public class CropActivity extends Activity {
 
     public void onClick(View v) {
         Intent intent = new Intent(v.getContext(), CropFbActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra("time", time);
         startActivity(intent);
     }
 }
