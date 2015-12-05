@@ -1,11 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.wearable.view.WatchViewStub xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/watch_view_stub"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:rectLayout="@layout/round_activity_playback"
-    app:roundLayout="@layout/round_activity_playback"
+    android:background="#000000"
+    android:id="@+id/play_screen"
     tools:context="me.chrisvle.rechordly.PlaybackActivity"
-    tools:deviceIds="wear"></android.support.wearable.view.WatchViewStub>
+    tools:deviceIds="wear_round">
+
+
+    <ImageButton
+        android:layout_width="111dp"
+        android:layout_height="111dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:src="@drawable/pause_btn"
+        android:id="@+id/pause_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        />
+
+    <ImageButton
+        android:layout_width="111dp"
+        android:layout_height="111dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:src="@drawable/play_btn"
+        android:id="@+id/play_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/swipe_play"
+        android:src="@drawable/right_arrow"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/play_btn"
+        android:layout_marginLeft="10dp"
+        />
+
+
+</RelativeLayout>

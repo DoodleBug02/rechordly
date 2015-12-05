@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,7 +15,7 @@ public class CropBackActivity extends Activity {
     private TextView time;
     private CropSliderViewBack slider;
     private RelativeLayout rel_circular;
-    private ImageButton doneButton;
+    private Button doneButton;
     private String time_s;
 
 
@@ -25,14 +24,8 @@ public class CropBackActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_back);
         time_s = getIntent().getStringExtra("time");
-
-        final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
-        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
-            @Override
-            public void onLayoutInflated(WatchViewStub stub) {
-
                 time = (TextView) findViewById(R.id.timeB);
-                doneButton = (ImageButton) findViewById(R.id.crop_b_done);
+                doneButton = (Button) findViewById(R.id.crop_b_done);
                 slider = (CropSliderViewBack) findViewById(R.id.crop_b_slider);
                 rel_circular = (RelativeLayout) findViewById(R.id.rel_crop_b_circular);
 
@@ -45,15 +38,15 @@ public class CropBackActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         sendCropF(v);
-                        Intent intent = new Intent(v.getContext(), CropActivity.class);
+                        Intent intent = new Intent(v.getContext(), SliderNavActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         intent.putExtra("time", time_s);
+                        intent.putExtra("start", 4);
                         startActivity(intent);
                     }
                 });
-            }
-        });
+
     }
 
     public void sendCropF(View view) {

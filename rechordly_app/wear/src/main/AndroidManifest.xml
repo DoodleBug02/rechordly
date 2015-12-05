@@ -33,15 +33,6 @@
         <activity
             android:name=".VolumeActivity"
             android:label="@string/title_activity_volume" />
-        <activity
-            android:name=".SaveRetryActivity"
-            android:label="@string/title_activity_save_retry" />
-        <activity
-            android:name=".EffectsChooserActivity"
-            android:label="@string/title_activity_effects_chooser" />
-        <activity
-            android:name=".FilterActivity"
-            android:label="@string/title_activity_effects" />
 
         <service
             android:name=".MessageService"
@@ -54,6 +45,15 @@
         <activity
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SliderNavActivity"
+            android:label="@string/title_activity_slider_nav">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -106,8 +106,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EditNavActivity"
-            android:label="@string/title_activity_edit_nav">
+            android:name=".FilterHighLowActivity"
+            android:label="@string/title_activity_filter_high_low">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

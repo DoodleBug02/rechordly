@@ -47,18 +47,28 @@
                 >
             </TextView>
 
-            <ImageButton
-                android:id="@+id/volume_done"
+            <!--<ImageButton-->
+                <!--android:id="@+id/volume_done"-->
+                <!--android:layout_width="75dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:adjustViewBounds="true"-->
+                <!--android:scaleType="fitStart"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:paddingTop="0dp"-->
+                <!--android:layout_marginTop="0dp"-->
+                <!--android:src="@drawable/done_btn_sm"-->
+                <!--android:background="@android:color/transparent"-->
+                <!--/>-->
+            <Button
                 android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:scaleType="fitStart"
+                android:layout_height="28dp"
                 android:layout_gravity="center"
                 android:paddingTop="0dp"
-                android:layout_marginTop="0dp"
-                android:src="@drawable/done_btn_sm"
-                android:background="@android:color/transparent"
-                />
+                android:layout_marginTop="10dp"
+                android:background="@drawable/gradient"
+                android:text="Done"
+                android:id="@+id/volume_done"
+               />
 
         </LinearLayout>
 

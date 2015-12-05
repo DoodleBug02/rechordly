@@ -8,11 +8,11 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 
 public class doneActivity extends Activity {
 
-    private ImageButton mImageButton;
+    private Button mImageButton;
     private GestureDetector mDetector;
     private GestureDetector tapDetector;
     private static final String DEBUG_TAG = "Gestures";
@@ -30,7 +30,7 @@ public class doneActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                mImageButton = (ImageButton) stub.findViewById(R.id.done_btn);
+                mImageButton = (Button) stub.findViewById(R.id.done_btn);
                 mImageButton.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent e) {
@@ -104,12 +104,6 @@ public class doneActivity extends Activity {
         return mDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
     }
 
-    public void onClick(View v) {
-        Intent intent = new Intent(getBaseContext(), SaveRetryActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
-    }
 
 
 }

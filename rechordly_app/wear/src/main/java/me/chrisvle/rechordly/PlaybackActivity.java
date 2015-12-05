@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,8 +12,8 @@ import android.widget.RelativeLayout;
 
 public class PlaybackActivity extends Activity {
     private ImageView mImageButton;
-    private GestureDetector tapDetector;
-    private GestureDetector mDetector;
+//    private GestureDetector tapDetector;
+//    private GestureDetector mDetector;
 
     private ImageView playBtn;
     private ImageView pauseBtn;
@@ -32,74 +30,106 @@ public class PlaybackActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
+
+
                 playBtn = (ImageButton) stub.findViewById(R.id.play_btn);
-                playBtn.setOnTouchListener(new View.OnTouchListener() {
+//                playBtn.setOnTouchListener(new View.OnTouchListener() {
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent e) {
+//                        if (tapDetector.onTouchEvent(e)) {
+//                            // single tap
+//                            return true;
+//                        } else {
+//                            return mDetector.onTouchEvent(e);
+//                        }
+//                    }
+//                });
+                pauseBtn = (ImageView) findViewById(R.id.pause_btn);
+//                pauseBtn.setOnTouchListener(new View.OnTouchListener() {
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent e) {
+//                        if (tapDetector.onTouchEvent(e)) {
+//                            // single tap
+//                            return true;
+//                        } else {
+//                            return mDetector.onTouchEvent(e);
+//                        }
+//                    }
+//                });
+
+                pauseBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public boolean onTouch(View v, MotionEvent e) {
-                        if (tapDetector.onTouchEvent(e)) {
-                            // single tap
-                            return true;
-                        } else {
-                            return mDetector.onTouchEvent(e);
-                        }
+                    public void onClick(View v) {
+                        Log.d("Playback Activity", "Play Request");
+                        Intent intent = new Intent("/pause");
+                        sendBroadcast(intent);
+                        pauseBtn.bringToFront();
+                        RelativeLayout parent = (RelativeLayout) pauseBtn.getParent();
+                        parent.invalidate();
+
+                        //FIXME add play music service logic
                     }
                 });
-                pauseBtn = (ImageView) findViewById(R.id.pause_btn);
-                pauseBtn.setOnTouchListener(new View.OnTouchListener() {
+
+                playBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public boolean onTouch(View v, MotionEvent e) {
-                        if (tapDetector.onTouchEvent(e)) {
-                            // single tap
-                            return true;
-                        } else {
-                            return mDetector.onTouchEvent(e);
-                        }
+                    public void onClick(View v) {
+
+                        Log.d("Playback Activity", "Play Request");
+                        Intent intent = new Intent("/play");
+                        sendBroadcast(intent);
+                        playBtn.bringToFront();
+                        RelativeLayout parent = (RelativeLayout) playBtn.getParent();
+                        parent.invalidate();
+
+                        //FIXME add pause music service logic
+
                     }
                 });
                 parentView = (RelativeLayout) findViewById(R.id.play_screen);
                 swipeRight = (ImageView) findViewById(R.id.swipe_play);
             }
         });
-
-        //Configure single tap detector
-        tapDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onSingleTapConfirmed(MotionEvent event) {
-                return true;
-            }
-        });
-
-
-        // Configure a gesture detector
-        mDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
-
-            @Override
-            public void onLongPress(MotionEvent event) {
-                return;
-            }
-
-            @Override
-            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-                                    float distanceY) {
-       //         if (!swipe) {
-       //             return true;
-       //         }
-                if (distanceX > 5.0) {
-                    Intent intent = new Intent(getBaseContext(), Main2Activity.class);
-                    intent.putExtra("swipe", "right");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivity(intent);
-                }
-                return true;
-            }
-        });
+//
+//        //Configure single tap detector
+//        tapDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+//            @Override
+//            public boolean onSingleTapConfirmed(MotionEvent event) {
+//                return true;
+//            }
+//        });
+//
+//
+//        // Configure a gesture detector
+//        mDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+//
+//            @Override
+//            public void onLongPress(MotionEvent event) {
+//                return;
+//            }
+//
+//            @Override
+//            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+//                                    float distanceY) {
+//       //         if (!swipe) {
+//       //             return true;
+//       //         }
+//                if (distanceX > 5.0) {
+//                    Intent intent = new Intent(getBaseContext(), Main2Activity.class);
+//                    intent.putExtra("swipe", "right");
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                    startActivity(intent);
+//                }
+//                return true;
+//            }
+//        });
     }
 
-    // Capture long presses
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        return mDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
-    }
+//    // Capture long presses
+//    @Override
+//    public boolean onTouchEvent(MotionEvent ev) {
+//        return mDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
+//    }
 
     public void play_click(View v) {
         Log.d("Playback Activity", "Play Request");
@@ -128,11 +158,11 @@ public class PlaybackActivity extends Activity {
 
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        overridePendingTransition(android.R.anim.slide_in_left, 0);
-
-    }
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        overridePendingTransition(android.R.anim.slide_in_left, 0);
+//
+//    }
 
 }
