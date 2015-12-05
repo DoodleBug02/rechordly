@@ -2,14 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.chrisvle.rechordly" >
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar" >
-        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
         <activity
             android:name=".PhoneMain"
             android:label="@string/app_name"
@@ -47,6 +47,12 @@
             android:label="@string/title_activity_crop"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+
+        <service
+            android:name=".PlaybackService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>

@@ -31,6 +31,10 @@ public class PhoneMain extends AppCompatActivity {
                 startActivity(info);
             }
         });
+
+        Intent serviceIntent = new Intent();
+        serviceIntent.setAction("com.testApp.service.PlaybackService");
+        startService(serviceIntent);
     }
 
     private void save(){
