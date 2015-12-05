@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:id="@+id/record_screen"
+tools:context=".RetryFragment"
+tools:deviceIds="wear_round">
+
+
+<ImageView
+    android:layout_width="350dp"
+    android:layout_height="350dp"
+    android:layout_centerHorizontal="true"
+    android:layout_marginLeft="-6dp"
+    android:id="@+id/sliders"
+    android:src="@drawable/left_right_arrows"
+   />
+
+<ImageButton
+    android:layout_width="111dp"
+    android:layout_height="111dp"
+    android:adjustViewBounds="true"
+    android:background="@android:color/transparent"
+    android:scaleType="fitStart"
+    android:src="@drawable/retry_icon"
+    android:id="@+id/retry_record"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:onClick="btnClick" />
+
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/record_text"
+    android:layout_below="@id/retry_record"
+    android:layout_marginTop="15dp"
+    android:layout_centerHorizontal="true"
+    android:text="Record"/>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/retry_time"
+    android:layout_above="@id/retry_record"
+    android:layout_marginBottom="15dp"
+    android:layout_centerHorizontal="true"
+    android:text="00:00"
+    />
+
+
+</RelativeLayout>
+
+

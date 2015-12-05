@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,7 +17,7 @@ public class CropFrontActivity extends Activity {
     private String time_s;
     private CropSliderViewFront slider;
     private RelativeLayout rel_circular;
-    private ImageButton doneButton;
+    private Button doneButton;
 
 
     @Override
@@ -34,7 +34,7 @@ public class CropFrontActivity extends Activity {
             public void onLayoutInflated(WatchViewStub stub) {
 
                 time = (TextView) findViewById(R.id.timeF);
-                doneButton = (ImageButton) findViewById(R.id.crop_f_done);
+                doneButton = (Button) findViewById(R.id.crop_f_done);
                 slider = (CropSliderViewFront) findViewById(R.id.crop_f_slider);
                 rel_circular = (RelativeLayout) findViewById(R.id.rel_crop_f_circular);
 
@@ -46,10 +46,11 @@ public class CropFrontActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         sendCropF(v);
-                        Intent intent = new Intent(v.getContext(), CropActivity.class);
+                        Intent intent = new Intent(v.getContext(), SliderNavActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         intent.putExtra("time", time_s);
+                        intent.putExtra("start", 4);
                         startActivity(intent);
                     }
                 });

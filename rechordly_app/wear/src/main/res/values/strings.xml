@@ -38,6 +38,12 @@
     <string name="Crop">Crop</string>
     <string name="Filter">Filter</string>
     <string name="Echo">Echo</string>
+    <string name="fragment">fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_slider_nav">SliderNavActivity</string>
+    <string name="title_activity_filter_high_low">FilterHighLow</string>
 
 </resources>
 
