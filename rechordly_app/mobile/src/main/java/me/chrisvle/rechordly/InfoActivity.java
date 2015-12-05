@@ -2,7 +2,6 @@ package me.chrisvle.rechordly;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -35,34 +34,26 @@ public class InfoActivity extends AppCompatActivity {
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent lyrics = new Intent(getBaseContext(), TranscribingActivity.class);
+                Intent lyrics = new Intent(getBaseContext(), CropActivity.class);
                 startActivity(lyrics);
 
             }
         });
-        Intent intent = getIntent();
-        String path = intent.getStringExtra("path");
-        mp = new MediaPlayer();
-        Uri uri = Uri.parse(path);
-        mp = MediaPlayer.create(this, uri);
+//        Intent intent = getIntent();
+//        String path = intent.getStringExtra("path");
+//        mp = new MediaPlayer();
+//        Uri uri = Uri.parse(path);
+        mp = MediaPlayer.create(this, R.raw.orchestra);
         Button b = (Button) findViewById(R.id.playback);
 
         t = (ToggleButton) findViewById(R.id.playback);
         t.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    // The toggle is play
-//                    Intent playback = new Intent(getBaseContext(), PlaybackActivity.class);
-//                    startActivity(playback);
-//                    Intent play = new Intent("Playback");
-//                    play.putExtra("Command", "play");
-//                    sendBroadcast(play);
+
                     play();
                 } else {
-                    // The toggle is pause
-//                  Intent pause = new Intent("Playback");
-//                    pause.putExtra("Command", "pause");
-//                    sendBroadcast(pause);
+
                     pause();
                 }
             }

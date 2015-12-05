@@ -39,10 +39,6 @@
         </service>
 
         <activity
-            android:name=".PlaybackActivity"
-            android:label="@string/title_activity_playback"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".CropActivity"
             android:label="@string/title_activity_crop"
             android:theme="@style/AppTheme.NoActionBar" >
