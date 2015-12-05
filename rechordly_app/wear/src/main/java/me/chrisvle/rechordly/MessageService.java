@@ -12,16 +12,11 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.wearable.Channel;
 import com.google.android.gms.wearable.ChannelApi;
-import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
-import com.google.android.gms.wearable.PutDataMapRequest;
-import com.google.android.gms.wearable.PutDataRequest;
 import com.google.android.gms.wearable.Wearable;
 
 import java.io.File;
@@ -89,8 +84,8 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
                     Log.d("NODE FOUND!", node.toString());
                     ChannelApi.OpenChannelResult fileResult = Wearable.ChannelApi.openChannel(mApiClient, node.getId(), "/new_recording").await();
                     Channel channel = fileResult.getChannel();
-                    channel.sendFile(mApiClient, Uri.fromFile(audioFile));
-
+                    channel.sendFile(mApiClient,  Uri.fromFile(audioFile));
+                    Log.d("SS", "File Sent! (Probably)");
                 }
             }
         }).start();
