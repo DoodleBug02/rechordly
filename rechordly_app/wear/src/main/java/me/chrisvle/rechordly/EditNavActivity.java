@@ -1,32 +1,28 @@
 package me.chrisvle.rechordly;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.wearable.view.WatchViewStub;
-import android.view.View;
 
-public class StopActivity extends Activity {
+public class EditNavActivity extends Activity {
 
+    private ViewPager viewPager;
+    private Context t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stop);
+        setContentView(R.layout.activity_edit_nav);
+        t = this;
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-
+                viewPager = (ViewPager) findViewById(R.id.viewpager);
+                viewPager.setAdapter(new CustomPagerAdapter(t));
             }
         });
-    }
-
-    public void stopRecording(View v) {
-        Intent intent = new Intent(this, ResumeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
-        //FIXME add recording service logic
-
     }
 }

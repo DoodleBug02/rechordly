@@ -35,7 +35,7 @@ public class SaveRetryActivity extends Activity {
                 mImageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(v.getContext(), WatchMain.class);
+                        Intent intent = new Intent(v.getContext(), Main2Activity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                        // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         //FIXME need code to erase prior recording

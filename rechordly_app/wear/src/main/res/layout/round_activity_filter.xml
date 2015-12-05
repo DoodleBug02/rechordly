@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    tools:context="me.chrisvle.rechordly.EffectsActivity"
+    tools:context=".FilterActivity"
     tools:deviceIds="wear_round">
 
     <ImageButton

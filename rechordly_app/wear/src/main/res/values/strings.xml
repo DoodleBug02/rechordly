@@ -32,6 +32,12 @@
     <string name="title_activity_resume">ResumeActivity</string>
     <string name="title_activity_main3">Main3Activity</string>
     <string name="title_activity_crop_back">CropBackActivity</string>
+    <string name="title_activity_edit_nav">EditNavActivity</string>
+    <string name="Done">Done</string>
+    <string name="Lyric">Lyric</string>
+    <string name="Crop">Crop</string>
+    <string name="Filter">Filter</string>
+    <string name="Echo">Echo</string>
 
 </resources>
 
