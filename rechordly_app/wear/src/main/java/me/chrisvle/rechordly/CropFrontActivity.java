@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,12 +26,6 @@ public class CropFrontActivity extends Activity {
         time_s = getIntent().getStringExtra("time");
 
 
-        final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
-
-        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
-            @Override
-            public void onLayoutInflated(WatchViewStub stub) {
-
                 time = (TextView) findViewById(R.id.timeF);
                 doneButton = (Button) findViewById(R.id.crop_f_done);
                 slider = (CropSliderViewFront) findViewById(R.id.crop_f_slider);
@@ -42,20 +35,24 @@ public class CropFrontActivity extends Activity {
                 Typeface tf = Typeface.createFromAsset(getAssets(), boldfontPath);
                 time.setTypeface(tf);
 
+                String[] tArray = time_s.split(":");
+                int t = 60*Integer.parseInt(tArray[0])+Integer.parseInt(tArray[1]);
+                slider.setTime(t);
+
                 doneButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         sendCropF(v);
                         Intent intent = new Intent(v.getContext(), SliderNavActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         intent.putExtra("time", time_s);
-                        intent.putExtra("start", 4);
+                        intent.putExtra("start", 2);
+                        intent.putExtra("start2", 2);
                         startActivity(intent);
                     }
                 });
-            }
-        });
+
 
     }
 

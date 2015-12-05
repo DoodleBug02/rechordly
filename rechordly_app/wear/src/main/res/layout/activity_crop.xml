@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    tools:context="me.chrisvle.rechordly.CropActivity"
+    tools:context="me.chrisvle.rechordly.CropFragment"
     tools:deviceIds="wear_round">
 
 
