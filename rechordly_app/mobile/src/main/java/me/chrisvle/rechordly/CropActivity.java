@@ -1,7 +1,6 @@
 package me.chrisvle.rechordly;
 
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
@@ -15,15 +14,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
 
-import com.musicg.wave.Wave;
-import com.musicg.wave.WaveFileManager;
-
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -31,7 +25,7 @@ import javazoom.jl.converter.WaveFile;
 
 public class CropActivity extends AppCompatActivity {
 
-    private static MediaPlayer mp;
+    MediaPlayer mp;
 
     ToggleButton t;
     EditText left;
@@ -84,28 +78,13 @@ public class CropActivity extends AppCompatActivity {
         File music = new File(path, "orch2.wav");
         Log.d("PathInCreate", music.getAbsolutePath());
 
-//        mp = new MediaPlayer();
-//        mp = MediaPlayer.create(this, R.raw.orchestra);
-        mp.create(this, Uri.fromFile(music));
-//        Intent i = getIntent();
-//        String path = i.getStringExtra("Path");
-
-    }
-
-    private static Wave trim(Wave wave, int left, int right) {
-        wave.leftTrim(left);
-        wave.rightTrim(right);
-        return wave;
-    }
-
-    private Wave load(String path) {
-        InputStream audio = getResources().openRawResource(R.raw.orchestra);
-        return new Wave(audio);
-    }
-
-    private static void save(String path, Wave wave) {
-        WaveFileManager wfm = new WaveFileManager(wave);
-        wfm.saveWaveAsFile(path);
+        mp = new MediaPlayer();
+        try {
+            mp.setDataSource(music.getAbsolutePath());
+            mp.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void play() {
@@ -170,28 +149,5 @@ public class CropActivity extends AppCompatActivity {
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
         File music = new File(path, "orch2.wav");
         Log.d("Path", music.getAbsolutePath());
-    }
-
-    private File createFileFromInputStream(InputStream inputStream) {
-
-        try{
-            File f = new File("my_file_name");
-            OutputStream outputStream = new FileOutputStream(f);
-            byte buffer[] = new byte[1024];
-            int length = 0;
-
-            while((length=inputStream.read(buffer)) > 0) {
-                outputStream.write(buffer,0,length);
-            }
-
-            outputStream.close();
-            inputStream.close();
-
-            return f;
-        }catch (IOException e) {
-            //Logging exception
-        }
-
-        return null;
     }
 }
