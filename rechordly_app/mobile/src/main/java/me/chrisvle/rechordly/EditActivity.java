@@ -2,22 +2,35 @@ package me.chrisvle.rechordly;
 
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.musicg.wave.Wave;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
+import javazoom.jl.converter.WaveFile;
 
 public class EditActivity extends AppCompatActivity {
 
     private BroadcastReceiver mReceiver;
     private IntentFilter filter;
+
+    MediaPlayer mp;
+
 
     String filepath;
     Wave myAudio;
@@ -25,6 +38,43 @@ public class EditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_edit);
+
+        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+        File music = new File(path, "orch2.wav");
+
+//        byte[] b = null;
+//        try {
+//            b = getBytesFromFile(music);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        Echo.echoFilter(b, music);
+
+        double[] d = null;
+        d = openWav(music, d);
+        d = PassFilters.fourierPassFilter(d, 1000, 8000, "low");
+
+
+        mp = new MediaPlayer();
+        try {
+            mp.setDataSource(music.getAbsolutePath());
+            mp.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Button button = (Button) findViewById(R.id.crop);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Play", "playing the song");
+                mp.start();
+            }
+        });
+
+
     }
 
     private File createFileFromInputStream(InputStream inputStream) {
@@ -129,6 +179,69 @@ public class EditActivity extends AppCompatActivity {
         short s = (short) ((secondByte << 8) | firstByte);
         // convert to range from -1 to (just below) 1
         return s / 32768.0;
+    }
+
+    static byte doubleToBytes(double d) {
+        // convert two bytes to one short (little endian)
+        short s = (short) ((secondByte << 8) | firstByte);
+        // convert to range from -1 to (just below) 1
+        return s * 32768.0;
+    }
+
+    public void saveFile(InputStream f, double startTime, double endTime) {
+        InputStream wavStream = null; // InputStream to stream the wav to trim
+        File trimmedSample = null;  // File to contain the trimmed down sample
+//        File sampleFile = f; // File pointer to the current wav sample
+
+        // If the sample file exists, try to trim it
+        if (f != null) {
+            Log.d("File", "Orchestra is an actual file!!");
+            trimmedSample = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "orch2.wav");
+            if (trimmedSample.isFile()) {
+                Log.d("Deleting", "Deleting because it already exists");
+                trimmedSample.delete();
+            }
+
+            // Trim the sample down and write it to file
+            try {
+                wavStream = new BufferedInputStream(f);
+                // Javazoom WaveFile class is used to write the wav
+                WaveFile waveFile = new WaveFile();
+                int sample_rate = 8000;
+                short sample_size = 16;
+                short num_channels = 1;
+                waveFile.OpenForWrite(trimmedSample.getAbsolutePath(), sample_rate, sample_size, num_channels);
+                // The number of bytes of wav data to trim off the beginning
+                long startOffset = (long) (startTime * sample_rate) * sample_size / 4;
+                // The number of bytes to copy
+                long length = ((long) (endTime * sample_rate) * sample_size / 4) - startOffset;
+                wavStream.skip(44); // Skip the header
+                wavStream.skip(startOffset);
+                byte[] buffer = new byte[1024];
+                int i = 0;
+                while (i < length) {
+                    if (length - i >= buffer.length) {
+                        wavStream.read(buffer);
+                    } else { // Write the remaining number of bytes
+                        buffer = new byte[(int) length - i];
+                        wavStream.read(buffer);
+                    }
+                    short[] shorts = new short[buffer.length / 2];
+                    ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(shorts);
+                    waveFile.WriteData(shorts, shorts.length);
+                    i += buffer.length;
+                }
+                waveFile.Close(); // Complete writing the wave file
+                wavStream.close(); // Close the input stream
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (wavStream != null) wavStream.close();
+                } catch (IOException e) {
+                }
+            }
+        }
     }
 
 

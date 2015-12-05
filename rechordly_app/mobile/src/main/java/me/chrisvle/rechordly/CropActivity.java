@@ -1,5 +1,6 @@
 package me.chrisvle.rechordly;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
@@ -46,6 +47,15 @@ public class CropActivity extends AppCompatActivity {
 
         ImageView iv = (ImageView)findViewById(R.id.info);
         iv.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent lyrics = new Intent(getBaseContext(), EditActivity.class);
+                startActivity(lyrics);
+
+            }
+        });
 
         left = (EditText) findViewById(R.id.left);
 
@@ -114,13 +124,13 @@ public class CropActivity extends AppCompatActivity {
                 // Javazoom WaveFile class is used to write the wav
                 WaveFile waveFile = new WaveFile();
                 int sample_rate = 8000;
-                short sample_size = 20;
+                short sample_size = 16;
                 short num_channels = 1;
                 waveFile.OpenForWrite(trimmedSample.getAbsolutePath(), sample_rate, sample_size, num_channels);
                 // The number of bytes of wav data to trim off the beginning
-                long startOffset = (long) (startTime * sample_size) * sample_size / 4;
+                long startOffset = (long) (startTime * sample_rate) * sample_size / 4;
                 // The number of bytes to copy
-                long length = ((long) (endTime * sample_size) * sample_size / 4) - startOffset;
+                long length = ((long) (endTime * sample_rate) * sample_size / 4) - startOffset;
                 wavStream.skip(44); // Skip the header
                 wavStream.skip(startOffset);
                 byte[] buffer = new byte[1024];
