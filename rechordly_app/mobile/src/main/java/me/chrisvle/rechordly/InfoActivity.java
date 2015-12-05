@@ -2,11 +2,9 @@ package me.chrisvle.rechordly;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,16 +34,16 @@ public class InfoActivity extends AppCompatActivity {
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent lyrics = new Intent(getBaseContext(), TranscribingActivity.class);
+                Intent lyrics = new Intent(getBaseContext(), EditActivity.class);
                 startActivity(lyrics);
 
             }
         });
-        Intent intent = getIntent();
-        String path = intent.getStringExtra("path");
-        mp = new MediaPlayer();
-        Uri uri = Uri.parse(path);
-        mp = MediaPlayer.create(this, uri);
+//        Intent intent = getIntent();
+//        String path = intent.getStringExtra("path");
+//        mp = new MediaPlayer();
+//        Uri uri = Uri.parse(path);
+        mp = MediaPlayer.create(this, R.raw.orchestra);
         Button b = (Button) findViewById(R.id.playback);
 
         t = (ToggleButton) findViewById(R.id.playback);

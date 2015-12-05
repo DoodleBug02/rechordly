@@ -1,7 +1,9 @@
 package me.chrisvle.rechordly;
 
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,6 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
+
+import com.musicg.wave.Wave;
+import com.musicg.wave.WaveFileManager;
+
+import java.io.InputStream;
 
 public class CropActivity extends AppCompatActivity {
 
@@ -55,41 +62,40 @@ public class CropActivity extends AppCompatActivity {
 //                Intent play = new Intent("Playback");
 //                play.putExtra("Command", "play");
 //                sendBroadcast(play);
-
+                Uri p = Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/myfile.wav");
+                mp = new MediaPlayer();
+                mp = MediaPlayer.create(getBaseContext(), p);
                 play();
             }
         });
 
-        mp = new MediaPlayer();
-        mp = MediaPlayer.create(this, R.raw.completed2);
+        String path = "android.resource://" + getPackageName() + "/raw/orchestra";
+        Wave w = load(path);
+        w = trim(w, 5, 5);
+        save(Environment.getExternalStorageDirectory().getPath()+"/myfile.wav", w);
+
+
 
 //        Intent i = getIntent();
 //        String path = i.getStringExtra("Path");
 
     }
 
-//    private static void trim(Wave wave, int left, int right) {
-//        wave.leftTrim(left);
-//        wave.rightTrim(right);
-//    }
+    private static Wave trim(Wave wave, int left, int right) {
+        wave.leftTrim(left);
+        wave.rightTrim(right);
+        return wave;
+    }
 
-//    private static Wave load(String path) {
-//        File f_path = new File(path);
-//        InputStream input = null;
-//        try {
-//            input = new BufferedInputStream(new FileInputStream(f_path));
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        return new Wave(input);
-//    }
-//
-//    private static void save(String path, Wave wave) {
-//        File f = new File(path);
-//        f.delete();
-//        WaveFileManager waveFileManager = new WaveFileManager(wave);
-//        waveFileManager.saveWaveAsFile(path);
-//    }
+    private Wave load(String path) {
+        InputStream audio = getResources().openRawResource(R.raw.orchestra);
+        return new Wave(audio);
+    }
+
+    private static void save(String path, Wave wave) {
+        WaveFileManager wfm = new WaveFileManager(wave);
+        wfm.saveWaveAsFile(path);
+    }
 
     private void play() {
         mp.start();
