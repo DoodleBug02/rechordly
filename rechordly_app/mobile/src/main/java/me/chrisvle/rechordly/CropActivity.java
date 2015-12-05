@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,9 +20,10 @@ import com.musicg.wave.WaveFileManager;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -71,20 +73,20 @@ public class CropActivity extends AppCompatActivity {
 //                Intent play = new Intent("Playback");
 //                play.putExtra("Command", "play");
 //                sendBroadcast(play);
-                Uri p = Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/myfile.wav");
-                mp = new MediaPlayer();
-                mp = MediaPlayer.create(getBaseContext(), p);
+                Log.d("Play", "playing the song");
                 play();
             }
         });
 
-        String path = "android.resource://" + getPackageName() + "/raw/orchestra";
-        Wave w = load(path);
-        w = trim(w, 5, 5);
-        save(Environment.getExternalStorageDirectory().getPath()+"/myfile.wav", w);
+//        File f = createFileFromInputStream(getResources().openRawResource(R.raw.orchestra));
+        TrimToSelection(getResources().openRawResource(R.raw.orchestra), 1, 50);
+        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+        File music = new File(path, "orch2.wav");
+        Log.d("PathInCreate", music.getAbsolutePath());
 
-
-
+//        mp = new MediaPlayer();
+//        mp = MediaPlayer.create(this, R.raw.orchestra);
+        mp.create(this, Uri.fromFile(music));
 //        Intent i = getIntent();
 //        String path = i.getStringExtra("Path");
 
@@ -114,36 +116,39 @@ public class CropActivity extends AppCompatActivity {
         mp.pause();
     }
 
-    public void TrimToSelection(double startTime, double endTime){
+    public void TrimToSelection(InputStream f, double startTime, double endTime) {
         InputStream wavStream = null; // InputStream to stream the wav to trim
         File trimmedSample = null;  // File to contain the trimmed down sample
-        File sampleFile = new File(samplePath); // File pointer to the current wav sample
+//        File sampleFile = f; // File pointer to the current wav sample
 
         // If the sample file exists, try to trim it
-        if (sampleFile.isFile()){
-            trimmedSample = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "trimmedSample.wav");
-            if (trimmedSample.isFile()) trimmedSample.delete();
+        if (f != null) {
+            Log.d("File", "Orchestra is an actual file!!");
+            trimmedSample = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "orch2.wav");
+            if (trimmedSample.isFile()) {
+                Log.d("Deleting", "Deleting because it already exists");
+                trimmedSample.delete();
+            }
 
             // Trim the sample down and write it to file
             try {
-                wavStream = new BufferedInputStream(new FileInputStream(sampleFile));
+                wavStream = new BufferedInputStream(f);
                 // Javazoom WaveFile class is used to write the wav
                 WaveFile waveFile = new WaveFile();
-                waveFile.OpenForWrite(trimmedSample.getAbsolutePath(), (int)audioFormat.getSampleRate(), (short)audioFormat.getSampleSizeInBits(), (short)audioFormat.getChannels());
+                waveFile.OpenForWrite(trimmedSample.getAbsolutePath(), 8000, (short) 16, (short) 1);
                 // The number of bytes of wav data to trim off the beginning
-                long startOffset = (long)(startTime * audioFormat.getSampleRate()) * audioFormat.getSampleSizeInBits() / 4;
+                long startOffset = (long) (startTime * 8000) * 16 / 4;
                 // The number of bytes to copy
-                long length = ((long)(endTime * audioFormat.getSampleRate()) * audioFormat.getSampleSizeInBits() / 4) - startOffset;
+                long length = ((long) (endTime * 8000) * 16 / 4) - startOffset;
                 wavStream.skip(44); // Skip the header
                 wavStream.skip(startOffset);
                 byte[] buffer = new byte[1024];
                 int i = 0;
-                while (i < length){
+                while (i < length) {
                     if (length - i >= buffer.length) {
                         wavStream.read(buffer);
-                    }
-                    else { // Write the remaining number of bytes
-                        buffer = new byte[(int)length - i];
+                    } else { // Write the remaining number of bytes
+                        buffer = new byte[(int) length - i];
                         wavStream.read(buffer);
                     }
                     short[] shorts = new short[buffer.length / 2];
@@ -153,10 +158,40 @@ public class CropActivity extends AppCompatActivity {
                 }
                 waveFile.Close(); // Complete writing the wave file
                 wavStream.close(); // Close the input stream
-            } catch (IOException e) {e.printStackTrace();}
-            finally {
-                try {if (wavStream != null) wavStream.close();} catch (IOException e){}
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (wavStream != null) wavStream.close();
+                } catch (IOException e) {
+                }
             }
         }
+        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+        File music = new File(path, "orch2.wav");
+        Log.d("Path", music.getAbsolutePath());
+    }
 
+    private File createFileFromInputStream(InputStream inputStream) {
+
+        try{
+            File f = new File("my_file_name");
+            OutputStream outputStream = new FileOutputStream(f);
+            byte buffer[] = new byte[1024];
+            int length = 0;
+
+            while((length=inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer,0,length);
+            }
+
+            outputStream.close();
+            inputStream.close();
+
+            return f;
+        }catch (IOException e) {
+            //Logging exception
+        }
+
+        return null;
+    }
 }

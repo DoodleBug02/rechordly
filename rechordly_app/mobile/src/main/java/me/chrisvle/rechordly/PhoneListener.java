@@ -17,8 +17,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import javazoom.jl.converter.WaveFile;
-
 public class PhoneListener extends WearableListenerService implements GoogleApiClient.ConnectionCallbacks, ChannelApi.ChannelListener {
 
     private static final String new_recording = "/new_recording";
@@ -71,7 +69,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
         else if (channel.getPath().equals("/edit_recording")) {
 
         }
-        else if (channel.getPath().equals()) {
+        else if (channel.getPath().equals("/playback")) {
 
         }
 

@@ -29,11 +29,11 @@ public class EditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        InputStream audio = getResources().openRawResource(R.raw.orchestra);
-        File f = createFileFromInputStream(audio);
-        double[] left = null;
-        double[] d = openWav(f, left);
-        double[] filtered = PassFilters.fourierPassFilter(d, 4000, 8000, "low");
+//        InputStream audio = getResources().openRawResource(R.raw.orchestra);
+//        File f = createFileFromInputStream(audio);
+//        double[] left = null;
+//        double[] d = openWav(f, left);
+//        double[] filtered = PassFilters.fourierPassFilter(d, 4000, 8000, "low");
 
 
 //        setVolumeControlStream(AudioManager.STREAM_MUSIC);

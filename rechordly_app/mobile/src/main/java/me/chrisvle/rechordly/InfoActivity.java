@@ -34,7 +34,7 @@ public class InfoActivity extends AppCompatActivity {
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent lyrics = new Intent(getBaseContext(), EditActivity.class);
+                Intent lyrics = new Intent(getBaseContext(), CropActivity.class);
                 startActivity(lyrics);
 
             }
