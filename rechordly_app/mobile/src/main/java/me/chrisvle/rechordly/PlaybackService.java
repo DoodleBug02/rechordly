@@ -20,7 +20,7 @@ public class PlaybackService extends Service {
     private BroadcastReceiver playbackReceiver;
     MediaPlayer player;
     final String PLAY = "/play";
-    final String PAUSE = "/PAUSE";
+    final String PAUSE = "/pause";
     final String NEW_PLAYBACK_FILE = "/playback_file";
     public PlaybackService() {
     }
@@ -64,10 +64,8 @@ public class PlaybackService extends Service {
                     }
                 } else if (intent.getAction().equals(PAUSE)) {
                     Log.d("PlaybackService", "Pause Requested");
-                    if(player.isPlaying()) {
-                        player.stop();
-                        Log.d("PlaybackService", "Playback Paused");
-                    }
+                    player.pause();
+                    Log.d("PlaybackService", "Playback Paused");
 
                 }
 

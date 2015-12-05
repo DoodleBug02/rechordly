@@ -5,4 +5,7 @@
     <string name="title_activity_edit">EditActivity</string>
     <string name="title_activity_playback">PlaybackActivity</string>
     <string name="title_activity_crop">CropActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Not Yet Implemented!</string>
 </resources>

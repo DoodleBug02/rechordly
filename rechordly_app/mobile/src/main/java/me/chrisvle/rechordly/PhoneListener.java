@@ -44,18 +44,14 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             Log.d("PhoneListener", "Play Request");
 
             Intent intent = new Intent("/play");
-            if (file.exists()) {
-                intent.putExtra("path", file.getAbsolutePath());
+                intent.putExtra("path", "/storage/emulated/0/currentFile.wav");
                 sendBroadcast(intent);
-            }
 
         } else if (messageEvent.getPath().equalsIgnoreCase(PAUSE)){
             Log.d("PhoneListener", "Pause Request");
             Intent intent = new Intent("/pause");
-            if (file.exists()) {
-                intent.putExtra("path", file.getAbsolutePath());
+                intent.putExtra("path", "/storage/emulated/0/currentFile.wav");
                 sendBroadcast(intent);
-            }
 
         }
     }
