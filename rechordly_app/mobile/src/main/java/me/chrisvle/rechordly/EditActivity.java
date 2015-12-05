@@ -181,12 +181,12 @@ public class EditActivity extends AppCompatActivity {
         return s / 32768.0;
     }
 
-    static byte doubleToBytes(double d) {
+    //static byte doubleToBytes(double d) {
         // convert two bytes to one short (little endian)
-        short s = (short) ((secondByte << 8) | firstByte);
+      //  short s = (short) ((secondByte << 8) | firstByte);
         // convert to range from -1 to (just below) 1
-        return s * 32768.0;
-    }
+        //return s * 32768.0;
+    //}
 
     public void saveFile(InputStream f, double startTime, double endTime) {
         InputStream wavStream = null; // InputStream to stream the wav to trim
