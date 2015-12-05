@@ -72,7 +72,6 @@ public class CropActivity extends AppCompatActivity {
             }
         });
 
-//        File f = createFileFromInputStream(getResources().openRawResource(R.raw.orchestra));
         TrimToSelection(getResources().openRawResource(R.raw.orchestra), 1, 50);
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
         File music = new File(path, "orch2.wav");
@@ -114,11 +113,14 @@ public class CropActivity extends AppCompatActivity {
                 wavStream = new BufferedInputStream(f);
                 // Javazoom WaveFile class is used to write the wav
                 WaveFile waveFile = new WaveFile();
-                waveFile.OpenForWrite(trimmedSample.getAbsolutePath(), 8000, (short) 16, (short) 1);
+                int sample_rate = 8000;
+                short sample_size = 20;
+                short num_channels = 1;
+                waveFile.OpenForWrite(trimmedSample.getAbsolutePath(), sample_rate, sample_size, num_channels);
                 // The number of bytes of wav data to trim off the beginning
-                long startOffset = (long) (startTime * 8000) * 16 / 4;
+                long startOffset = (long) (startTime * sample_size) * sample_size / 4;
                 // The number of bytes to copy
-                long length = ((long) (endTime * 8000) * 16 / 4) - startOffset;
+                long length = ((long) (endTime * sample_size) * sample_size / 4) - startOffset;
                 wavStream.skip(44); // Skip the header
                 wavStream.skip(startOffset);
                 byte[] buffer = new byte[1024];
@@ -146,8 +148,5 @@ public class CropActivity extends AppCompatActivity {
                 }
             }
         }
-        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
-        File music = new File(path, "orch2.wav");
-        Log.d("Path", music.getAbsolutePath());
     }
 }
