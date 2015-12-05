@@ -8,12 +8,14 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -46,7 +48,7 @@ public class Main2Activity extends Activity {
     private RelativeLayout parentView;
     private ImageView sliders;
     private TextView text;
-    private TextView time;
+    private Chronometer time;
 
     private GestureDetector mDetector;
     private GestureDetector tapDetector;
@@ -54,11 +56,13 @@ public class Main2Activity extends Activity {
     private Context t;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         t=this;
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
@@ -69,7 +73,7 @@ public class Main2Activity extends Activity {
                 parentView = (RelativeLayout) findViewById(R.id.record_screen);
                 sliders = (ImageView) findViewById(R.id.sliders);
                 text = (TextView) findViewById(R.id.record_text);
-                time = (TextView) findViewById(R.id.record_time);
+                time = (Chronometer) findViewById(R.id.record_time);
 
 
                 startBtn.setOnTouchListener(new View.OnTouchListener() {
@@ -118,11 +122,13 @@ public class Main2Activity extends Activity {
                 }
                 if (distanceX > 5.0) {
                     Intent intent = new Intent(getBaseContext(), doneActivity.class);
+                    intent.putExtra("time", time.getText());
                     startActivity(intent);
                 }
                 if (distanceX < -5.0) {
                     Intent intent = new Intent(t, PlaybackActivity.class);
                     startActivity(intent);
+               //     intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     overridePendingTransition(android.R.anim.slide_in_left, 0);
                     return true;
                 }
@@ -355,6 +361,9 @@ public class Main2Activity extends Activity {
 
                     stopBtn.bringToFront();
                     sliders.setVisibility(View.INVISIBLE);
+                    text.setText("Stop");
+                    time.setBase(SystemClock.elapsedRealtime());
+                    time.start();
                     parentView.invalidate();
                     startRecording();
 
@@ -363,6 +372,8 @@ public class Main2Activity extends Activity {
                 case R.id.btnStop:{
                     startBtn.bringToFront();
                     sliders.setVisibility(View.VISIBLE);
+                    text.setText("Retry");
+                    time.stop();
                     parentView.invalidate();
                     stopRecording();
                     Intent intent = new Intent("/new_recording");

@@ -21,7 +21,7 @@ public class EffectsChooserActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_effects_chooser);
+        setContentView(R.layout.activity_filter_chooser);
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
@@ -54,7 +54,7 @@ public class EffectsChooserActivity extends Activity {
             @Override
             public boolean onSingleTapConfirmed(MotionEvent event) {
                 Log.d("Event: ", "onSingleTapEvent Fired!");
-                Intent intent = new Intent(getBaseContext(), EffectsActivity.class);
+                Intent intent = new Intent(getBaseContext(), FilterActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;

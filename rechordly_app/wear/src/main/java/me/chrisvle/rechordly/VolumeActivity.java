@@ -16,10 +16,16 @@ public class VolumeActivity extends Activity {
     private GestureDetector mDetector;
     private GestureDetector tapDetector;
 
+    private String time;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volume);
+
+        Intent i = getIntent();
+        time = i.getStringExtra("time");
+
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
@@ -55,7 +61,8 @@ public class VolumeActivity extends Activity {
                                     float distanceY) {
                 if (distanceX > 5.0) {
                     Log.d("Event: ", "onScrollEvent Fired!");
-                    Intent intent = new Intent(getBaseContext(), EffectsActivity.class);
+                    Intent intent = new Intent(getBaseContext(), FilterActivity.class);
+                    intent.putExtra("time", time);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     return true;
@@ -63,6 +70,7 @@ public class VolumeActivity extends Activity {
                 if (distanceX < -5.0) {
                     Log.d("Event: ", "onScrollEvent Fired!");
                     Intent intent = new Intent(getBaseContext(), CropActivity.class);
+                    intent.putExtra("time", time);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     overridePendingTransition(android.R.anim.slide_in_left, 0);
