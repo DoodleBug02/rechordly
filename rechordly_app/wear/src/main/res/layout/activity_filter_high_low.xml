@@ -12,7 +12,6 @@
         android:layout_height="55dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="40dp"
-        android:onClick="front_click"
         android:id="@+id/high_pass"
         android:background="@drawable/gradient"
         android:layout_centerVertical="true"

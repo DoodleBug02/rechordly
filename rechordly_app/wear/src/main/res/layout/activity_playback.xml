@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#000000"
     android:id="@+id/play_screen"
-    tools:context="me.chrisvle.rechordly.PlaybackActivity"
+    tools:context="me.chrisvle.rechordly.PlaybackFragment"
     tools:deviceIds="wear_round">
 
 
