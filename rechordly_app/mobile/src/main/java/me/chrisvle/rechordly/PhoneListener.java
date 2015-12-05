@@ -19,13 +19,14 @@ import java.nio.charset.StandardCharsets;
 
 public class PhoneListener extends WearableListenerService implements GoogleApiClient.ConnectionCallbacks, ChannelApi.ChannelListener {
 
-    private static final String new_recording = "/new_recording";
+    private static final String PLAY = "/play";
+    private static final String PAUSE = "/pause";
     public File file;
     public GoogleApiClient mApiClient;
 
     @Override
     public void onCreate() {
-        Log.d("OK", "OK");
+        Log.d("PhoneListener", "OK");
         super.onCreate();
         mApiClient = new GoogleApiClient.Builder( this )
                 .addApi( Wearable.API )
@@ -39,13 +40,23 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
-        if (messageEvent.getPath().equalsIgnoreCase(new_recording)) {
-            String value = new String(messageEvent.getData(), StandardCharsets.UTF_8);
-            Log.d("PhoneListener", value);
+        if (messageEvent.getPath().equalsIgnoreCase(PLAY)) {
+            Log.d("PhoneListener", "Play Request");
 
-        } else {
-            Log.d("PhoneListener", "Case not matched");
-            super.onMessageReceived(messageEvent);
+            Intent intent = new Intent("/play");
+            if (file.exists()) {
+                intent.putExtra("path", file.getAbsolutePath());
+                sendBroadcast(intent);
+            }
+
+        } else if (messageEvent.getPath().equalsIgnoreCase(PAUSE)){
+            Log.d("PhoneListener", "Pause Request");
+            Intent intent = new Intent("/pause");
+            if (file.exists()) {
+                intent.putExtra("path", file.getAbsolutePath());
+                sendBroadcast(intent);
+            }
+
         }
     }
 
@@ -71,10 +82,6 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
     @Override
     public void onInputClosed(Channel channel, int int0, int int1) {
         Log.d("PhoneListener", "File Received!!");
-        Log.d("PATH", file.getAbsolutePath());
-        Intent intent = new Intent("/playback_file");
-        intent.putExtra("path", file.getAbsolutePath() );
-        sendBroadcast(intent);
 
     }
 
