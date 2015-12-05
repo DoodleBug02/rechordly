@@ -54,7 +54,8 @@ public class VolumeChooserActivity extends Activity {
         //FIXME @Jeremy code here
 
         Intent intent = new Intent(getBaseContext(), SliderNavActivity.class);
-        intent.putExtra("start", 5);
+        intent.putExtra("start", 2);
+        intent.putExtra("start2", 3);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);

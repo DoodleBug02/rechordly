@@ -19,20 +19,11 @@
         <!-- android:theme="@android:style/Theme.DeviceDefault"> -->
 
         <activity
-            android:name=".doneActivity"
-            android:label="@string/title_activity_done" />
-        <activity
             android:name=".CropFbActivity"
             android:label="@string/title_activity_crop_chooser" />
         <activity
             android:name=".VolumeChooserActivity"
             android:label="@string/title_activity_volume_chooser" />
-        <activity
-            android:name=".CropActivity"
-            android:label="@string/title_activity_crop" />
-        <activity
-            android:name=".VolumeActivity"
-            android:label="@string/title_activity_volume" />
 
         <service
             android:name=".MessageService"

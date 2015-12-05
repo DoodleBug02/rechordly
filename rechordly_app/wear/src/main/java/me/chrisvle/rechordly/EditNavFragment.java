@@ -1,12 +1,14 @@
 package me.chrisvle.rechordly;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 
 /**
@@ -17,37 +19,121 @@ import android.view.ViewGroup;
  */
 public class EditNavFragment extends Fragment {
 
+    static final int NUM_ITEMS = 6;
+
+    private ViewPagerAdapter mAdapter;
+    private ViewPager mPager;
+    private ImageView dots;
+    private int start;
+
+
     private OnFragmentInteractionListener mListener;
 
     public EditNavFragment() {
         // Required empty public constructor
     }
 
+    public EditNavFragment(int s){
+        start = s;
+    }
+
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_nav, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_edit_nav, container, false);
+        mAdapter = new ViewPagerAdapter(getChildFragmentManager());
+        mPager = (ViewPager) view.findViewById(R.id.pager2);
+        mPager.setAdapter(mAdapter);
+        mPager.setCurrentItem(start);
+
+        dots = (ImageView) view.findViewById(R.id.dots);
+
+        return view;
+        }
+
+
+
+    private class  ViewPagerAdapter extends FragmentPagerAdapter {
+        public ViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case (0):
+                    return new DoneFragment();
+                case (1):
+                    return new LyricFragment();
+                case (2):
+                    return new CropFragment();
+                case (3):
+                    return new VolumeFragment();
+                case (4):
+                    return new FilterFragment();
+                case (5):
+                    return new EchoFragment();
+            }
+            return new DoneFragment();
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_ITEMS;
+        }
+
+//        @Override
+//        public void startUpdate(ViewGroup container){
+//            super.finishUpdate(container);
+//            int i = mPager.getCurrentItem();
+//            switch(i) {
+//                case(0):
+//                    dots.setVisibility(View.INVISIBLE);
+//                    return;
+//                case(1):
+//                    dots.setVisibility(View.INVISIBLE);
+//                    return;
+//                case(2):
+//                    dots.setImageDrawable(getDrawable(R.drawable.dot1));
+//                    dots.setVisibility(View.VISIBLE);
+//                    return;
+//                case(3):
+//                    dots.setImageDrawable(getDrawable(R.drawable.dot2));
+//                    dots.setVisibility(View.VISIBLE);
+//                    return;
+//                case(4):
+//                    dots.setImageDrawable(getDrawable(R.drawable.dot3));
+//                    dots.setVisibility(View.VISIBLE);
+//                    return;
+//                case(5):
+//                    dots.setImageDrawable(getDrawable(R.drawable.dot4));
+//                    dots.setVisibility(View.VISIBLE);
+//                    return;
+//                case(6):
+//                    dots.setVisibility(View.VISIBLE);
+//                    return;
+//                case(7):
+//                    dots.setVisibility(View.VISIBLE);
+//                    return;
+//            }
+//
+//        }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+
+
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
+//    }
 
     @Override
     public void onDetach() {
@@ -67,6 +153,10 @@ public class EditNavFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        String getTime();
+    }
+
+    public String getTime() {
+        return mListener.getTime();
     }
 }
