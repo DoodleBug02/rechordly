@@ -50,18 +50,10 @@ public class InfoActivity extends AppCompatActivity {
         t.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    // The toggle is play
-//                    Intent playback = new Intent(getBaseContext(), PlaybackActivity.class);
-//                    startActivity(playback);
-//                    Intent play = new Intent("Playback");
-//                    play.putExtra("Command", "play");
-//                    sendBroadcast(play);
+
                     play();
                 } else {
-                    // The toggle is pause
-//                  Intent pause = new Intent("Playback");
-//                    pause.putExtra("Command", "pause");
-//                    sendBroadcast(pause);
+
                     pause();
                 }
             }

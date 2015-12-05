@@ -114,6 +114,7 @@ public class CropActivity extends AppCompatActivity {
                 wavStream = new BufferedInputStream(f);
                 // Javazoom WaveFile class is used to write the wav
                 WaveFile waveFile = new WaveFile();
+                // Path, sample rate, sample size, num of channels
                 waveFile.OpenForWrite(trimmedSample.getAbsolutePath(), 8000, (short) 16, (short) 1);
                 // The number of bytes of wav data to trim off the beginning
                 long startOffset = (long) (startTime * 8000) * 16 / 4;
