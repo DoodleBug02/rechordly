@@ -45,6 +45,7 @@ public class Main2Activity extends Activity {
 
     private ImageButton startBtn;
     private ImageButton stopBtn;
+    private ImageButton retryBtn;
     private RelativeLayout parentView;
     private ImageView sliders;
     private TextView text;
@@ -70,6 +71,7 @@ public class Main2Activity extends Activity {
             public void onLayoutInflated(WatchViewStub stub) {
                 startBtn = (ImageButton) findViewById(R.id.btnStart);
                 stopBtn = (ImageButton) findViewById(R.id.btnStop);
+                retryBtn = (ImageButton) findViewById(R.id.retry_record);
                 parentView = (RelativeLayout) findViewById(R.id.record_screen);
                 sliders = (ImageView) findViewById(R.id.sliders);
                 text = (TextView) findViewById(R.id.record_text);
@@ -88,6 +90,17 @@ public class Main2Activity extends Activity {
                 });
 
                 stopBtn.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent e) {
+                        if (tapDetector.onTouchEvent(e)) {
+                            return true;
+                        } else {
+                            return mDetector.onTouchEvent(e);
+                        }
+                    }
+                });
+
+                retryBtn.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent e) {
                         if (tapDetector.onTouchEvent(e)) {
@@ -127,9 +140,8 @@ public class Main2Activity extends Activity {
                 }
                 if (distanceX < -5.0) {
                     Intent intent = new Intent(t, PlaybackActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
-               //     intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    overridePendingTransition(android.R.anim.slide_in_left, 0);
                     return true;
                 }
                 return true;
@@ -358,37 +370,45 @@ public class Main2Activity extends Activity {
     public void btnClick(View v) {
         switch(v.getId()){
             case R.id.btnStart:{
-
-                    stopBtn.bringToFront();
-                    sliders.setVisibility(View.INVISIBLE);
-                    text.setText("Stop");
-                    time.setBase(SystemClock.elapsedRealtime());
-                    time.start();
-                    parentView.invalidate();
-                    startRecording();
-
-                    break;
+                stopBtn.bringToFront();
+                sliders.setVisibility(View.INVISIBLE);
+                text.setText("Stop");
+                time.setBase(SystemClock.elapsedRealtime());
+                time.start();
+                parentView.invalidate();
+                startRecording();
+                break;
                 }
-                case R.id.btnStop:{
-                    startBtn.bringToFront();
-                    sliders.setVisibility(View.VISIBLE);
-                    text.setText("Retry");
-                    time.stop();
-                    parentView.invalidate();
-                    stopRecording();
-                    Intent intent = new Intent("/new_recording");
-                    File f = new File(filePath);
+            case R.id.btnStop:{
+                retryBtn.bringToFront();
+                sliders.setVisibility(View.VISIBLE);
+                text.setText("Retry");
+                time.stop();
+                parentView.invalidate();
+                stopRecording();
+                Intent intent = new Intent("/new_recording");
+                File f = new File(filePath);
 
-                    intent.putExtra("message", fileName);
-                    intent.putExtra("Path", filePath );
-                    sendBroadcast(intent);
-                    File fe = new File(fileName);
-                    Log.d("FILEPATH", fileName);
-                    Log.d("FILE?", String.valueOf(fe.length()));
-                    Log.d("EXISTS?", String.valueOf((fe.exists())));
-
-                    break;
+                intent.putExtra("message", fileName);
+                intent.putExtra("Path", filePath );
+                sendBroadcast(intent);
+                File fe = new File(fileName);
+                Log.d("FILEPATH", fileName);
+                Log.d("FILE?", String.valueOf(fe.length()));
+                Log.d("EXISTS?", String.valueOf((fe.exists())));
+                break;
                 }
+            case R.id.retry_record:{
+                sliders.setVisibility(View.INVISIBLE);
+                text.setText("Record");
+                time.setBase(SystemClock.elapsedRealtime());
+                startBtn.bringToFront();
+                parentView.invalidate();
+
+                //FIXME code for redoing the recording goes here
+                break;
+
+            }
             }
         }
 
