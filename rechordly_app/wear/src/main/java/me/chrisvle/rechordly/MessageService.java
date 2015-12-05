@@ -63,7 +63,7 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
                     Log.d("MessageService", "Play Requested");
                     sendMessage("/play", "");
                 } else if (intent.getAction().equals("/pause")) {
-                    Log.d("MessageService", "Play Requested");
+                    Log.d("MessageService", "Pause Requested");
                     sendMessage("/pause", "");
 
                 }
