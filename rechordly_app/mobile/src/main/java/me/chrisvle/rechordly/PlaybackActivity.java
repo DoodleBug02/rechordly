@@ -1,20 +1,21 @@
 package me.chrisvle.rechordly;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
-import java.io.File;
+import android.util.Log;
 
 public class PlaybackActivity extends AppCompatActivity {
 
     private static MediaPlayer mp;
-//    private BroadcastReceiver mReceiver;
-//    private IntentFilter filter;
+    private BroadcastReceiver mReceiver;
+    private IntentFilter filter;
 
-    String filepath;
+//    String filepath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,24 +23,32 @@ public class PlaybackActivity extends AppCompatActivity {
 
 
 
-//        mReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                Bundle extras = intent.getExtras();
-//                filepath = extras.getString("File");
-//            }
-//        };
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String command = intent.getStringExtra("Command");
+                if (command.equals("play'")) {
+                    play();
+                }
+                else {
+                    pause();
+                }
+            }
+        };
 //
-//        filter = new IntentFilter();
-//        filter.addAction("Playback");
-//        registerReceiver(mReceiver, filter);
+        filter = new IntentFilter();
+        filter.addAction("Playback");
+        registerReceiver(mReceiver, filter);
+
+//        Intent play = getIntent();
+//        filepath = play.getStringExtra("Playback");
+//        File f = new File(filepath);
 
         Intent play = getIntent();
-        filepath = play.getStringExtra("Path");
-        File f = new File(filepath);
 
         mp = new MediaPlayer();
-        mp = MediaPlayer.create(this, Uri.fromFile(f));
+        mp = MediaPlayer.create(this, R.raw.completed);
+        //mp = MediaPlayer.create(this, Uri.fromFile(f));
     }
 
     private void play() {
@@ -53,7 +62,7 @@ public class PlaybackActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-//        unregisterReceiver(mReceiver);
+        unregisterReceiver(mReceiver);
     }
 
 }

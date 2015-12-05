@@ -23,6 +23,7 @@ public class PhoneListener extends WearableListenerService {
 
     @Override
     public void onCreate() {
+        Log.d("OK", "OK");
         super.onCreate();
         mApiClient = new GoogleApiClient.Builder( this )
                 .addApi( Wearable.API )
@@ -61,7 +62,7 @@ public class PhoneListener extends WearableListenerService {
         Log.d("PhoneListener", "Channel established");
         if (channel.getPath().equals("/new_recording")) {
 
-            file = new File(this.getFilesDir(), "file2.pcm");
+            file = new File(this.getFilesDir(), "file2.wav");
             try {
                 file.createNewFile();
                 Log.d("PhoneListener", "Trying to receive file");
@@ -82,11 +83,12 @@ public class PhoneListener extends WearableListenerService {
     @Override
     public void onInputClosed(Channel channel, int int0, int int1) {
         Log.d("PhoneListener", "File Received!!");
-        channel.close(mApiClient);
-        Log.d("PhoneListener", String.valueOf(file.length()));
         Log.d("PhoneListener", "Channel Closed!");
-        Intent play = new Intent(this, PlaybackActivity.class);
-        play.putExtra("Path", file.getAbsolutePath());
+        Log.d("PATH", file.getAbsolutePath());
+        Intent play = new Intent(this, InfoActivity.class);
+        play.putExtra("path", file.getAbsolutePath());
+        play.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
         startActivity(play);
     }
 
@@ -95,5 +97,6 @@ public class PhoneListener extends WearableListenerService {
         super.onDestroy();
         mApiClient.disconnect();
     }
+
 
 }

@@ -41,16 +41,18 @@ public class WatchMain extends Activity {
 
     public void recordLyrics(View v) {
         Log.d("Event: ", "recording lyrics");
-        Intent intent = new Intent(getBaseContext(), RecordActivity.class);
+        Intent intent = new Intent(getBaseContext(), Main2Activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
     public void recordMusic(View v) {
         Log.d("Event: ", "recording music");
-        Intent intent = new Intent(getBaseContext(), RecordActivity.class);
+        Intent intent = new Intent(getBaseContext(), Main2Activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        overridePendingTransition(0,0);
     }
 
 }

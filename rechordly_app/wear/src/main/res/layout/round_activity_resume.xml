@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context="me.chrisvle.rechordly.ResumeActivity"
+    tools:deviceIds="wear_round">
+
+    <ImageView
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="-6dp"
+        android:src="@drawable/left_right_arrows"/>
+
+    <ImageButton
+        android:layout_width="111dp"
+        android:layout_height="111dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:src="@drawable/record_btn"
+        android:id="@+id/resume_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:onClick="resume" />
+
+
+</RelativeLayout>

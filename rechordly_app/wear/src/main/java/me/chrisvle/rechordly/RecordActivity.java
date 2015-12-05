@@ -9,22 +9,17 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.wearable.ChannelApi;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 public class RecordActivity extends Activity {
 
-    private TextView mTextView;
 
     private static final String TAG = "MainActivity";
     private static final int PERMISSIONS_REQUEST_CODE = 100;
@@ -50,7 +45,7 @@ public class RecordActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                mTextView = (TextView) stub.findViewById(R.id.text);
+
             }
         });
     }
@@ -60,6 +55,9 @@ public class RecordActivity extends Activity {
         Log.d("string", "HIIII");
         mState = AppState.RECORDING;
         mSoundRecorder.startRecording();
+        Intent intent = new Intent(this, StopActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
     }
 
     public void stopRecording(View v) {
@@ -72,7 +70,6 @@ public class RecordActivity extends Activity {
         Intent intent = new Intent("/new_recording");
         intent.putExtra("message", VOICE_FILE_NAME);
         sendBroadcast(intent);
-
     }
 
 
@@ -140,7 +137,5 @@ public class RecordActivity extends Activity {
         }
         super.onStop();
     }
-
-
 
 }

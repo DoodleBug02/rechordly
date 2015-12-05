@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".CropFbActivity"
+    tools:deviceIds="wear_round">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/front_btn"
+        android:adjustViewBounds="true"
+        android:src="@drawable/front_crop_btn"
+        android:background="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="36dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="front_click"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/back_btn"
+        android:src="@drawable/back_crop_btn"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:layout_below="@+id/front_btn"
+        android:layout_marginTop="22dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="back_click"/>
+</RelativeLayout>

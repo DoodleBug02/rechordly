@@ -3,14 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context="me.chrisvle.rechordly.SaveActivity"
     tools:deviceIds="wear_round">
 
-    <TextView
-        android:id="@+id/text"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/icon"
+        android:src="@drawable/icon"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_round" />
+        android:layout_marginTop="25dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Saving!"
+        android:id="@+id/saving_txt"
+        android:layout_below="@id/icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:textSize="25dp"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dots_save"
+        android:src="@drawable/dots_save"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/saving_txt"
+        android:layout_marginTop="-4dp"
+        />
+
+
 </RelativeLayout>

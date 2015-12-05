@@ -3,31 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context="me.chrisvle.rechordly.SaveRetryActivity"
     tools:deviceIds="wear_round">
 
     <ImageButton
-        android:layout_width="match_parent"
-        android:layout_height="160px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/save_retry_placeholder"
-        android:id="@+id/imageButton"
-        android:layout_centerVertical="false"
+        android:id="@+id/save_btn"
+        android:adjustViewBounds="true"
+        android:src="@drawable/save_btn"
+        android:background="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="38dp"
         android:layout_centerHorizontal="true" />
 
     <ImageButton
-        android:layout_width="match_parent"
-        android:layout_height="170px"
-        android:layout_below="@+id/imageButton"
-        android:contentDescription="@string/save_retry_placeholder"
-        android:id="@+id/imageButtonRetry"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Save Retry Chooser" />
+        android:contentDescription="@string/save_retry_placeholder"
+        android:id="@+id/retry_btn"
+        android:src="@drawable/retry_btn"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:layout_below="@+id/save_btn"
+        android:layout_marginTop="26dp"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
