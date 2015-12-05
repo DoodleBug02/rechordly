@@ -133,7 +133,7 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
 
     @Override
     public void onConnectionSuspended(int i0) {
-        Wearable.ChannelApi.addListener(mApiClient, this);
+        Wearable.ChannelApi.removeListener(mApiClient, this);
     }
 
 

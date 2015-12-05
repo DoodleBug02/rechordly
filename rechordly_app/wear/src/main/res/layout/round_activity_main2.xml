@@ -1,30 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="me.chrisvle.rechordly.Main2Activity"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/record_screen"
+    tools:context="me.chrisvle.rechordly.Main2Activity"
     tools:deviceIds="wear_round">
 
-    <TextView android:id="@+id/text" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" android:text="@string/hello_round" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="start recording"
-        android:id="@+id/btnStart"
-        android:layout_above="@+id/text"
+    <ImageView
+        android:layout_width="350dp"
+        android:layout_height="350dp"
         android:layout_centerHorizontal="true"
-        android:onClick="btnClick"/>
+        android:layout_marginLeft="-6dp"
+        android:id="@+id/sliders"
+        android:src="@drawable/left_right_arrows"
+        android:visibility="invisible"/>
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Stop recording"
+    <ImageButton
+        android:layout_width="111dp"
+        android:layout_height="111dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:src="@drawable/stop_btn"
         android:id="@+id/btnStop"
-        android:layout_below="@+id/btnStart"
         android:layout_centerHorizontal="true"
-        android:onClick="btnClick"/>
+        android:layout_centerVertical="true"
+        android:onClick="btnClick" />
+
+    <ImageButton
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:src="@drawable/record_btn"
+        android:id="@+id/btnStart"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:onClick="btnClick" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/record_text"
+        android:layout_below="@id/btnStart"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:text="Record"/>
+
+    <Chronometer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/record_time"
+        android:layout_above="@id/btnStart"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        />
+
+
+
+
+
+
+
+
+
 </RelativeLayout>

@@ -15,14 +15,19 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/icon"
+        android:id="@+id/save_edit">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Saving!"
         android:id="@+id/saving_txt"
-        android:layout_below="@id/icon"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
         android:textSize="25dp"
         />
 
@@ -35,6 +40,7 @@
         android:layout_below="@id/saving_txt"
         android:layout_marginTop="-4dp"
         />
+    </RelativeLayout>
 
 
 </RelativeLayout>

@@ -16,11 +16,16 @@ public class doneActivity extends Activity {
     private GestureDetector mDetector;
     private GestureDetector tapDetector;
     private static final String DEBUG_TAG = "Gestures";
+    private String time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_done);
+
+        Intent i = getIntent();
+        time = i.getStringExtra("time");
+
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
@@ -73,15 +78,18 @@ public class doneActivity extends Activity {
                 if (distanceX > 5.0) {
                     Log.d("Event: ", "onScrollEvent Fired!");
                     Intent intent = new Intent(getBaseContext(), CropActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    intent.putExtra("swipe", "right");
+                    intent.putExtra("time", time);
                     startActivity(intent);
                 }
                 if (distanceX < -5.0) {
                     Log.d("Event: ", "onScrollEvent Fired!");
-                    Intent intent = new Intent(getBaseContext(), ResumeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    Intent intent = new Intent(getBaseContext(), Main2Activity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    intent.putExtra("swipe", "left");
+                    intent.putExtra("time", time);
                     startActivity(intent);
-                    overridePendingTransition(android.R.anim.slide_in_left, 0);
                     return true;
                 }
                 Log.d(DEBUG_TAG, " onScroll: " + e1.toString()+e2.toString());

@@ -1,0 +1,8 @@
+<resources>
+    <declare-styleable name="CropSliderView">
+        <attr name="soundwave" format="reference" />
+        <attr name="time" format="integer" />
+        <attr name="black_outline" format="dimension" />
+
+    </declare-styleable>
+</resources>
