@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,7 +21,7 @@ public class PlaybackActivity extends Activity {
     private ImageView pauseBtn;
     private RelativeLayout parentView;
 
-    private boolean swipe = true;
+//    private boolean swipe = true;
     private ImageView swipeRight;
 
     @Override
@@ -31,8 +32,8 @@ public class PlaybackActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                mImageButton = (ImageButton) stub.findViewById(R.id.play_btn);
-                mImageButton.setOnTouchListener(new View.OnTouchListener() {
+                playBtn = (ImageButton) stub.findViewById(R.id.play_btn);
+                playBtn.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent e) {
                         if (tapDetector.onTouchEvent(e)) {
@@ -43,8 +44,18 @@ public class PlaybackActivity extends Activity {
                         }
                     }
                 });
-                playBtn = (ImageView) findViewById(R.id.play_btn);
                 pauseBtn = (ImageView) findViewById(R.id.pause_btn);
+                pauseBtn.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent e) {
+                        if (tapDetector.onTouchEvent(e)) {
+                            // single tap
+                            return true;
+                        } else {
+                            return mDetector.onTouchEvent(e);
+                        }
+                    }
+                });
                 parentView = (RelativeLayout) findViewById(R.id.play_screen);
                 swipeRight = (ImageView) findViewById(R.id.swipe_play);
             }
@@ -70,9 +81,9 @@ public class PlaybackActivity extends Activity {
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
                                     float distanceY) {
-                if (!swipe) {
-                    return true;
-                }
+       //         if (!swipe) {
+       //             return true;
+       //         }
                 if (distanceX > 5.0) {
                     Intent intent = new Intent(getBaseContext(), Main2Activity.class);
                     intent.putExtra("swipe", "right");
@@ -91,9 +102,12 @@ public class PlaybackActivity extends Activity {
     }
 
     public void play_click(View v) {
-        swipe = false;
+        Log.d("Playback Activity", "Play Request");
+        Intent intent = new Intent("/play");
+        sendBroadcast(intent);
+//        swipe = false;
         pauseBtn.bringToFront();
-        swipeRight.setVisibility(View.INVISIBLE);
+//        swipeRight.setVisibility(View.INVISIBLE);
         parentView.invalidate();
 
         //FIXME add play music service logic
@@ -101,12 +115,23 @@ public class PlaybackActivity extends Activity {
     }
 
     public void pause_click(View v) {
-        swipe = true;
+        Log.d("Playback Activity", "Pause Request");
+        Intent intent = new Intent("/pause");
+        sendBroadcast(intent);
+
+ //       swipe = true;
         playBtn.bringToFront();
-        swipeRight.setVisibility(View.VISIBLE);
+ //       swipeRight.setVisibility(View.VISIBLE);
         parentView.invalidate();
 
         //FIXME add play music service logic
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        overridePendingTransition(android.R.anim.slide_in_left, 0);
 
     }
 
