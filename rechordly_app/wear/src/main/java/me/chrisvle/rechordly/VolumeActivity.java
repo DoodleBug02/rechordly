@@ -61,7 +61,7 @@ public class VolumeActivity extends Activity {
                                     float distanceY) {
                 if (distanceX > 5.0) {
                     Log.d("Event: ", "onScrollEvent Fired!");
-                    Intent intent = new Intent(getBaseContext(), EffectsActivity.class);
+                    Intent intent = new Intent(getBaseContext(), FilterActivity.class);
                     intent.putExtra("time", time);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);

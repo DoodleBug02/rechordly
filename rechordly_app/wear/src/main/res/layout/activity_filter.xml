@@ -5,7 +5,7 @@
     android:id="@+id/watch_view_stub"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:rectLayout="@layout/round_activity_effects"
-    app:roundLayout="@layout/round_activity_effects"
-    tools:context="me.chrisvle.rechordly.EffectsActivity"
+    app:rectLayout="@layout/round_activity_filter"
+    app:roundLayout="@layout/round_activity_filter"
+    tools:context="me.chrisvle.rechordly.FilterActivity"
     tools:deviceIds="wear"></android.support.wearable.view.WatchViewStub>

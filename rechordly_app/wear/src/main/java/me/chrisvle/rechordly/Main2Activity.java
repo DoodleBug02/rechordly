@@ -128,6 +128,7 @@ public class Main2Activity extends Activity {
                 if (distanceX < -5.0) {
                     Intent intent = new Intent(t, PlaybackActivity.class);
                     startActivity(intent);
+               //     intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     overridePendingTransition(android.R.anim.slide_in_left, 0);
                     return true;
                 }
