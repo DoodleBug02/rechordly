@@ -22,71 +22,10 @@ public class EditActivity extends AppCompatActivity {
     String filepath;
     Wave myAudio;
 
-//    private Equalizer eq;
-//    private MediaPlayer mp;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        InputStream audio = getResources().openRawResource(R.raw.orchestra);
-//        File f = createFileFromInputStream(audio);
-//        double[] left = null;
-//        double[] d = openWav(f, left);
-//        double[] filtered = PassFilters.fourierPassFilter(d, 4000, 8000, "low");
-
-
-//        setVolumeControlStream(AudioManager.STREAM_MUSIC);
-//
-//        mp = new MediaPlayer();
-//        mp = MediaPlayer.create(this, R.raw.completed);
-//
-//        eq = new Equalizer(0, mp.getAudioSessionId());
-//        eq.setEnabled(true);
-
-//        setupEq();
-
-
-
-
-
-
-//        mReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                Bundle extras = intent.getExtras();
-//                filepath = extras.getString("File");
-//            }
-//        };
-//
-//        filter = new IntentFilter();
-//        filter.addAction("Edit");
-//        registerReceiver(mReceiver, filter);
-//
-//        myAudio = load(filepath);
     }
-
-//    private void setupEq() {
-//        short numOfBands = eq.getNumberOfBands();
-//        final short min = eq.getBandLevelRange()[0];
-////        final short max = eq.getBandLevelRange()[1];
-//        for (short i = 0; i < numOfBands; i++) {
-//            eq.setBandLevel(i, (short) (5 + min));
-//        }
-//    }
-
-
-//
-
-//
-
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        unregisterReceiver(mReceiver);
-//
-//    }
 
     private File createFileFromInputStream(InputStream inputStream) {
 
