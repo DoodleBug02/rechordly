@@ -74,6 +74,10 @@ public class CropSliderViewBack extends CircularSliderView{
         a.recycle();
     }
 
+    void setTime(int t) {
+        time = t;
+    }
+
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
