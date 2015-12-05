@@ -120,4 +120,11 @@ public class PlaybackActivity extends Activity {
 
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        overridePendingTransition(android.R.anim.slide_in_left, 0);
+
+    }
+
 }
