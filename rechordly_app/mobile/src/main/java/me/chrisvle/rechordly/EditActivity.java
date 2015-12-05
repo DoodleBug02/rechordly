@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.musicg.wave.Wave;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -35,6 +36,8 @@ public class EditActivity extends AppCompatActivity {
     String filepath;
     Wave myAudio;
 
+    byte[] b;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,14 +55,32 @@ public class EditActivity extends AppCompatActivity {
 //
 //        Echo.echoFilter(b, music);
 
-        double[] d = null;
-        d = openWav(music, d);
-        d = PassFilters.fourierPassFilter(d, 1000, 8000, "low");
+        try {
+            b = getBytesFromFile(music);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        double[] d = null;
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                double[] d  = PassFilters.calculateFFT(b, 1000, "low");
+            }
+        };
+
+        thread.start();
+
+        byte[] done = toByteArray(d);
+        InputStream i = new ByteArrayInputStream(done);
+        saveFile(i);
+
+        File myPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+        File myFilter = new File(path, "filter.wav");
 
         mp = new MediaPlayer();
         try {
-            mp.setDataSource(music.getAbsolutePath());
+            mp.setDataSource(myFilter.getAbsolutePath());
             mp.prepare();
         } catch (IOException e) {
             e.printStackTrace();
@@ -181,14 +202,16 @@ public class EditActivity extends AppCompatActivity {
         return s / 32768.0;
     }
 
-    static byte doubleToBytes(double d) {
-        // convert two bytes to one short (little endian)
-        short s = (short) ((secondByte << 8) | firstByte);
-        // convert to range from -1 to (just below) 1
-        return s * 32768.0;
+    public static byte[] toByteArray(double[] doubleArray){
+        int times = Double.SIZE / Byte.SIZE;
+        byte[] bytes = new byte[doubleArray.length * times];
+        for(int i=0;i<doubleArray.length;i++){
+            ByteBuffer.wrap(bytes, i*times, times).putDouble(doubleArray[i]);
+        }
+        return bytes;
     }
 
-    public void saveFile(InputStream f, double startTime, double endTime) {
+    public void saveFile(InputStream f) {
         InputStream wavStream = null; // InputStream to stream the wav to trim
         File trimmedSample = null;  // File to contain the trimmed down sample
 //        File sampleFile = f; // File pointer to the current wav sample
@@ -196,7 +219,7 @@ public class EditActivity extends AppCompatActivity {
         // If the sample file exists, try to trim it
         if (f != null) {
             Log.d("File", "Orchestra is an actual file!!");
-            trimmedSample = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "orch2.wav");
+            trimmedSample = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "filter.wav");
             if (trimmedSample.isFile()) {
                 Log.d("Deleting", "Deleting because it already exists");
                 trimmedSample.delete();
@@ -212,11 +235,9 @@ public class EditActivity extends AppCompatActivity {
                 short num_channels = 1;
                 waveFile.OpenForWrite(trimmedSample.getAbsolutePath(), sample_rate, sample_size, num_channels);
                 // The number of bytes of wav data to trim off the beginning
-                long startOffset = (long) (startTime * sample_rate) * sample_size / 4;
                 // The number of bytes to copy
-                long length = ((long) (endTime * sample_rate) * sample_size / 4) - startOffset;
+                long length = ((long) (50 * sample_rate) * sample_size / 4);
                 wavStream.skip(44); // Skip the header
-                wavStream.skip(startOffset);
                 byte[] buffer = new byte[1024];
                 int i = 0;
                 while (i < length) {
