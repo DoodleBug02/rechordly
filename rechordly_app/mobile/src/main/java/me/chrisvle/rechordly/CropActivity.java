@@ -17,7 +17,15 @@ import android.widget.ToggleButton;
 import com.musicg.wave.Wave;
 import com.musicg.wave.WaveFileManager;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
+import javazoom.jl.converter.WaveFile;
 
 public class CropActivity extends AppCompatActivity {
 
@@ -46,6 +54,7 @@ public class CropActivity extends AppCompatActivity {
         left = (EditText) findViewById(R.id.left);
 
         right = (EditText) findViewById(R.id.left);
+
 
         Button b = (Button) findViewById(R.id.crop);
         b.setOnClickListener(new View.OnClickListener() {
@@ -104,5 +113,50 @@ public class CropActivity extends AppCompatActivity {
     private void pause() {
         mp.pause();
     }
+
+    public void TrimToSelection(double startTime, double endTime){
+        InputStream wavStream = null; // InputStream to stream the wav to trim
+        File trimmedSample = null;  // File to contain the trimmed down sample
+        File sampleFile = new File(samplePath); // File pointer to the current wav sample
+
+        // If the sample file exists, try to trim it
+        if (sampleFile.isFile()){
+            trimmedSample = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "trimmedSample.wav");
+            if (trimmedSample.isFile()) trimmedSample.delete();
+
+            // Trim the sample down and write it to file
+            try {
+                wavStream = new BufferedInputStream(new FileInputStream(sampleFile));
+                // Javazoom WaveFile class is used to write the wav
+                WaveFile waveFile = new WaveFile();
+                waveFile.OpenForWrite(trimmedSample.getAbsolutePath(), (int)audioFormat.getSampleRate(), (short)audioFormat.getSampleSizeInBits(), (short)audioFormat.getChannels());
+                // The number of bytes of wav data to trim off the beginning
+                long startOffset = (long)(startTime * audioFormat.getSampleRate()) * audioFormat.getSampleSizeInBits() / 4;
+                // The number of bytes to copy
+                long length = ((long)(endTime * audioFormat.getSampleRate()) * audioFormat.getSampleSizeInBits() / 4) - startOffset;
+                wavStream.skip(44); // Skip the header
+                wavStream.skip(startOffset);
+                byte[] buffer = new byte[1024];
+                int i = 0;
+                while (i < length){
+                    if (length - i >= buffer.length) {
+                        wavStream.read(buffer);
+                    }
+                    else { // Write the remaining number of bytes
+                        buffer = new byte[(int)length - i];
+                        wavStream.read(buffer);
+                    }
+                    short[] shorts = new short[buffer.length / 2];
+                    ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(shorts);
+                    waveFile.WriteData(shorts, shorts.length);
+                    i += buffer.length;
+                }
+                waveFile.Close(); // Complete writing the wave file
+                wavStream.close(); // Close the input stream
+            } catch (IOException e) {e.printStackTrace();}
+            finally {
+                try {if (wavStream != null) wavStream.close();} catch (IOException e){}
+            }
+        }
 
 }
