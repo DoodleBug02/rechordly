@@ -37,6 +37,7 @@ public class EditActivity extends AppCompatActivity {
     Wave myAudio;
 
     byte[] b;
+    double[] d;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +62,14 @@ public class EditActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        double[] d = null;
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                double[] d  = PassFilters.calculateFFT(b, 1000, "low");
-            }
-        };
-
-        thread.start();
+//        Thread thread = new Thread() {
+//            @Override
+//            public void run() {
+        d = PassFilters.calculateFFT(b, 5000, "low");
+//            }
+//        };
+//
+//        thread.start();
 
         byte[] done = toByteArray(d);
         InputStream i = new ByteArrayInputStream(done);
