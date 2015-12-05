@@ -21,21 +21,22 @@ public class PhoneMain extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
 
-        ImageView iv = (ImageView)findViewById(R.id.main);
+        ImageView iv = (ImageView) findViewById(R.id.main);
         iv.setScaleType(ImageView.ScaleType.FIT_XY);
 
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent info = new Intent(getBaseContext(), InfoActivity.class);
-                startActivity(info);
+                //Intent info = new Intent(getBaseContext(), InfoActivity.class);
+                //startActivity(info);
             }
         });
 
-        Intent serviceIntent = new Intent();
-        serviceIntent.setAction("com.testApp.service.PlaybackService");
+        Intent serviceIntent = new Intent(this, PlaybackService.class);
         startService(serviceIntent);
+
     }
+
 
     private void save(){
 

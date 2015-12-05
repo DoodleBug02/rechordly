@@ -62,7 +62,7 @@ public class Main2Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         t=this;
-
+        startService(new Intent(this, MessageService.class));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
@@ -361,8 +361,8 @@ public class Main2Activity extends Activity {
 
                     stopBtn.bringToFront();
                     sliders.setVisibility(View.INVISIBLE);
-                    text.setText("Stop");
-                    time.setBase(SystemClock.elapsedRealtime());
+                text.setText("Stop");
+                time.setBase(SystemClock.elapsedRealtime());
                     time.start();
                     parentView.invalidate();
                     startRecording();

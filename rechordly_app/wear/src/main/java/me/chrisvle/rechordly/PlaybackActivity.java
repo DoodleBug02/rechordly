@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -101,6 +102,9 @@ public class PlaybackActivity extends Activity {
     }
 
     public void play_click(View v) {
+        Log.d("Playback Activity", "Play Request");
+        Intent intent = new Intent("/play");
+        sendBroadcast(intent);
 //        swipe = false;
         pauseBtn.bringToFront();
 //        swipeRight.setVisibility(View.INVISIBLE);
@@ -111,6 +115,10 @@ public class PlaybackActivity extends Activity {
     }
 
     public void pause_click(View v) {
+        Log.d("Playback Activity", "Pause Request");
+        Intent intent = new Intent("/pause");
+        sendBroadcast(intent);
+
  //       swipe = true;
         playBtn.bringToFront();
  //       swipeRight.setVisibility(View.VISIBLE);
