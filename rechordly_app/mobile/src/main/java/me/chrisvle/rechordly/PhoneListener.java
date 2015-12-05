@@ -19,13 +19,14 @@ import java.nio.charset.StandardCharsets;
 
 public class PhoneListener extends WearableListenerService implements GoogleApiClient.ConnectionCallbacks, ChannelApi.ChannelListener {
 
-    private static final String new_recording = "/new_recording";
+    private static final String PLAY = "/play";
+    private static final String PAUSE = "/pause";
     public File file;
     public GoogleApiClient mApiClient;
 
     @Override
     public void onCreate() {
-        Log.d("OK", "OK");
+        Log.d("PhoneListener", "OK");
         super.onCreate();
         mApiClient = new GoogleApiClient.Builder( this )
                 .addApi( Wearable.API )
@@ -39,13 +40,19 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
-        if (messageEvent.getPath().equalsIgnoreCase(new_recording)) {
-            String value = new String(messageEvent.getData(), StandardCharsets.UTF_8);
-            Log.d("PhoneListener", value);
+        if (messageEvent.getPath().equalsIgnoreCase(PLAY)) {
+            Log.d("PhoneListener", "Play Request");
 
-        } else {
-            Log.d("PhoneListener", "Case not matched");
-            super.onMessageReceived(messageEvent);
+            Intent intent = new Intent("/play");
+                intent.putExtra("path", "/storage/emulated/0/currentFile.wav");
+                sendBroadcast(intent);
+
+        } else if (messageEvent.getPath().equalsIgnoreCase(PAUSE)){
+            Log.d("PhoneListener", "Pause Request");
+            Intent intent = new Intent("/pause");
+                intent.putExtra("path", "/storage/emulated/0/currentFile.wav");
+                sendBroadcast(intent);
+
         }
     }
 
@@ -54,7 +61,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
         Log.d("PhoneListener", "Channel established");
         if (channel.getPath().equals("/new_recording")) {
 
-            file = new File(Environment.getExternalStorageDirectory().getPath(), "file4.wav");
+            file = new File(Environment.getExternalStorageDirectory().getPath(), "currentFile.wav");
             Log.d("this", String.valueOf(this.getFilesDir()));
             try {
                 file.createNewFile();
@@ -64,7 +71,6 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             Log.d("PhoneListener", "Trying to receive file");
 
             channel.receiveFile(mApiClient, Uri.fromFile(file), false);
-            Log.d("PhoneListener", "DONE");
         }
         else if (channel.getPath().equals("/edit_recording")) {
 
@@ -78,14 +84,12 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
     @Override
     public void onInputClosed(Channel channel, int int0, int int1) {
         Log.d("PhoneListener", "File Received!!");
-        Log.d("PhoneListener", "Channel Closed!");
-            Log.d("LEN", String.valueOf(file.length()));
-            Log.d("PATH", file.getAbsolutePath());
-            Intent play = new Intent(this, InfoActivity.class);
-            play.putExtra("path", file.getAbsolutePath());
-            play.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            startActivity(play);
+    }
+
+    @Override
+    public void onChannelClosed(Channel channel, int i0, int i1) {
+        Log.d("PhoneListener", "Channel Closed!");
     }
 
 

@@ -1,19 +1,18 @@
 package me.chrisvle.rechordly;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -46,20 +45,16 @@ public class Main2Activity extends Activity {
     private RelativeLayout parentView;
     private ImageView sliders;
     private TextView text;
-    private TextView time;
-
-    private GestureDetector mDetector;
-    private GestureDetector tapDetector;
-    private ImageButton mImageButton;
-    private Context t;
+    private Chronometer time;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        t=this;
+        startService(new Intent(this, MessageService.class));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
@@ -67,84 +62,16 @@ public class Main2Activity extends Activity {
                 startBtn = (ImageButton) findViewById(R.id.btnStart);
                 stopBtn = (ImageButton) findViewById(R.id.btnStop);
                 parentView = (RelativeLayout) findViewById(R.id.record_screen);
-                sliders = (ImageView) findViewById(R.id.sliders);
                 text = (TextView) findViewById(R.id.record_text);
-                time = (TextView) findViewById(R.id.record_time);
+                time = (Chronometer) findViewById(R.id.record_time);
 
-
-                startBtn.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent e) {
-                        if (tapDetector.onTouchEvent(e)) {
-                            return true;
-                        } else {
-                            return mDetector.onTouchEvent(e);
-                        }
-                    }
-                });
-
-                stopBtn.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent e) {
-                        if (tapDetector.onTouchEvent(e)) {
-                            return true;
-                        } else {
-                            return mDetector.onTouchEvent(e);
-                        }
-                    }
-                });
             }
 
 
         });
-
-        //Configure single tap detector
-        tapDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onSingleTapConfirmed(MotionEvent event) {
-                return true;
-            }
-        });
-
-        // Configure a gesture detector
-        mDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
-
-
-            @Override
-            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-                                    float distanceY) {
-                if(sliders.getVisibility() == View.INVISIBLE) {
-                    return true;
-                }
-                if (distanceX > 5.0) {
-                    Intent intent = new Intent(getBaseContext(), doneActivity.class);
-                    startActivity(intent);
-                }
-                if (distanceX < -5.0) {
-                    Intent intent = new Intent(t, PlaybackActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(android.R.anim.slide_in_left, 0);
-                    return true;
-                }
-                return true;
-            }
-        });
     }
 
 
-
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-            return mDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if (intent.getStringExtra("swipe").equals("left")) {
-            overridePendingTransition(android.R.anim.slide_in_left, 0);
-        }
-    }
 
 
 
@@ -352,32 +279,51 @@ public class Main2Activity extends Activity {
     public void btnClick(View v) {
         switch(v.getId()){
             case R.id.btnStart:{
-
-                    stopBtn.bringToFront();
-                    sliders.setVisibility(View.INVISIBLE);
+                stopBtn.bringToFront();
+//                sliders.setVisibility(View.INVISIBLE);
+                text.setText("Stop");
+                time.setBase(SystemClock.elapsedRealtime());
+                    time.start();
                     parentView.invalidate();
                     startRecording();
-
                     break;
                 }
-                case R.id.btnStop:{
-                    startBtn.bringToFront();
-                    sliders.setVisibility(View.VISIBLE);
-                    parentView.invalidate();
-                    stopRecording();
-                    Intent intent = new Intent("/new_recording");
-                    File f = new File(filePath);
+            case R.id.btnStop:{
+//                retryBtn.bringToFront();
+////                sliders.setVisibility(View.VISIBLE);
+//                text.setText("RetryFragment");
+//                time.stop();
+//                parentView.invalidate();
+                stopRecording();
+                Intent intent = new Intent("/new_recording");
+                File f = new File(filePath);
 
-                    intent.putExtra("message", fileName);
-                    intent.putExtra("Path", filePath );
-                    sendBroadcast(intent);
-                    File fe = new File(fileName);
-                    Log.d("FILEPATH", fileName);
-                    Log.d("FILE?", String.valueOf(fe.length()));
-                    Log.d("EXISTS?", String.valueOf((fe.exists())));
+                intent.putExtra("message", fileName);
+                intent.putExtra("Path", filePath);
+                sendBroadcast(intent);
+                File fe = new File(fileName);
+                Log.d("FILEPATH", fileName);
+                Log.d("FILE?", String.valueOf(fe.length()));
+                Log.d("EXISTS?", String.valueOf((fe.exists())));
 
-                    break;
+                Intent slideIntent = new Intent(this, SliderNavActivity.class);
+                slideIntent.putExtra("time", time.getText());
+                slideIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(slideIntent);
+
+                break;
                 }
+//            case R.id.retry_record:{
+//                sliders.setVisibility(View.INVISIBLE);
+//                text.setText("Record");
+//                time.setBase(SystemClock.elapsedRealtime());
+//                startBtn.bringToFront();
+//                parentView.invalidate();
+//
+//                //FIXME code for redoing the recording goes here
+//                break;
+//
+//            }
             }
         }
 

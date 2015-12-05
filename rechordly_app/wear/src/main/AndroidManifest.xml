@@ -5,8 +5,7 @@
     <uses-feature android:name="android.hardware.type.watch" />
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-library android:name="com.google.android.wearable" />
 
@@ -19,19 +18,6 @@
 
         <!-- android:theme="@android:style/Theme.DeviceDefault"> -->
 
-        <activity
-            android:name=".WatchMain"
-            android:label="@string/app_name">
-
-            <!-- removed for debugging purpose -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-
-        </activity>
         <activity
             android:name=".doneActivity"
             android:label="@string/title_activity_done" />
@@ -47,29 +33,6 @@
         <activity
             android:name=".VolumeActivity"
             android:label="@string/title_activity_volume" />
-        <activity
-            android:name=".SaveRetryActivity"
-            android:label="@string/title_activity_save_retry" />
-        <activity
-            android:name=".EffectsChooserActivity"
-            android:label="@string/title_activity_effects_chooser" />
-        <activity
-            android:name=".EffectsActivity"
-            android:label="@string/title_activity_effects" />
-        <activity
-            android:name=".RecordActivity"
-            android:label="@string/title_activity_record">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".StopActivity"
-            android:label="@string/title_activity_stop">
-        </activity>
 
         <service
             android:name=".MessageService"
@@ -81,7 +44,16 @@
 
         <activity
             android:name=".Main2Activity"
-            android:label="@string/title_activity_main2" >
+            android:label="@string/title_activity_main2">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SliderNavActivity"
+            android:label="@string/title_activity_slider_nav">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -107,15 +79,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PauseActivity"
-            android:label="@string/title_activity_pause">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".NameActivity"
             android:label="@string/title_activity_name">
             <intent-filter>
@@ -125,8 +88,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ResumeActivity"
-            android:label="@string/title_activity_resume">
+            android:name=".CropFrontActivity"
+            android:label="@string/title_activity_main3">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CropBackActivity"
+            android:label="@string/title_activity_crop_back">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".FilterHighLowActivity"
+            android:label="@string/title_activity_filter_high_low">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

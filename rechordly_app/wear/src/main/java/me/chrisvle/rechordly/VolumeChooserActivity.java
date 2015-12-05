@@ -2,85 +2,62 @@ package me.chrisvle.rechordly;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class VolumeChooserActivity extends Activity {
 
-    private TextView mTextView;
-    private ImageButton mImageButton;
-    private GestureDetector mDetector;
-    private static final String DEBUG_TAG = "Gestures";
+
+    private TextView volume;
+    private VolumeSliderView slider;
+    private RelativeLayout rel_circular;
+    private Button doneButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volume_chooser);
+
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                mTextView = (TextView) stub.findViewById(R.id.text);
-                mImageButton = (ImageButton) stub.findViewById(R.id.imageButton);
-                mImageButton.setOnTouchListener(new View.OnTouchListener() {
+                volume = (TextView) findViewById(R.id.Volume);
+                doneButton = (Button) findViewById(R.id.volume_done);
+                slider = (VolumeSliderView) findViewById(R.id.circular);
+                rel_circular = (RelativeLayout) findViewById(R.id.rel_circular);
+
+                String boldfontPath = "fonts/Mission_Gothic_Bold.otf";
+                Typeface tf = Typeface.createFromAsset(getAssets(), boldfontPath);
+                volume.setTypeface(tf);
+
+                doneButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if (mDetector.onTouchEvent(event)) {
-                            Log.d("Event: ", "onTouchEvent Fired!");
-//                            finish();
-                            return true;
-                        }
-                        return false;
+                    public void onClick(View v) {
+                        sendVolume(v);
                     }
                 });
             }
         });
+    }
 
-        // Configure a gesture detector
-        mDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+    public void sendVolume(View view) {
+        int volume = slider.getVolume();
+        Log.d("Done", "Clicked: volume is " + volume);
 
-            @Override
-            public void onLongPress(MotionEvent event) {
-//                mDismissOverlay.show();
-                Log.d(DEBUG_TAG, " onLongPress: " + event.toString());
-            }
+        //FIXME @Jeremy code here
 
-            @Override
-            public boolean onSingleTapConfirmed(MotionEvent event) {
-                Log.d("Event: ", "onSingleTapEvent Fired!");
-                Intent intent = new Intent(getBaseContext(), VolumeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                return true;
-            }
+        Intent intent = new Intent(getBaseContext(), SliderNavActivity.class);
+        intent.putExtra("start", 5);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
 
-            @Override
-            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-                                    float distanceY) {
-                Log.d(DEBUG_TAG, "onScroll: Distance: " + String.valueOf(distanceX) + ", " + String.valueOf(distanceY));
-                if (distanceX > 5.0) {
-                    Log.d("Event: ", "onScrollEvent Fired!");
-                    Intent intent = new Intent(getBaseContext(), EffectsChooserActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    return true;
-                }
-                if (distanceX < -5.0) {
-                    Log.d("Event: ", "onScrollEvent Fired!");
-                    Intent intent = new Intent(getBaseContext(), CropFbActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    return true;
-                }
-                Log.d(DEBUG_TAG, " onScroll: " + e1.toString()+e2.toString());
-                return false;
-            }
-        });
     }
 }

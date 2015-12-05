@@ -1,15 +1,35 @@
 package me.chrisvle.rechordly;
 
+//import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
-public class PhoneMain extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+import me.chrisvle.rechordly.dummy.DummyContent;
+
+public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListFragmentInteractionListener,
+                                                            MusicFragment.OnFragmentInteractionListener,
+                                                            LyricsFragment.OnFragmentInteractionListener {
+
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,19 +41,89 @@ public class PhoneMain extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
 
-        ImageView iv = (ImageView)findViewById(R.id.main);
-        iv.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent info = new Intent(getBaseContext(), InfoActivity.class);
-                startActivity(info);
-            }
-        });
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//        getSupportActionBar().setCustomView(R.layout.action_bar_custom);
+        toolbar.setBackground(getDrawable(R.drawable.purp_gradient));
+
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setBackground(new ColorDrawable(Color.parseColor("#D6D6D6")));
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#6F37FF"));
+//        setBackgroundDrawable(new ColorDrawable("FF0000"));
+//        tabLayout.setBackgroundColor(0xD6D6D6);
+//        tabLayout.setSelectedTabIndicatorColor(0x6f37ff);
+
     }
+
 
     private void save(){
 
     }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new ItemFragment(), "all");
+        adapter.addFragment(new MusicFragment(), "music");
+        adapter.addFragment(new LyricsFragment(), "lyrics");
+        viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+        Log.d("DUMMY INTERACTION", "");
+        Intent info = new Intent(getBaseContext(), InfoActivity.class);
+        info.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(info);
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        Log.d("DUMMY INTERACTION", "Lyrics");
+    }
+
+    @Override
+    public void onMusicFragmentInteraction(Uri uri) {
+        Log.d("DUMMY INTERACTION", "music");
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
+
 }
