@@ -16,6 +16,8 @@
         android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"
         android:onClick="front_click"
+        android:textAllCaps="false"
+        android:textSize="25sp"
         android:id="@+id/front_btn"
         />
 
@@ -55,6 +57,8 @@
         android:layout_below="@+id/front_btn"
         android:layout_marginTop="22dp"
         android:layout_centerHorizontal="true"
+        android:textAllCaps="false"
+        android:textSize="25sp"
         android:onClick="back_click"
         android:id="@+id/back_btn"
         />

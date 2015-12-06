@@ -35,9 +35,13 @@ public class CropFrontActivity extends Activity {
                 Typeface tf = Typeface.createFromAsset(getAssets(), boldfontPath);
                 time.setTypeface(tf);
 
-                String[] tArray = time_s.split(":");
-                int t = 60*Integer.parseInt(tArray[0])+Integer.parseInt(tArray[1]);
-                slider.setTime(t);
+                if (time_s != null) {
+                    String[] tArray = time_s.split(":");
+                    int t = 60 * Integer.parseInt(tArray[0]) + Integer.parseInt(tArray[1]);
+                    slider.setTime(t);
+                } else {
+                    Log.d("CropTimeForward", "Did not receive time for crop");
+                }
 
                 doneButton.setOnClickListener(new View.OnClickListener() {
                     @Override

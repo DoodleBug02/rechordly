@@ -12,6 +12,8 @@
         android:background="@drawable/gradient"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:text="Lyric"/>
+        android:textAllCaps="false"
+        android:textSize="25sp"
+        android:text="Add\nLyrics"/>
 
 </RelativeLayout>

@@ -2,5 +2,6 @@
 <resources>
     <style name="AppTheme" parent="@android:style/Theme.DeviceDefault">
         <item name="android:windowSwipeToDismiss">false</item>
+        <item name="android:typeface">monospace</item>
     </style>
 </resources>
