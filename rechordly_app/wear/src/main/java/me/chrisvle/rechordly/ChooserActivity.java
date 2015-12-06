@@ -23,7 +23,7 @@ public class ChooserActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_volume_chooser);
+        setContentView(R.layout.round_activity_volume_chooser);
         Intent intent = getIntent();
         from = intent.getStringExtra("from");
 
