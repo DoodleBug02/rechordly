@@ -70,7 +70,7 @@ public class EchoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChooserActivity.class);
-                intent.putExtra("from", "echo");
+                intent.putExtra("from", "/echo");
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);

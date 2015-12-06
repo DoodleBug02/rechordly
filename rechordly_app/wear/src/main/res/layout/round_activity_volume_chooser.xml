@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="10dp"
-                circular:angle="3.14"
+                circular:angle="1.57"
                 circular:start_angle="0"
                 circular:border_color="#17013f"
                 circular:border_thickness="20dp"

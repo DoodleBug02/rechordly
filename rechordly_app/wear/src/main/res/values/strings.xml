@@ -45,6 +45,7 @@
     <string name="title_activity_slider_nav">SliderNavActivity</string>
     <string name="title_activity_filter_high_low">FilterHighLow</string>
     <string name="title_activity_echo_chooser">EchoChooserActivity</string>
+    <string name="title_activity_speech_to_text">SpeechToTextActivity</string>
 
 </resources>
 
