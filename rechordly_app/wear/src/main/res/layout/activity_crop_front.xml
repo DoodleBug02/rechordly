@@ -50,12 +50,14 @@
         </TextView>
 
         <Button
-            android:layout_width="70dp"
-            android:layout_height="25dp"
+            android:layout_width="65dp"
+            android:layout_height="23dp"
             android:layout_gravity="center"
             android:paddingTop="0dp"
             android:layout_marginTop="75dp"
             android:background="@drawable/gradient"
+            android:textAllCaps="false"
+            android:textSize="17sp"
             android:text="Done"
             android:id="@+id/crop_f_done"
 

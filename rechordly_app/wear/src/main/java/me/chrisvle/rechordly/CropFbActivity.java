@@ -35,8 +35,8 @@ public class CropFbActivity extends Activity {
 
     public void front_click(View v) {
         Intent intent = new Intent(this, CropFrontActivity.class);
-    //    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("time", time);
         startActivity(intent);
 
@@ -45,7 +45,7 @@ public class CropFbActivity extends Activity {
     public void back_click(View v) {
         //FIXME
         Intent intent = new Intent(this, CropBackActivity.class);
-    //    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra("time", time);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 
 /**
@@ -25,6 +26,17 @@ public class EditNavFragment extends Fragment {
     private ViewPager mPager;
     private ImageView dots;
     private int start;
+    private RelativeLayout.LayoutParams lp;
+    private float density;
+
+    private final float DONE = 43;
+    private final float LYRIC = 66;
+    private final float CROP = 89;
+    private final float VOLUME = 112;
+    private final float FILTER = 134;
+    private final float ECHO = (float) 156.5;
+
+
 
 
     private OnFragmentInteractionListener mListener;
@@ -47,7 +59,10 @@ public class EditNavFragment extends Fragment {
         mPager.setAdapter(mAdapter);
         mPager.setCurrentItem(start);
 
-        dots = (ImageView) view.findViewById(R.id.dots);
+        dots = (ImageView) view.findViewById(R.id.light_dot);
+        lp= new RelativeLayout.LayoutParams(dots.getLayoutParams());
+        density = getActivity().getResources().getDisplayMetrics().density;
+
 
         return view;
         }
@@ -83,42 +98,43 @@ public class EditNavFragment extends Fragment {
             return NUM_ITEMS;
         }
 
-//        @Override
-//        public void startUpdate(ViewGroup container){
-//            super.finishUpdate(container);
-//            int i = mPager.getCurrentItem();
-//            switch(i) {
-//                case(0):
-//                    dots.setVisibility(View.INVISIBLE);
-//                    return;
-//                case(1):
-//                    dots.setVisibility(View.INVISIBLE);
-//                    return;
-//                case(2):
-//                    dots.setImageDrawable(getDrawable(R.drawable.dot1));
-//                    dots.setVisibility(View.VISIBLE);
-//                    return;
-//                case(3):
-//                    dots.setImageDrawable(getDrawable(R.drawable.dot2));
-//                    dots.setVisibility(View.VISIBLE);
-//                    return;
-//                case(4):
-//                    dots.setImageDrawable(getDrawable(R.drawable.dot3));
-//                    dots.setVisibility(View.VISIBLE);
-//                    return;
-//                case(5):
-//                    dots.setImageDrawable(getDrawable(R.drawable.dot4));
-//                    dots.setVisibility(View.VISIBLE);
-//                    return;
-//                case(6):
-//                    dots.setVisibility(View.VISIBLE);
-//                    return;
-//                case(7):
-//                    dots.setVisibility(View.VISIBLE);
-//                    return;
-//            }
-//
-//        }
+        @Override
+        public void startUpdate(ViewGroup container){
+            super.finishUpdate(container);
+            int i = mPager.getCurrentItem();
+            switch(i) {
+                case (0):
+                    lp.setMargins((int)(DONE*density),0, 0, 0);
+                    dots.setLayoutParams(lp);
+                    return;
+                case(1):
+                    lp.setMargins((int)(LYRIC*density), 0, 0, 0);
+                    dots.setLayoutParams(lp);
+                    return;
+                case(2):
+                    lp.setMargins( (int)(CROP*density), 0, 0, 0);
+                    dots.setLayoutParams(lp);
+                    return;
+                case(3):
+                    lp.setMargins((int)(VOLUME*density), 0, 0, 0);
+                    dots.setLayoutParams(lp);
+                    return;
+                case(4):
+                    lp.setMargins((int)(FILTER*density), 0, 0, 0);
+                    dots.setLayoutParams(lp);
+                    return;
+                case(5):
+                    lp.setMargins((int)(ECHO*density), 0, 0, 0);
+                    dots.setLayoutParams(lp);
+                    return;
+                case(6):
+                    lp.setMargins((int)(FILTER*density), 0, 0, 0);
+                    dots.setLayoutParams(lp);
+                    return;
+
+            }
+
+        }
     }
 
 

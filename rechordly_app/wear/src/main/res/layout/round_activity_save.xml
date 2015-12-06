@@ -13,34 +13,60 @@
         android:id="@+id/icon"
         android:src="@drawable/icon"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="26dp"
         />
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="8dp"
         android:layout_below="@id/icon"
+        android:layout_centerHorizontal="true"
         android:id="@+id/save_edit">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Saving!"
-        android:id="@+id/saving_txt"
-        android:layout_centerHorizontal="true"
-        android:textSize="25dp"
-        />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dots_save"
-        android:src="@drawable/dots_save"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/saving_txt"
-        android:layout_marginTop="-4dp"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saving"
+            android:id="@+id/saving_txt"
+            android:layout_centerHorizontal="true"
+            android:textSize="26sp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dots_save"
+            android:src="@drawable/dots_save"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/saving_txt"
+            android:layout_marginTop="-4dp"
+            />
     </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/icon"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/save_complete">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save Complete!"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/saving_txt2"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="-8dp"
+            android:textSize="26sp"
+            android:visibility="invisible"
+
+            />
+
+        </RelativeLayout>
 
 
 </RelativeLayout>
