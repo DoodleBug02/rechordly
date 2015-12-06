@@ -21,6 +21,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
 
     private static final String PLAY = "/play";
     private static final String PAUSE = "/pause";
+    private static final String SAVE = "/save";
+    private static final String RETRY = "/retry";
     public File file;
     public GoogleApiClient mApiClient;
 
@@ -42,18 +44,76 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
     public void onMessageReceived(MessageEvent messageEvent) {
         if (messageEvent.getPath().equalsIgnoreCase(PLAY)) {
             Log.d("PhoneListener", "Play Request");
-
             Intent intent = new Intent("/play");
-                intent.putExtra("path", "/storage/emulated/0/currentFile.wav");
+                intent.putExtra("path", file.getAbsolutePath());
                 sendBroadcast(intent);
-
-        } else if (messageEvent.getPath().equalsIgnoreCase(PAUSE)){
+        } else if (messageEvent.getPath().equalsIgnoreCase(PAUSE)) {
             Log.d("PhoneListener", "Pause Request");
             Intent intent = new Intent("/pause");
-                intent.putExtra("path", "/storage/emulated/0/currentFile.wav");
-                sendBroadcast(intent);
+            intent.putExtra("path", file.getAbsolutePath());
+            sendBroadcast(intent);
+        } else if (messageEvent.getPath().equalsIgnoreCase(RETRY)){
+            Log.d("PhoneListener", "Retry Request");
+            Intent intent = new Intent("/retry");
+            file.delete();
+        } else if (messageEvent.getPath().equalsIgnoreCase(SAVE)){
+            Log.d("PhoneListener", "Save Request");
+            String all = new String(messageEvent.getData(), StandardCharsets.UTF_8);
+            String[] edits = all.split("|");
 
-        }
+            // Handles all FILENAMING
+            if (!edits[0].equals("None")) {
+                file.delete();
+                file = new File(Environment.getExternalStorageDirectory().getPath(), edits[0] + ".wav");
+                Log.d("New filename after save", String.valueOf(this.getFilesDir()));
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    //handle error
+                }
+            }
+            // Handles all TRIM
+            double left = 0;
+            double right = 0;
+            if (!edits[1].equals("None")) {
+                left = Integer.parseInt(edits[1]);
+            }
+            if (!edits[2].equals("None")) {
+                right = Integer.parseInt(edits[2]);
+            }
+            Intent trim = new Intent("/trim");
+            trim.putExtra("path", file.getAbsolutePath());
+            trim.putExtra("left", left);
+            trim.putExtra("right", right);
+            sendBroadcast(trim);
+
+            // Handles all ECHO
+            double echo_val = 1;
+            if (!edits[3].equals("None")) {
+                echo_val = Integer.parseInt(edits[3]);
+            }
+            Intent echo = new Intent("/echo");
+            echo.putExtra("path", file.getAbsolutePath());
+            echo.putExtra("value", echo_val);
+            sendBroadcast(echo);
+
+            // Handles all GAIN
+            double gain_val = 1;
+            if (!edits[4].equals("None")) {
+                gain_val = Integer.parseInt(edits[4]);
+            }
+            Intent gain = new Intent("/gain");
+            gain.putExtra("path", file.getAbsolutePath());
+            gain.putExtra("value", gain_val);
+            sendBroadcast(gain);
+
+            // Handles all TRANSCRIPTION
+            if (!edits[5].equals("None")) {
+                Intent transcription = new Intent("/transcription");
+                sendBroadcast(transcription);
+            }
+
+         }
     }
 
     @Override
@@ -61,7 +121,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
         Log.d("PhoneListener", "Channel established");
         if (channel.getPath().equals("/new_recording")) {
 
-            file = new File(Environment.getExternalStorageDirectory().getPath(), "currentFile.wav");
+            file = new File(Environment.getExternalStorageDirectory().getPath(), getTime() + ".wav");
             Log.d("this", String.valueOf(this.getFilesDir()));
             try {
                 file.createNewFile();
@@ -110,5 +170,10 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
         mApiClient.disconnect();
     }
 
+    public String getTime() {
+        Long tsLong = System.currentTimeMillis()/1000;
+        String ts = tsLong.toString();
+        return ts;
+    }
 
 }

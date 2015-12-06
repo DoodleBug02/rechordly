@@ -35,24 +35,24 @@ public class EditActivity extends AppCompatActivity {
     String filepath;
     Wave myAudio;
 
-    byte[] b;
-    double[] d;
+//    byte[] b;
+//    double[] d;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
-        File music = new File(path, "curr.wav");
-
-        try {
-            b = getBytesFromFile(music);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Echo.echoFilter(b, music);
+//        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+//        File music = new File(path, "curr.wav");
+//
+//        try {
+//            b = getBytesFromFile(music);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        Echo.echoFilter(b, music);
 
 //        try {
 //            b = getBytesFromFile(music);
@@ -60,18 +60,40 @@ public class EditActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 //
-//        d = PassFilters.calculateFFT(b, 1, "low");
+//        byte[] noHeader = Arrays.copyOfRange(b, 44, b.length);
+//        byte[] header = Arrays.copyOfRange(b, 0, 43);
+//
+//        d = toDoubleArray(noHeader);
+//
+//        d = PassFilters.fourierPassFilter(noHeader, 0.1, "low");
+//
+//        byte[] filtered = toByteArray(d);
+//        byte[] combined = concat(header, filtered);
+//        InputStream i = new ByteArrayInputStream(combined);
+//        saveFile(i);
+//
+        File myPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+        File myCurrent = new File(myPath, "curr.wav");
 
+        wavIO w = new wavIO();
+        w.read(myCurrent);
+        Log.d("byterate", Long.toString(w.myByteRate));
+        Log.d("bitpersample", Long.toString(w.myBitsPerSample));
+        byte[] b = w.myData;
+//        double[] d = toDoubleArray(b);
+
+        b = Gain.adjustVolume(b, 2);
 //        byte[] done = toByteArray(d);
+        w.myData = b;
+
+        File myGain = new File(myPath, "gain.wav");
+        w.save(myGain);
 //        InputStream i = new ByteArrayInputStream(done);
 //        saveFile(i);
 
-//        File myPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
-//        File myFilter = new File(myPath, "filter.wav");
-
         mp = new MediaPlayer();
         try {
-            mp.setDataSource(music.getAbsolutePath());
+            mp.setDataSource(myGain.getAbsolutePath());
             mp.prepare();
         } catch (IOException e) {
             e.printStackTrace();
@@ -202,6 +224,15 @@ public class EditActivity extends AppCompatActivity {
         return bytes;
     }
 
+    public static double[] toDoubleArray(byte[] byteArray){
+        int times = Double.SIZE / Byte.SIZE;
+        double[] doubles = new double[byteArray.length / times];
+        for(int i=0;i<doubles.length;i++){
+            doubles[i] = ByteBuffer.wrap(byteArray, i*times, times).getDouble();
+        }
+        return doubles;
+    }
+
     public void saveFile(InputStream f) {
         InputStream wavStream = null; // InputStream to stream the wav to trim
         File trimmedSample = null;  // File to contain the trimmed down sample
@@ -210,7 +241,7 @@ public class EditActivity extends AppCompatActivity {
         // If the sample file exists, try to trim it
         if (f != null) {
             Log.d("File", "Orchestra is an actual file!!");
-            trimmedSample = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "filter.wav");
+            trimmedSample = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "gain.wav");
             if (trimmedSample.isFile()) {
                 Log.d("Deleting", "Deleting because it already exists");
                 trimmedSample.delete();
@@ -227,7 +258,7 @@ public class EditActivity extends AppCompatActivity {
                 waveFile.OpenForWrite(trimmedSample.getAbsolutePath(), sample_rate, sample_size, num_channels);
                 // The number of bytes of wav data to trim off the beginning
                 // The number of bytes to copy
-                long length = ((long) (50 * sample_rate) * sample_size / 4);
+                long length = ((long) (3 * sample_rate) * sample_size / 4);
                 wavStream.skip(44); // Skip the header
                 byte[] buffer = new byte[1024];
                 int i = 0;
@@ -256,5 +287,13 @@ public class EditActivity extends AppCompatActivity {
         }
     }
 
+    public byte[] concat(byte[] a, byte[] b) {
+        int aLen = a.length;
+        int bLen = b.length;
+        byte[] c= new byte[aLen+bLen];
+        System.arraycopy(a, 0, c, 0, aLen);
+        System.arraycopy(b, 0, c, aLen, bLen);
+        return c;
+    }
 
 }

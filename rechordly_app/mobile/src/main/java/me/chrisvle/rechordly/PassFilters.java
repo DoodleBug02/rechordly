@@ -5,9 +5,13 @@ import android.util.Log;
 /**
  * Created by Chris on 12/4/15.
  */
+
+/**
+ * Created by Chris on 12/4/15.
+ */
 public class PassFilters {
 
-    public static double[] calculateFFT(byte[] signal, double level, String type)
+    public static double[] fourierPassFilter(byte[] signal, double level, String type)
     {
         final int mNumberOfFFTPoints =1024;
         double mMaxFFTSample;
