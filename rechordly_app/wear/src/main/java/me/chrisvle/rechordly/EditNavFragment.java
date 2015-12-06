@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 
 /**
@@ -26,14 +25,6 @@ public class EditNavFragment extends Fragment {
     private ViewPager mPager;
     private ImageView dots;
     private int start;
-    private RelativeLayout.LayoutParams lp;
-    private float density;
-
-    private final float DONE = 43;
-    private final float LYRIC = 66;
-    private final float CROP = 89;
-    private final float GAIN = 112;
-    private final float ECHO = 134;
 
 
 
@@ -110,9 +101,6 @@ public class EditNavFragment extends Fragment {
                     return;
                 case(4):
                     dots.setImageResource(R.drawable.dot5);
-                    return;
-                case(5):
-                    dots.setImageResource(R.drawable.dot6);
                     return;
 
             }

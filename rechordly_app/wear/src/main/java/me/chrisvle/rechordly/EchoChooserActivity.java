@@ -4,18 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class ChooserActivity extends Activity {
+public class EchoChooserActivity extends Activity {
 
 
     private TextView amount;
-    private VolumeSliderView slider;
+    private EchoSliderView slider;
     private RelativeLayout rel_circular;
     private Button doneButton;
     private String from;
@@ -23,12 +22,12 @@ public class ChooserActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_volume_chooser);
+        setContentView(R.layout.activity_echo_chooser);
         Intent intent = getIntent();
         from = intent.getStringExtra("from");
-                amount = (TextView) findViewById(R.id.Volume);
-                doneButton = (Button) findViewById(R.id.volume_done);
-                slider = (VolumeSliderView) findViewById(R.id.circular);
+                amount = (TextView) findViewById(R.id.echo);
+                doneButton = (Button) findViewById(R.id.echo_done);
+                slider = (EchoSliderView) findViewById(R.id.circular);
                 rel_circular = (RelativeLayout) findViewById(R.id.rel_circular);
 
                 String boldfontPath = "fonts/Mission_Gothic_Bold.otf";
@@ -38,18 +37,18 @@ public class ChooserActivity extends Activity {
                 doneButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        sendVolume(v);
+                        sendEcho(v);
                     }
                 });
 
     }
 
-    public void sendVolume(View view) {
-        int volume = slider.getVolume();
-        Log.d("Done", "Clicked: volume is " + volume);
+    public void sendEcho(View view) {
+        int echo = slider.getEcho();
+        Log.d("Done", "Clicked: volume is " + echo);
 
         Intent intent = new Intent(from);
-        intent.putExtra("amount", volume);
+        intent.putExtra("amount", echo);
         sendBroadcast(intent);
         Intent intent2 = new Intent(getBaseContext(), SliderNavActivity.class);
         intent2.putExtra("start", 2);
