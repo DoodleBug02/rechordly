@@ -26,7 +26,7 @@
             circular:thumb_color="#1939cc"
             circular:thumb_size="20dp"
             circular:black_outline="25dp"
-            circular:soundwave="@drawable/default_wave"
+            circular:soundwave="@drawable/defaultwave"
             circular:time="300"/>
     </RelativeLayout>
 
