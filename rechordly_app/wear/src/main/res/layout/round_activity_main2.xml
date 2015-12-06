@@ -39,19 +39,19 @@
             android:src="@drawable/stop_btn"
             android:id="@+id/btnStop"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="45dp"
             android:onClick="btnClick" />
 
         <ImageButton
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="111dp"
+            android:layout_height="111dp"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
             android:scaleType="fitStart"
             android:src="@drawable/record_btn"
             android:id="@+id/btnStart"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="45dp"
             android:onClick="btnClick" />
 
         <TextView
@@ -59,17 +59,19 @@
             android:layout_height="wrap_content"
             android:id="@+id/record_text"
             android:layout_below="@id/btnStart"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:layout_centerHorizontal="true"
-            android:text="Record"/>
+            android:text="Record"
+            android:textSize="28sp"/>
 
         <Chronometer
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/record_time"
             android:layout_above="@id/btnStart"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="-38dp"
             android:layout_centerHorizontal="true"
+            android:textSize="23sp"
             />
 
 

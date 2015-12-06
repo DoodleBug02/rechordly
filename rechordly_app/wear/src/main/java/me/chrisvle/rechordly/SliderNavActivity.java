@@ -36,6 +36,9 @@ public class SliderNavActivity extends FragmentActivity implements RetryFragment
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/Mission_Gothic_Bold.otf");
+
         setContentView(R.layout.activity_slider_nav);
         Intent intent = getIntent();
         time = intent.getStringExtra("time");

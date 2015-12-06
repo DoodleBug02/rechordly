@@ -2,6 +2,7 @@ package me.chrisvle.rechordly;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -51,6 +52,7 @@ public class Main2Activity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/Mission_Gothic_Bold.otf");
         setContentView(R.layout.activity_main2);
         startService(new Intent(this, MessageService.class));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -64,6 +66,11 @@ public class Main2Activity extends Activity {
                 parentView = (RelativeLayout) findViewById(R.id.record_screen);
                 text = (TextView) findViewById(R.id.record_text);
                 time = (Chronometer) findViewById(R.id.record_time);
+
+                String boldfontPath = "fonts/Mission_Gothic_Bold.otf";
+                Typeface tf = Typeface.createFromAsset(getAssets(), boldfontPath);
+                text.setTypeface(tf);
+                time.setTypeface(tf);
 
             }
 

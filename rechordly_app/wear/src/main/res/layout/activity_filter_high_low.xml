@@ -16,6 +16,8 @@
         android:background="@drawable/gradient"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:textAllCaps="false"
+        android:textSize="22sp"
         android:text="High Pass Filter" />
 
     <Button
@@ -30,6 +32,8 @@
         android:background="@drawable/gradient"
         android:layout_below="@+id/high_pass"
         android:layout_marginTop="22dp"
+        android:textAllCaps="false"
+        android:textSize="22sp"
 
         />
 

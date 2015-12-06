@@ -15,15 +15,9 @@
         android:background="@drawable/gradient"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:textAllCaps="false"
+        android:textSize="30sp"
         android:text="Crop"/>
 
-    <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/dots4"-->
-        <!--android:src="@drawable/dot2"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_below="@id/crop_btn"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--/>-->
+
 </RelativeLayout>

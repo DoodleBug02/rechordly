@@ -29,6 +29,8 @@
         android:background="@drawable/gradient"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:textAllCaps="false"
+        android:textSize="30sp"
         android:text="Done"/>
 
     <!--<ImageView-->
