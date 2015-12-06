@@ -43,24 +43,25 @@
                 android:gravity="center"
                 android:textColor="#ffffff"
                 android:id="@+id/mytext"
-                android:textSize="30dp" />
+                android:textSize="40sp" />
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:id="@+id/plus_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="right"
-                android:layout_marginRight="16dp"
-                android:src="@drawable/play"/>
+                android:layout_marginRight="5dp"
+                android:src="@drawable/plus"/>
         </android.support.v7.widget.Toolbar>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabTextColor="#6f37ff"
-            app:tabSelectedTextColor="#b18fff"
-            app:tabMode="fixed"
-            app:tabGravity="fill"/>
+        <!--<android.support.design.widget.TabLayout-->
+            <!--android:id="@+id/tabs"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:tabTextColor="#6f37ff"-->
+            <!--app:tabSelectedTextColor="#b18fff"-->
+            <!--app:tabMode="fixed"-->
+            <!--app:tabGravity="fill"/>-->
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
