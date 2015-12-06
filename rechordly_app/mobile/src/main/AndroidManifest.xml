@@ -60,6 +60,11 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+        <service
+            android:name=".GainService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>
