@@ -8,9 +8,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar"
-        android:largeHeap="true">
+        android:theme="@style/AppTheme.NoActionBar" >
         <activity
             android:name=".PhoneMain"
             android:label="@string/app_name"
@@ -49,6 +49,11 @@
             android:name=".PlaybackService"
             android:enabled="true"
             android:exported="true" >
+        </service>
+        <service
+            android:name=".MessageSender"
+            android:enabled="true"
+            android:exported="true">
         </service>
     </application>
 

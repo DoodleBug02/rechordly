@@ -1,9 +1,9 @@
 package me.chrisvle.rechordly;
 
 //import android.app.ActionBar;
+
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -15,8 +15,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,8 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private TextView textview;
+    private ImageView mPlus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +57,32 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
 //        getSupportActionBar().setCustomView(R.layout.action_bar_custom);
         toolbar.setBackground(getDrawable(R.drawable.purp_gradient));
 
+        mPlus = (ImageView) toolbar.findViewById(R.id.plus_image);
+        mPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent openMain = new Intent(v.getContext(), MessageSender.class);
+                openMain.putExtra("START", "main");
+                startService(openMain);
+            }
+        });
+
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+//        tabLayout = (TabLayout) findViewById(R.id.tabs);
 
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setBackground(new ColorDrawable(Color.parseColor("#D6D6D6")));
-        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#6F37FF"));
+//        tabLayout.setupWithViewPager(viewPager);
+//        tabLayout.setBackground(new ColorDrawable(Color.parseColor("#D6D6D6")));
+//        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#6F37FF"));
 //        setBackgroundDrawable(new ColorDrawable("FF0000"));
 //        tabLayout.setBackgroundColor(0xD6D6D6);
 //        tabLayout.setSelectedTabIndicatorColor(0x6f37ff);
+
+        textview = (TextView) toolbar.findViewById(R.id.mytext);
+        Typeface font = Typeface.createFromAsset(toolbar.getContext().getAssets(), "font/Mission_Gothic_Bold.ttf");
+        textview.setTypeface(font);
+        Intent startPlaybackService = new Intent(this, PlaybackService.class);
+        startService(startPlaybackService);
 
     }
 
@@ -73,8 +94,8 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ItemFragment(), "all");
-        adapter.addFragment(new MusicFragment(), "music");
-        adapter.addFragment(new LyricsFragment(), "lyrics");
+//        adapter.addFragment(new MusicFragment(), "music");
+//        adapter.addFragment(new LyricsFragment(), "lyrics");
         viewPager.setAdapter(adapter);
     }
 
@@ -83,6 +104,7 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
         Log.d("DUMMY INTERACTION", "");
         Intent info = new Intent(getBaseContext(), InfoActivity.class);
         info.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        info.putExtra("path", "android.resource://" + getPackageName() + "/" + R.raw.completed2);
         startActivity(info);
 
     }

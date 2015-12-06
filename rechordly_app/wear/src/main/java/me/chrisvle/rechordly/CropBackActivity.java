@@ -22,6 +22,7 @@ public class CropBackActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_crop_back);
         time_s = getIntent().getStringExtra("time");
 
@@ -31,9 +32,13 @@ public class CropBackActivity extends Activity {
         slider = (CropSliderViewBack) findViewById(R.id.crop_b_slider);
         rel_circular = (RelativeLayout) findViewById(R.id.rel_crop_b_circular);
 
-        String[] tArray = time_s.split(":");
-        int t = 60*Integer.parseInt(tArray[0])+Integer.parseInt(tArray[1]);
-        slider.setTime(t);
+        if (time_s != null) {
+            String[] tArray = time_s.split(":");
+            int t = 60 * Integer.parseInt(tArray[0]) + Integer.parseInt(tArray[1]);
+            slider.setTime(t);
+        } else {
+            Log.d("CropTime", "Did not receive time for crop");
+        }
 
         String boldfontPath = "fonts/Mission_Gothic_Regular.otf";
         Typeface tf = Typeface.createFromAsset(getAssets(), boldfontPath);
@@ -58,8 +63,10 @@ public class CropBackActivity extends Activity {
 
     public void sendCropF(View view) {
         String t = slider.getTime();
-        Log.d("Done", "Clicked: crop time is " + t);
+        Log.d("CropBackActivity", "Clicked: crop time is " + t);
+        Intent intent = new Intent("/crop_back");
+        intent.putExtra("time", t);
+        sendBroadcast(intent);
          //Currently t is a string in MM:SS format
-        //FIXME Jeremy's code to send cropTimeF to phone here
     }
 }

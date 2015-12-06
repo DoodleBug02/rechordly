@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.chrisvle.rechordly">
+    package="me.chrisvle.rechordly" >
 
     <uses-feature android:name="android.hardware.type.watch" />
 
@@ -14,7 +14,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
 
         <!-- android:theme="@android:style/Theme.DeviceDefault"> -->
 
@@ -22,12 +22,19 @@
             android:name=".CropFbActivity"
             android:label="@string/title_activity_crop_chooser" />
         <activity
-            android:name=".VolumeChooserActivity"
+            android:name=".ChooserActivity"
             android:label="@string/title_activity_volume_chooser" />
 
         <service
             android:name=".MessageService"
-            android:label="Rechordly">
+            android:label="Rechordly" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".PhoneListener"
+            android:label="Rechordly" >
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
             </intent-filter>
@@ -35,7 +42,7 @@
 
         <activity
             android:name=".Main2Activity"
-            android:label="@string/title_activity_main2">
+            android:label="@string/title_activity_main2" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,7 +51,7 @@
         </activity>
         <activity
             android:name=".SliderNavActivity"
-            android:label="@string/title_activity_slider_nav">
+            android:label="@string/title_activity_slider_nav" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,7 +60,7 @@
         </activity>
         <activity
             android:name=".SaveActivity"
-            android:label="@string/title_activity_save">
+            android:label="@string/title_activity_save" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -62,7 +69,7 @@
         </activity>
         <activity
             android:name=".NameActivity"
-            android:label="@string/title_activity_name">
+            android:label="@string/title_activity_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -71,7 +78,7 @@
         </activity>
         <activity
             android:name=".CropFrontActivity"
-            android:label="@string/title_activity_main3">
+            android:label="@string/title_activity_main3" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -80,7 +87,7 @@
         </activity>
         <activity
             android:name=".CropBackActivity"
-            android:label="@string/title_activity_crop_back">
+            android:label="@string/title_activity_crop_back" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -88,8 +95,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FilterHighLowActivity"
-            android:label="@string/title_activity_filter_high_low">
+            android:name=".SpeechToTextActivity"
+            android:label="@string/title_activity_speech_to_text" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

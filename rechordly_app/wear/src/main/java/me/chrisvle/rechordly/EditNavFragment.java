@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 
 /**
@@ -19,12 +20,22 @@ import android.widget.ImageView;
  */
 public class EditNavFragment extends Fragment {
 
-    static final int NUM_ITEMS = 6;
+    static final int NUM_ITEMS = 5;
 
     private ViewPagerAdapter mAdapter;
     private ViewPager mPager;
     private ImageView dots;
     private int start;
+    private RelativeLayout.LayoutParams lp;
+    private float density;
+
+    private final float DONE = 43;
+    private final float LYRIC = 66;
+    private final float CROP = 89;
+    private final float GAIN = 112;
+    private final float ECHO = 134;
+
+
 
 
     private OnFragmentInteractionListener mListener;
@@ -46,7 +57,6 @@ public class EditNavFragment extends Fragment {
         mPager = (ViewPager) view.findViewById(R.id.pager2);
         mPager.setAdapter(mAdapter);
         mPager.setCurrentItem(start);
-
         dots = (ImageView) view.findViewById(R.id.dots);
 
         return view;
@@ -69,10 +79,8 @@ public class EditNavFragment extends Fragment {
                 case (2):
                     return new CropFragment();
                 case (3):
-                    return new VolumeFragment();
+                    return new GainFragment();
                 case (4):
-                    return new FilterFragment();
-                case (5):
                     return new EchoFragment();
             }
             return new DoneFragment();
@@ -83,42 +91,33 @@ public class EditNavFragment extends Fragment {
             return NUM_ITEMS;
         }
 
-//        @Override
-//        public void startUpdate(ViewGroup container){
-//            super.finishUpdate(container);
-//            int i = mPager.getCurrentItem();
-//            switch(i) {
-//                case(0):
-//                    dots.setVisibility(View.INVISIBLE);
-//                    return;
-//                case(1):
-//                    dots.setVisibility(View.INVISIBLE);
-//                    return;
-//                case(2):
-//                    dots.setImageDrawable(getDrawable(R.drawable.dot1));
-//                    dots.setVisibility(View.VISIBLE);
-//                    return;
-//                case(3):
-//                    dots.setImageDrawable(getDrawable(R.drawable.dot2));
-//                    dots.setVisibility(View.VISIBLE);
-//                    return;
-//                case(4):
-//                    dots.setImageDrawable(getDrawable(R.drawable.dot3));
-//                    dots.setVisibility(View.VISIBLE);
-//                    return;
-//                case(5):
-//                    dots.setImageDrawable(getDrawable(R.drawable.dot4));
-//                    dots.setVisibility(View.VISIBLE);
-//                    return;
-//                case(6):
-//                    dots.setVisibility(View.VISIBLE);
-//                    return;
-//                case(7):
-//                    dots.setVisibility(View.VISIBLE);
-//                    return;
-//            }
-//
-//        }
+        @Override
+        public void startUpdate(ViewGroup container){
+            super.finishUpdate(container);
+            int i = mPager.getCurrentItem();
+            switch(i) {
+                case (0):
+                    dots.setImageResource(R.drawable.dot1);
+                    return;
+                case(1):
+                    dots.setImageResource(R.drawable.dot2);
+                    return;
+                case(2):
+                    dots.setImageResource(R.drawable.dot3);
+                    return;
+                case(3):
+                    dots.setImageResource(R.drawable.dot4);
+                    return;
+                case(4):
+                    dots.setImageResource(R.drawable.dot5);
+                    return;
+                case(5):
+                    dots.setImageResource(R.drawable.dot6);
+                    return;
+
+            }
+
+        }
     }
 
 

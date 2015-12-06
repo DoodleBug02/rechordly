@@ -27,7 +27,9 @@
         android:background="@drawable/gradient"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:text="Volume"/>
+        android:textAllCaps="false"
+        android:textSize="30sp"
+        android:text="Gain"/>
 
     <!--<ImageView-->
         <!--android:layout_width="wrap_content"-->

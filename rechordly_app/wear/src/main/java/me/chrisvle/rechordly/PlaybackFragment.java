@@ -1,6 +1,7 @@
 package me.chrisvle.rechordly;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 
 /**
@@ -19,6 +21,7 @@ public class PlaybackFragment extends Fragment {
     private ImageButton play_btn;
     private ImageButton pause_btn;
     private RelativeLayout parent;
+    private TextView play_txt;
 
 
     public PlaybackFragment() {
@@ -31,9 +34,16 @@ public class PlaybackFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_playback, container, false);
+
         play_btn = (ImageButton) view.findViewById(R.id.play_btn);
         pause_btn = (ImageButton) view.findViewById(R.id.pause_btn);
         parent = (RelativeLayout) view.findViewById(R.id.play_screen);
+        play_txt = (TextView) view.findViewById(R.id.play_txt);
+
+        String boldfontPath = "fonts/Mission_Gothic_Bold.otf";
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), boldfontPath);
+        play_txt.setTypeface(tf);
+
 
         pause_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,9 +53,8 @@ public class PlaybackFragment extends Fragment {
                 getActivity().sendBroadcast(intent);
                 pause_btn.setVisibility(View.INVISIBLE);
                 play_btn.setVisibility(View.VISIBLE);
+                play_txt.setText("Play");
 
-
-                //FIXME @Jeremy add play music service logic
 
             }
         });
@@ -59,8 +68,8 @@ public class PlaybackFragment extends Fragment {
                 getActivity().sendBroadcast(intent);
                 play_btn.setVisibility(View.INVISIBLE);
                 pause_btn.setVisibility(View.VISIBLE);
+                play_txt.setText("Pause");
 
-                //FIXME @Jeremy add pause music service logic
 
             }
         });

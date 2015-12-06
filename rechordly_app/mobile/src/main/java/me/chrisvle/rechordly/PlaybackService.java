@@ -9,13 +9,20 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.util.Log;
 
-public class PlayBackService extends Service {
+import java.io.IOException;
 
-    private static MediaPlayer mp;
-    private BroadcastReceiver mReceiver;
-    private IntentFilter filter;
 
-    public PlayBackService() {
+
+public class PlaybackService extends Service {
+
+    String path = "";
+    private BroadcastReceiver playbackReceiver;
+    MediaPlayer player;
+    final String PLAY = "/play";
+    final String PAUSE = "/pause";
+    final String NEW_PLAYBACK_FILE = "/playback_file";
+    public PlaybackService() {
+
     }
 
     @Override
@@ -25,47 +32,48 @@ public class PlayBackService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public void onCreate() {
+        Log.d("PlaybackService", "Started");
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("/playback_file");
+        filter.addAction("/play");
+        filter.addAction("/pause");
+        playbackReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(PLAY)) {
+                    Log.d("PlaybackService", "Attemping play");
+                    String newPath = intent.getStringExtra("path");
+                    player  = new MediaPlayer();
 
-//        mReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                String command = intent.getStringExtra("Command");
-//                if (command.equals("play'")) {
-//                    play();
-//                }
-//                else {
-//                    pause();
-//                }
-//            }
-//        };
+                    path = newPath;
+                    player.stop();
+                    player.reset();
+                    try {
+                        Log.d("PlaybackService", newPath);
+                        player.setDataSource(newPath);
+                        player.prepare();
+                    } catch (IOException e) {
+                        Log.d("PlaybackService", "FILE COULD NOT BE FOUND TO PLAY");
+                    }
+                    player.start();
+                    Log.d("PlaybackService", String.valueOf(player.getCurrentPosition()));
+                } else if (intent.getAction().equals(PAUSE)) {
+                    Log.d("PlaybackService", "Pause Requested");
+                    player.stop();
+                    Log.d("PlaybackService", "Playback Paused");
 
-        String command = intent.getStringExtra("Command");
+                }
 
-        Log.d("THE COMMAND: ", command);
-
-        filter = new IntentFilter();
-        filter.addAction("Playback");
-        registerReceiver(mReceiver, filter);
-
-//        mp = new MediaPlayer();
-        mp = MediaPlayer.create(this, R.raw.orchestra);
-
-        if (command.equals("play")) {
-            play();
-        }
-        else {
-            pause();
-        }
-
-        return super.onStartCommand(intent, flags, startId);
+            }
+        };
+        registerReceiver(playbackReceiver, filter);
     }
 
-    private void play() {
-        mp.start();
-    }
 
-    private void pause() {
-        mp.pause();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(playbackReceiver);
     }
 }

@@ -2,6 +2,7 @@ package me.chrisvle.rechordly;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -45,6 +46,13 @@ public class RetryFragment extends Fragment {
         });
         time_txt = (TextView) view.findViewById(R.id.retry_time);
         time_txt.setText(mListener.getTime());
+
+        TextView retry_txt = (TextView) view.findViewById(R.id.retry_text);
+
+        String boldfontPath = "fonts/Mission_Gothic_Bold.otf";
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), boldfontPath);
+        time_txt.setTypeface(tf);
+        retry_txt.setTypeface(tf);
 
         return view;
     }

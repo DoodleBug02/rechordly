@@ -13,6 +13,9 @@
         android:background="@drawable/gradient"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:text="Echo"/>
+        android:textAllCaps="false"
+        android:textSize="30sp"
+        android:text="Echo"
+        />
 
 </RelativeLayout>
