@@ -1,7 +1,6 @@
 package me.chrisvle.rechordly;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -69,7 +68,7 @@ public class EchoFragment extends Fragment {
         volume_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ChooserActivity.class);
+                Intent intent = new Intent(getActivity(), EchoChooserActivity.class);
                 intent.putExtra("from", "/echo");
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

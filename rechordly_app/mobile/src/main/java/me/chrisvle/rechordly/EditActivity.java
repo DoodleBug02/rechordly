@@ -64,7 +64,9 @@ public class EditActivity extends AppCompatActivity {
 //        byte[] header = Arrays.copyOfRange(b, 0, 43);
 //
 //        d = toDoubleArray(noHeader);
-
+//
+//        d = PassFilters.fourierPassFilter(noHeader, 0.1, "low");
+//
 //        byte[] filtered = toByteArray(d);
 //        byte[] combined = concat(header, filtered);
 //        InputStream i = new ByteArrayInputStream(combined);

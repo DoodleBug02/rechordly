@@ -23,7 +23,7 @@
     <Button
         android:layout_width="150dp"
         android:layout_height="85dp"
-        android:id="@+id/volume_btn"
+        android:id="@+id/gain_btn"
         android:background="@drawable/gradient"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"

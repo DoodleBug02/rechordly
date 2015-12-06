@@ -18,7 +18,7 @@ import android.widget.Button;
  */
 public class GainFragment extends Fragment {
 
-    private Button volume_btn;
+    private Button gain_btn;
 
     public GainFragment() {
         // Required empty public constructor
@@ -30,11 +30,11 @@ public class GainFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_gain, container, false);
-        volume_btn = (Button) view.findViewById(R.id.volume_btn);
-        volume_btn.setOnClickListener(new View.OnClickListener() {
+        gain_btn = (Button) view.findViewById(R.id.gain_btn);
+        gain_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ChooserActivity.class);
+                Intent intent = new Intent(getActivity(), GainChooserActivity.class);
                 intent.putExtra("from", "/gain");
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
