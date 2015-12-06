@@ -63,8 +63,10 @@ public class CropBackActivity extends Activity {
 
     public void sendCropF(View view) {
         String t = slider.getTime();
-        Log.d("Done", "Clicked: crop time is " + t);
+        Log.d("CropBackActivity", "Clicked: crop time is " + t);
+        Intent intent = new Intent("/crop_back");
+        intent.putExtra("time", t);
+        sendBroadcast(intent);
          //Currently t is a string in MM:SS format
-        //FIXME Jeremy's code to send cropTimeF to phone here
     }
 }

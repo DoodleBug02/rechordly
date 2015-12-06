@@ -62,8 +62,10 @@ public class CropFrontActivity extends Activity {
 
     public void sendCropF(View view) {
         String t = slider.getTime();
-        Log.d("Done", "Clicked: crop time is " + t);
+        Log.d("CropFrontActivity", "Clicked: crop time is " + t);
         //Currently t is a string in MM:SS format
-        //FIXME Jeremy's code to send cropTimeF to phone here
+        Intent intent = new Intent("/crop_front");
+        intent.putExtra("time", t);
+        sendBroadcast(intent);
     }
 }

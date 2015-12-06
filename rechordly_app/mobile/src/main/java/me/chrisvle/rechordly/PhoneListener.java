@@ -60,7 +60,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
     public void onChannelOpened(Channel channel) {
         Log.d("PhoneListener", "Channel established");
         if (channel.getPath().equals("/new_recording")) {
-
+            File file = new File(Environment.getExternalStorageDirectory().getPath(), "currentFile.wav");
+            file.delete();
             file = new File(Environment.getExternalStorageDirectory().getPath(), "currentFile.wav");
             Log.d("this", String.valueOf(this.getFilesDir()));
             try {
