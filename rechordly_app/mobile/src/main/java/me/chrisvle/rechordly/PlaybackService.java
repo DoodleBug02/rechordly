@@ -11,7 +11,7 @@ import android.util.Log;
 
 import java.io.IOException;
 
-public class PlayBackService extends Service {
+public class PlaybackService extends Service {
 
     String path = "";
     private BroadcastReceiver playbackReceiver;
@@ -19,7 +19,7 @@ public class PlayBackService extends Service {
     final String PLAY = "/play";
     final String PAUSE = "/pause";
     final String NEW_PLAYBACK_FILE = "/playback_file";
-    public PlayBackService() {
+    public PlaybackService() {
     }
 
     @Override
