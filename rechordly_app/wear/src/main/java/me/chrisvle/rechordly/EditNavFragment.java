@@ -57,11 +57,7 @@ public class EditNavFragment extends Fragment {
         mPager = (ViewPager) view.findViewById(R.id.pager2);
         mPager.setAdapter(mAdapter);
         mPager.setCurrentItem(start);
-
-        dots = (ImageView) view.findViewById(R.id.light_dot);
-        lp= new RelativeLayout.LayoutParams(dots.getLayoutParams());
-        density = getActivity().getResources().getDisplayMetrics().density;
-
+        dots = (ImageView) view.findViewById(R.id.dots);
 
         return view;
         }
@@ -101,24 +97,22 @@ public class EditNavFragment extends Fragment {
             int i = mPager.getCurrentItem();
             switch(i) {
                 case (0):
-                    lp.setMargins((int)(DONE*density),0, 0, 0);
-                    dots.setLayoutParams(lp);
+                    dots.setImageResource(R.drawable.dot1);
                     return;
                 case(1):
-                    lp.setMargins((int)(LYRIC*density), 0, 0, 0);
-                    dots.setLayoutParams(lp);
+                    dots.setImageResource(R.drawable.dot2);
                     return;
                 case(2):
-                    lp.setMargins( (int)(CROP*density), 0, 0, 0);
-                    dots.setLayoutParams(lp);
+                    dots.setImageResource(R.drawable.dot3);
                     return;
                 case(3):
-                    lp.setMargins((int)(GAIN*density), 0, 0, 0);
-                    dots.setLayoutParams(lp);
+                    dots.setImageResource(R.drawable.dot4);
                     return;
                 case(4):
-                    lp.setMargins((int)(ECHO*density), 0, 0, 0);
-                    dots.setLayoutParams(lp);
+                    dots.setImageResource(R.drawable.dot5);
+                    return;
+                case(5):
+                    dots.setImageResource(R.drawable.dot6);
                     return;
 
             }

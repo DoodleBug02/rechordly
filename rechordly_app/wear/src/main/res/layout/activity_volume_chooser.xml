@@ -1,13 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.wearable.view.WatchViewStub xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/watch_view_stub"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:rectLayout="@layout/round_activity_volume_chooser"
-    app:roundLayout="@layout/round_activity_volume_chooser"
-    tools:context="me.chrisvle.rechordly.VolumeChooserActivity"
-    tools:deviceIds="wear">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="me.chrisvle.rechordly.VolumeChooserActivity"
+        tools:deviceIds="wear_round"
+        android:background="#000000">
 
-</android.support.wearable.view.WatchViewStub>
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:circular="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rel_circular">
+
+            <me.chrisvle.rechordly.VolumeSliderView
+                android:id="@+id/circular"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                circular:angle="3.14"
+                circular:start_angle="0"
+                circular:border_color="#17013f"
+                circular:border_thickness="20dp"
+                circular:thumb_color="#1939cc"
+                circular:thumb_size="18dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Volume"
+                android:layout_width="35dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:paddingBottom="0dp"
+                android:text="5"
+                android:textColor="#4b96ec"
+                android:textSize="30pt"
+                >
+            </TextView>
+
+            <Button
+                android:layout_width="90dp"
+                android:layout_height="35dp"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:paddingTop="0dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/gradient"
+                android:text="Done"
+                android:id="@+id/volume_done"
+                android:textAllCaps="false"
+              />
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+

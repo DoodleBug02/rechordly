@@ -46,28 +46,29 @@ public class ChooserActivity extends Activity {
                         sendVolume(v);
                     }
                 });
+
+            }
+
+            public void sendVolume(View view) {
+                int volume = slider.getVolume();
+                Log.d("Done", "Clicked: volume is " + volume);
+
+                Intent intent = new Intent(from);
+                intent.putExtra("amount", volume);
+                sendBroadcast(intent);
+                Intent intent2 = new Intent(getBaseContext(), SliderNavActivity.class);
+                intent2.putExtra("start", 2);
+                if (from.equalsIgnoreCase("/gain")) {
+                    intent2.putExtra("start2", 3);
+                } else {
+                    intent2.putExtra("start2", 4);
+
+                }
+                intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent2);
+
             }
         });
-    }
-
-    public void sendVolume(View view) {
-        int volume = slider.getVolume();
-        Log.d("Done", "Clicked: volume is " + volume);
-
-        Intent intent = new Intent(from);
-        intent.putExtra("amount", volume);
-        sendBroadcast(intent);
-        Intent intent2 = new Intent(getBaseContext(), SliderNavActivity.class);
-        intent2.putExtra("start", 2);
-        if (from.equalsIgnoreCase("/gain")) {
-            intent2.putExtra("start2", 3);
-        } else {
-            intent2.putExtra("start2", 4);
-
-        }
-        intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        intent2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent2);
-
     }
 }

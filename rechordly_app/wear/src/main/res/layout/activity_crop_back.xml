@@ -39,9 +39,10 @@
 
         <TextView
             android:id="@+id/timeB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
+            android:gravity="center"
             android:layout_marginTop="38dp"
             android:paddingBottom="0dp"
             android:text="00:00"
@@ -50,8 +51,10 @@
             >
         </TextView>
         <Button
-            android:layout_width="70dp"
-            android:layout_height="25dp"
+            android:layout_width="90dp"
+            android:layout_height="35dp"
+            android:textSize="20sp"
+            android:textAllCaps="false"
             android:layout_gravity="center"
             android:paddingTop="0dp"
             android:layout_marginTop="75dp"
