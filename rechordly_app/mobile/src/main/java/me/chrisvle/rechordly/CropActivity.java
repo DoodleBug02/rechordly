@@ -82,9 +82,9 @@ public class CropActivity extends AppCompatActivity {
             }
         });
 
-        TrimToSelection(getResources().openRawResource(R.raw.orchestra), 1, 50);
+        TrimToSelection(getResources().openRawResource(R.raw.currentfile), 1, 5);
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
-        File music = new File(path, "orch2.wav");
+        File music = new File(path, "curr.wav");
         Log.d("PathInCreate", music.getAbsolutePath());
 
         mp = new MediaPlayer();
@@ -112,7 +112,7 @@ public class CropActivity extends AppCompatActivity {
         // If the sample file exists, try to trim it
         if (f != null) {
             Log.d("File", "Orchestra is an actual file!!");
-            trimmedSample = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "orch2.wav");
+            trimmedSample = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "curr.wav");
             if (trimmedSample.isFile()) {
                 Log.d("Deleting", "Deleting because it already exists");
                 trimmedSample.delete();
