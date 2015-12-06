@@ -6,7 +6,8 @@
         android:layout_height="match_parent"
         android:id="@+id/record_screen"
         tools:context="me.chrisvle.rechordly.Main2Activity"
-        tools:deviceIds="wear_round">
+        tools:deviceIds="wear_round"
+        android:keepScreenOn="true">
 
 
         <!--<ImageView-->
