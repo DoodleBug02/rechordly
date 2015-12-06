@@ -24,10 +24,6 @@ public class VolumeChooserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volume_chooser);
 
-        final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
-        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
-            @Override
-            public void onLayoutInflated(WatchViewStub stub) {
                 volume = (TextView) findViewById(R.id.Volume);
                 doneButton = (Button) findViewById(R.id.volume_done);
                 slider = (VolumeSliderView) findViewById(R.id.circular);
@@ -43,8 +39,7 @@ public class VolumeChooserActivity extends Activity {
                         sendVolume(v);
                     }
                 });
-            }
-        });
+
     }
 
     public void sendVolume(View view) {
