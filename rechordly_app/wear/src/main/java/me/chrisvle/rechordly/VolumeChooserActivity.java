@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,7 +17,7 @@ public class VolumeChooserActivity extends Activity {
     private TextView volume;
     private VolumeSliderView slider;
     private RelativeLayout rel_circular;
-    private ImageButton doneButton;
+    private Button doneButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class VolumeChooserActivity extends Activity {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
                 volume = (TextView) findViewById(R.id.Volume);
-                doneButton = (ImageButton) findViewById(R.id.volume_done);
+                doneButton = (Button) findViewById(R.id.volume_done);
                 slider = (VolumeSliderView) findViewById(R.id.circular);
                 rel_circular = (RelativeLayout) findViewById(R.id.rel_circular);
 
@@ -51,13 +51,14 @@ public class VolumeChooserActivity extends Activity {
         int volume = slider.getVolume();
         Log.d("Done", "Clicked: volume is " + volume);
 
-        //FIXME Jeremy's code here
+        //FIXME @Jeremy code here
 
-        Intent intent = new Intent(getBaseContext(), VolumeActivity.class);
-      //  intent.putExtra("time", time);
+        Intent intent = new Intent(getBaseContext(), SliderNavActivity.class);
+        intent.putExtra("start", 2);
+        intent.putExtra("start2", 3);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
-
 
     }
 }

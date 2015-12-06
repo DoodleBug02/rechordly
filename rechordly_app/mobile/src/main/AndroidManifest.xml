@@ -9,7 +9,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar" >
+        android:theme="@style/AppTheme.NoActionBar"
+        android:largeHeap="true">
         <activity
             android:name=".PhoneMain"
             android:label="@string/app_name"
@@ -38,10 +39,6 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".PlaybackActivity"
-            android:label="@string/title_activity_playback"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CropActivity"
             android:label="@string/title_activity_crop"

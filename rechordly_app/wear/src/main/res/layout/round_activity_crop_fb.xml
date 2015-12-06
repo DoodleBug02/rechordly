@@ -7,29 +7,59 @@
     tools:context=".CropFbActivity"
     tools:deviceIds="wear_round">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/front_btn"
-        android:adjustViewBounds="true"
-        android:src="@drawable/front_crop_btn"
-        android:background="@android:color/transparent"
-        android:scaleType="fitStart"
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@drawable/gradient"
+        android:text="Front"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"
-        android:onClick="front_click"/>
+        android:onClick="front_click"
+        android:textAllCaps="false"
+        android:textSize="25sp"
+        android:id="@+id/front_btn"
+        />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/back_btn"
-        android:src="@drawable/back_crop_btn"
-        android:adjustViewBounds="true"
-        android:background="@android:color/transparent"
-        android:scaleType="fitStart"
+    <!--<ImageButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/front_btn"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:src="@drawable/front_crop_btn"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:scaleType="fitStart"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_marginTop="36dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:onClick="front_click"/>-->
+
+    <!--<ImageButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/back_btn"-->
+        <!--android:src="@drawable/back_crop_btn"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:scaleType="fitStart"-->
+        <!--android:layout_below="@+id/front_btn"-->
+        <!--android:layout_marginTop="22dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:onClick="back_click"/>-->
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:paddingTop="0dp"
+        android:background="@drawable/gradient"
+        android:text="Back"
         android:layout_below="@+id/front_btn"
         android:layout_marginTop="22dp"
         android:layout_centerHorizontal="true"
-        android:onClick="back_click"/>
+        android:textAllCaps="false"
+        android:textSize="25sp"
+        android:onClick="back_click"
+        android:id="@+id/back_btn"
+        />
 </RelativeLayout>

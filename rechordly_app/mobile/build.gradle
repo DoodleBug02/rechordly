@@ -10,6 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -24,7 +25,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     wearApp project(':wear')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
@@ -33,6 +34,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:8.3.0'
     compile 'com.google.android.gms:play-services-identity:8.3.0'
     compile 'com.google.android.gms:play-services-gcm:8.3.0'
+    compile files('libs/commons-math3-3.5.jar')
+    compile 'com.github.DASAR:Minim-Android:a73b596916@aar'
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
 }

@@ -72,6 +72,12 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
 
             channel.receiveFile(mApiClient, Uri.fromFile(file), false);
         }
+        else if (channel.getPath().equals("/edit_recording")) {
+
+        }
+        else if (channel.getPath().equals("/playback")) {
+
+        }
 
     }
 

@@ -7,10 +7,37 @@
     tools:deviceIds="wear_round">
 
     <TextView
-        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Name\n Recording?"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_round" />
+        android:layout_marginTop="25dp"
+        android:id="@+id/name_txt"
+        android:gravity="center"
+        android:textSize="24sp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom = "45dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        >
+
+        <ImageButton
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/check_btn"
+            android:id="@+id/check_btn"
+            android:layout_marginLeft="28dp"/>
+
+        <ImageButton
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/cross"
+            android:id="@+id/cross_btn"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/check_btn"/>
+
+    </RelativeLayout>
 </RelativeLayout>

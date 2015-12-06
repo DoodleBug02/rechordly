@@ -19,29 +19,11 @@
         <!-- android:theme="@android:style/Theme.DeviceDefault"> -->
 
         <activity
-            android:name=".doneActivity"
-            android:label="@string/title_activity_done" />
-        <activity
             android:name=".CropFbActivity"
             android:label="@string/title_activity_crop_chooser" />
         <activity
             android:name=".VolumeChooserActivity"
             android:label="@string/title_activity_volume_chooser" />
-        <activity
-            android:name=".CropActivity"
-            android:label="@string/title_activity_crop" />
-        <activity
-            android:name=".VolumeActivity"
-            android:label="@string/title_activity_volume" />
-        <activity
-            android:name=".SaveRetryActivity"
-            android:label="@string/title_activity_save_retry" />
-        <activity
-            android:name=".EffectsChooserActivity"
-            android:label="@string/title_activity_effects_chooser" />
-        <activity
-            android:name=".FilterActivity"
-            android:label="@string/title_activity_effects" />
 
         <service
             android:name=".MessageService"
@@ -69,8 +51,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SaveActivity"
-            android:label="@string/title_activity_save">
+            android:name=".SliderNavActivity"
+            android:label="@string/title_activity_slider_nav">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -78,8 +60,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PlaybackActivity"
-            android:label="@string/title_activity_playback">
+            android:name=".SaveActivity"
+            android:label="@string/title_activity_save">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -114,8 +96,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EditNavActivity"
-            android:label="@string/title_activity_edit_nav">
+            android:name=".FilterHighLowActivity"
+            android:label="@string/title_activity_filter_high_low">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,11 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.wearable.view.WatchViewStub xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/watch_view_stub"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:rectLayout="@layout/round_activity_playback"
-    app:roundLayout="@layout/round_activity_playback"
-    tools:context="me.chrisvle.rechordly.PlaybackActivity"
-    tools:deviceIds="wear"></android.support.wearable.view.WatchViewStub>
+    android:background="#000000"
+    android:id="@+id/play_screen"
+    tools:context="me.chrisvle.rechordly.PlaybackFragment"
+    tools:deviceIds="wear_round">
+
+
+    <ImageButton
+        android:layout_width="111dp"
+        android:layout_height="111dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:src="@drawable/pause_btn"
+        android:id="@+id/pause_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        />
+
+    <ImageButton
+        android:layout_width="111dp"
+        android:layout_height="111dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:src="@drawable/play_btn"
+        android:id="@+id/play_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/swipe_play"
+        android:src="@drawable/right_arrow"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/play_btn"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/play_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:id="@+id/play_txt"
+        android:text="Play"
+        android:textSize="28sp"
+        />
+
+
+</RelativeLayout>
