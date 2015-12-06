@@ -36,12 +36,12 @@
 
             <TextView
                 android:id="@+id/Volume"
-                android:layout_width="80dp"
+                android:layout_width="35dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
                 android:paddingBottom="0dp"
-                android:text="50"
+                android:text="5"
                 android:textColor="#4b96ec"
                 android:textSize="30pt"
                 >

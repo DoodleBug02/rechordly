@@ -39,9 +39,10 @@
 
         <TextView
             android:id="@+id/timeB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
+            android:gravity="center"
             android:layout_marginTop="38dp"
             android:paddingBottom="0dp"
             android:text="00:00"
