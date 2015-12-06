@@ -25,10 +25,11 @@
             circular:border_thickness="20dp"
             circular:thumb_color="#1939cc"
             circular:thumb_size="20dp"
-            circular:black_outline="25dp"
+            circular:black_outline="40dp"
             circular:soundwave="@drawable/defaultwave"
             circular:time="300"/>
     </RelativeLayout>
+
 
 
     <LinearLayout
@@ -52,12 +53,12 @@
         </TextView>
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="45dp"
+            android:layout_width="85dp"
+            android:layout_height="35dp"
             android:textSize="20sp"
             android:layout_gravity="center"
             android:paddingTop="0dp"
-            android:layout_marginTop="95dp"
+            android:layout_marginTop="75dp"
             android:background="@drawable/gradient"
             android:textAllCaps="false"
             android:text="Done"
@@ -66,18 +67,21 @@
             />
 
         <!--<ImageButton-->
-            <!--android:id="@+id/crop_f_done"-->
-            <!--android:layout_width="60dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:adjustViewBounds="true"-->
-            <!--android:scaleType="fitStart"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:paddingTop="0dp"-->
-            <!--android:layout_marginTop="75dp"-->
-            <!--android:src="@drawable/done_btn_sm"-->
-            <!--android:background="@android:color/transparent"-->
-            <!--/>-->
+        <!--android:id="@+id/crop_f_done"-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:scaleType="fitStart"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:paddingTop="0dp"-->
+        <!--android:layout_marginTop="75dp"-->
+        <!--android:src="@drawable/done_btn_sm"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--/>-->
 
     </LinearLayout>
+
+
+
 
 </RelativeLayout>

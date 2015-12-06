@@ -8,6 +8,8 @@ tools:context=".MainActivity"
 tools:deviceIds="wear_round"
 android:background="#000000">
 
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:circular="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -28,40 +30,42 @@ android:background="#000000">
 
 </RelativeLayout>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/echo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:paddingBottom="0dp"
-        android:text="50"
-        android:textColor="#4b96ec"
-        android:textSize="30pt"
-        >
-    </TextView>
+        <TextView
+            android:id="@+id/echo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="45dp"
+            android:paddingBottom="0dp"
+            android:text="50"
+            android:textColor="#4b96ec"
+            android:textSize="30pt"
+            >
+        </TextView>
 
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="45dp"
-        android:textSize="20sp"
-        android:layout_gravity="center"
-        android:paddingTop="0dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/gradient"
-        android:text="Done"
-        android:id="@+id/echo_done"
-        android:textAllCaps="false"
-        />
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:paddingTop="0dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/gradient"
+            android:text="Done"
+            android:id="@+id/echo_done"
+            android:textAllCaps="false"
+            />
 
-</LinearLayout>
+    </LinearLayout>
+
+
 
 
 
