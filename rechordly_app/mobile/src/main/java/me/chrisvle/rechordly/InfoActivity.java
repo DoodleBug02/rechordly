@@ -40,6 +40,7 @@ public class InfoActivity extends AppCompatActivity {
 
             }
         });
+
         Intent intent = getIntent();
         String path = intent.getStringExtra("path");
         mp = new MediaPlayer();
