@@ -11,7 +11,9 @@ import android.util.Log;
 
 import java.io.IOException;
 
-public class PlayBackService extends Service {
+
+
+public class PlaybackService extends Service {
 
     String path = "";
     private BroadcastReceiver playbackReceiver;
@@ -19,7 +21,8 @@ public class PlayBackService extends Service {
     final String PLAY = "/play";
     final String PAUSE = "/pause";
     final String NEW_PLAYBACK_FILE = "/playback_file";
-    public PlayBackService() {
+    public PlaybackService() {
+
     }
 
     @Override
@@ -34,34 +37,30 @@ public class PlayBackService extends Service {
         IntentFilter filter = new IntentFilter();
         filter.addAction("/playback_file");
         filter.addAction("/play");
-        player  = new MediaPlayer();
         filter.addAction("/pause");
         playbackReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(PLAY)) {
+                    Log.d("PlaybackService", "Attemping play");
                     String newPath = intent.getStringExtra("path");
-                    if (newPath.equalsIgnoreCase(path)) {
-                        if (!player.isPlaying()) {
-                            player.start();
-                            Log.d("PlaybackService", "Playback Started");
-                        }
-                    } else {
-                        path = newPath;
-                        player.stop();
-                        player.reset();
-                        try {
-                            player.setDataSource(newPath);
-                            player.prepare();
-                        } catch (IOException e) {
-                            Log.d("PlaybackService", "FILE COULD NOT BE FOUND TO PLAY");
-                        }
-                        player.start();
+                    player  = new MediaPlayer();
 
+                    path = newPath;
+                    player.stop();
+                    player.reset();
+                    try {
+                        Log.d("PlaybackService", newPath);
+                        player.setDataSource(newPath);
+                        player.prepare();
+                    } catch (IOException e) {
+                        Log.d("PlaybackService", "FILE COULD NOT BE FOUND TO PLAY");
                     }
+                    player.start();
+                    Log.d("PlaybackService", String.valueOf(player.getCurrentPosition()));
                 } else if (intent.getAction().equals(PAUSE)) {
                     Log.d("PlaybackService", "Pause Requested");
-                    player.pause();
+                    player.stop();
                     Log.d("PlaybackService", "Playback Paused");
 
                 }

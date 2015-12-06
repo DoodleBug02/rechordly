@@ -15,6 +15,7 @@
         android:layout_centerHorizontal="true"
         android:textAllCaps="false"
         android:textSize="30sp"
-        android:text="Echo"/>
+        android:text="Echo"
+        android:onClick="onButtonPressed"/>
 
 </RelativeLayout>
