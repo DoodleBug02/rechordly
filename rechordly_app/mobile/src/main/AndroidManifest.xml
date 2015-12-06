@@ -53,7 +53,12 @@
         <service
             android:name=".MessageSender"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true" >
+        </service>
+        <service
+            android:name=".EchoService"
+            android:enabled="true"
+            android:exported="true" >
         </service>
     </application>
 
