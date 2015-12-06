@@ -63,6 +63,9 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
 //        tabLayout.setBackgroundColor(0xD6D6D6);
 //        tabLayout.setSelectedTabIndicatorColor(0x6f37ff);
 
+        Intent serviceIntent = new Intent(this, PlaybackService.class);
+        startService(serviceIntent);
+
     }
 
 

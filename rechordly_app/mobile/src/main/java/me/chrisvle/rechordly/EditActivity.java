@@ -192,7 +192,7 @@ public class EditActivity extends AppCompatActivity {
         // convert to range from -1 to (just below) 1
         return s / 32768.0;
     }
-    
+
     public static byte[] toByteArray(double[] doubleArray){
         int times = Double.SIZE / Byte.SIZE;
         byte[] bytes = new byte[doubleArray.length * times];
