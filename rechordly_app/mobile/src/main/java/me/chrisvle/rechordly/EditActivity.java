@@ -13,7 +13,6 @@ import android.widget.Button;
 import com.musicg.wave.Wave;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -45,16 +44,7 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
 
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
-        File music = new File(path, "orch2.wav");
-
-//        byte[] b = null;
-//        try {
-//            b = getBytesFromFile(music);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        Echo.echoFilter(b, music);
+        File music = new File(path, "curr.wav");
 
         try {
             b = getBytesFromFile(music);
@@ -62,25 +52,26 @@ public class EditActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-//        Thread thread = new Thread() {
-//            @Override
-//            public void run() {
-        d = PassFilters.calculateFFT(b, 5000, "low");
-//            }
-//        };
+        Echo.echoFilter(b, music);
+
+//        try {
+//            b = getBytesFromFile(music);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 //
-//        thread.start();
+//        d = PassFilters.calculateFFT(b, 1, "low");
 
-        byte[] done = toByteArray(d);
-        InputStream i = new ByteArrayInputStream(done);
-        saveFile(i);
+//        byte[] done = toByteArray(d);
+//        InputStream i = new ByteArrayInputStream(done);
+//        saveFile(i);
 
-        File myPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
-        File myFilter = new File(path, "filter.wav");
+//        File myPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+//        File myFilter = new File(myPath, "filter.wav");
 
         mp = new MediaPlayer();
         try {
-            mp.setDataSource(myFilter.getAbsolutePath());
+            mp.setDataSource(music.getAbsolutePath());
             mp.prepare();
         } catch (IOException e) {
             e.printStackTrace();

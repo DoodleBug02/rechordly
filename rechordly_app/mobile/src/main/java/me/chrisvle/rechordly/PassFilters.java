@@ -1,5 +1,7 @@
 package me.chrisvle.rechordly;
 
+import android.util.Log;
+
 /**
  * Created by Chris on 12/4/15.
  */
@@ -26,6 +28,7 @@ public class PassFilters {
         for(int i = 0; i < (mNumberOfFFTPoints/2); i++)
         {
             double val = Math.sqrt(Math.pow(y[i].re(), 2) + Math.pow(y[i].im(), 2));
+            Log.d("Value", Double.toString(val));
             if (type.equals("low")) {
                 if (val >= level){
                     absSignal[i] = val;
