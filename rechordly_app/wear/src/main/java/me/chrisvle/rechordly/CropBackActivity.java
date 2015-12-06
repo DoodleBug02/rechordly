@@ -16,7 +16,7 @@ public class CropBackActivity extends Activity {
     private CropSliderViewBack slider;
     private RelativeLayout rel_circular;
     private Button doneButton;
-    private String time_s;
+    private String totalTime;
 
 
     @Override
@@ -24,7 +24,7 @@ public class CropBackActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_crop_back);
-        time_s = getIntent().getStringExtra("time");
+        totalTime = getIntent().getStringExtra("time");
 
 
         time = (TextView) findViewById(R.id.timeB);
@@ -32,8 +32,8 @@ public class CropBackActivity extends Activity {
         slider = (CropSliderViewBack) findViewById(R.id.crop_b_slider);
         rel_circular = (RelativeLayout) findViewById(R.id.rel_crop_b_circular);
 
-        if (time_s != null) {
-            String[] tArray = time_s.split(":");
+        if (totalTime != null) {
+            String[] tArray = totalTime.split(":");
             int t = 60 * Integer.parseInt(tArray[0]) + Integer.parseInt(tArray[1]);
             slider.setTime(t);
         } else {
@@ -52,7 +52,7 @@ public class CropBackActivity extends Activity {
                 Intent intent = new Intent(v.getContext(), SliderNavActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra("time", time_s);
+                intent.putExtra("time", totalTime);
                 intent.putExtra("start", 2);
                 intent.putExtra("start2", 2);
                 startActivity(intent);

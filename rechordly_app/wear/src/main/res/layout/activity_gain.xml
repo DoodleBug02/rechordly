@@ -23,13 +23,13 @@
     <Button
         android:layout_width="150dp"
         android:layout_height="85dp"
-        android:id="@+id/volume_btn"
+        android:id="@+id/gain_btn"
         android:background="@drawable/gradient"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:textAllCaps="false"
         android:textSize="30sp"
-        android:text="Volume"/>
+        android:text="Gain"/>
 
     <!--<ImageView-->
         <!--android:layout_width="wrap_content"-->

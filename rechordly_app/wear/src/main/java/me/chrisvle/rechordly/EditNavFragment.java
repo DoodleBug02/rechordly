@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 
 /**
@@ -20,21 +19,12 @@ import android.widget.RelativeLayout;
  */
 public class EditNavFragment extends Fragment {
 
-    static final int NUM_ITEMS = 6;
+    static final int NUM_ITEMS = 5;
 
     private ViewPagerAdapter mAdapter;
     private ViewPager mPager;
     private ImageView dots;
     private int start;
-    private RelativeLayout.LayoutParams lp;
-    private float density;
-
-    private final float DONE = 43;
-    private final float LYRIC = 66;
-    private final float CROP = 89;
-    private final float VOLUME = 112;
-    private final float FILTER = 134;
-    private final float ECHO = (float) 156.5;
 
 
 
@@ -58,11 +48,7 @@ public class EditNavFragment extends Fragment {
         mPager = (ViewPager) view.findViewById(R.id.pager2);
         mPager.setAdapter(mAdapter);
         mPager.setCurrentItem(start);
-
-        dots = (ImageView) view.findViewById(R.id.light_dot);
-        lp= new RelativeLayout.LayoutParams(dots.getLayoutParams());
-        density = getActivity().getResources().getDisplayMetrics().density;
-
+        dots = (ImageView) view.findViewById(R.id.dots);
 
         return view;
         }
@@ -84,10 +70,8 @@ public class EditNavFragment extends Fragment {
                 case (2):
                     return new CropFragment();
                 case (3):
-                    return new VolumeFragment();
+                    return new GainFragment();
                 case (4):
-                    return new FilterFragment();
-                case (5):
                     return new EchoFragment();
             }
             return new DoneFragment();
@@ -104,32 +88,19 @@ public class EditNavFragment extends Fragment {
             int i = mPager.getCurrentItem();
             switch(i) {
                 case (0):
-                    lp.setMargins((int)(DONE*density),0, 0, 0);
-                    dots.setLayoutParams(lp);
+                    dots.setImageResource(R.drawable.dot1);
                     return;
                 case(1):
-                    lp.setMargins((int)(LYRIC*density), 0, 0, 0);
-                    dots.setLayoutParams(lp);
+                    dots.setImageResource(R.drawable.dot2);
                     return;
                 case(2):
-                    lp.setMargins( (int)(CROP*density), 0, 0, 0);
-                    dots.setLayoutParams(lp);
+                    dots.setImageResource(R.drawable.dot3);
                     return;
                 case(3):
-                    lp.setMargins((int)(VOLUME*density), 0, 0, 0);
-                    dots.setLayoutParams(lp);
+                    dots.setImageResource(R.drawable.dot4);
                     return;
                 case(4):
-                    lp.setMargins((int)(FILTER*density), 0, 0, 0);
-                    dots.setLayoutParams(lp);
-                    return;
-                case(5):
-                    lp.setMargins((int)(ECHO*density), 0, 0, 0);
-                    dots.setLayoutParams(lp);
-                    return;
-                case(6):
-                    lp.setMargins((int)(FILTER*density), 0, 0, 0);
-                    dots.setLayoutParams(lp);
+                    dots.setImageResource(R.drawable.dot5);
                     return;
 
             }

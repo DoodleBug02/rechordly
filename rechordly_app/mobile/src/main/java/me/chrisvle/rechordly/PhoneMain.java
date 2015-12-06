@@ -81,6 +81,8 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
         textview = (TextView) toolbar.findViewById(R.id.mytext);
         Typeface font = Typeface.createFromAsset(toolbar.getContext().getAssets(), "font/Mission_Gothic_Bold.ttf");
         textview.setTypeface(font);
+        Intent startPlaybackService = new Intent(this, PlaybackService.class);
+        startService(startPlaybackService);
 
     }
 

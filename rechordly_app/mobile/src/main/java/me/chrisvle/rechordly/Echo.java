@@ -10,7 +10,7 @@ import java.io.RandomAccessFile;
  */
 public class Echo {
 
-    public static void echoFilter (byte[] b, File music) {
+    public static void echoFilter (byte[] b, File music, Double level) {
         byte[] temp = b.clone();
         RandomAccessFile randomAccessFile = null;
         try {
@@ -24,8 +24,9 @@ public class Echo {
             e.printStackTrace();
         }
         int N = 8000 / 8;
+        level = level/100;
         for (int n = N + 1; n < b.length; n++) {
-            b[n] = (byte) (temp[n] + .5 * temp[n - N]);
+            b[n] = (byte) (temp[n] + level * temp[n - N]);
         }
         try {
             randomAccessFile.write(b);

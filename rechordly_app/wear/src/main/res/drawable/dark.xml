@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <!--  Gradient Bg for listrow -->
+            <gradient
+                android:startColor="#3740ff"
+                android:centerColor="#3f75ff"
+                android:endColor="#4096ff"
+                android:angle="90" />
+        </shape>
+    </item>
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <gradient android:angle="90" android:startColor="#880f0f10" android:centerColor="#880d0d0f" android:endColor="#885d5d5e"/>
+        </shape>
+    </item>
+</layer-list>

@@ -39,6 +39,11 @@ public class NameActivity extends Activity {
                 check.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent intent = new Intent(getBaseContext(), SpeechToTextActivity.class);
+                        intent.putExtra("from", "/name");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
                         //FIXME call google voice @Jeremy
                     }
                 });
