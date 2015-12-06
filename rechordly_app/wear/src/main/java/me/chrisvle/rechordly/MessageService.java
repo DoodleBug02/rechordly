@@ -27,7 +27,7 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
     private String crop_front_value;
     private String crop_back_value;
     private String lyrics;
-    private String gain;
+    private String gain_value;
     private String echo_value;
     private String old_name_value;
     private String new_name_value;
@@ -80,29 +80,45 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
 
                 } else if (intent.getAction().equals("/crop_front")) {
                     Log.d("MessageService", "Crop Front Requested");
+                    crop_front_value = intent.getStringExtra("time");
 
                 } else if (intent.getAction().equals("/crop_back")) {
                     Log.d("MessageService", "Crop Back Requested");
+                    crop_back_value = intent.getStringExtra("time");
+
 
                 } else if (intent.getAction().equals("/lyrics")) {
                     Log.d("MessageService", "New Lyrics Requested");
+                    lyrics = intent.getStringExtra("lyrics");
 
                 } else if (intent.getAction().equals("/gain")) {
                     Log.d("MessageService", "Gain Requested");
+                    gain_value = intent.getStringExtra("amount");
 
                 } else if (intent.getAction().equals("/echo")) {
                     Log.d("MessageService", "Echo Requested");
+                    echo_value = intent.getStringExtra("amount");
 
 
                 } else if (intent.getAction().equals("/name")) {
                     Log.d("MessageService", "Name Change Requested");
+                    new_name_value = intent.getStringExtra("name");
 
                 } else if (intent.getAction().equals("/save")) {
                     Log.d("MessageService", "Save Requested");
+                    String message = new_name_value +
+                                    "|" + crop_front_value +
+                                    "|" + crop_back_value +
+                                    "|" + gain_value +
+                                    "|" + echo_value +
+                                    "|" + lyrics;
+                    sendMessage("/save", message);
+                    clearVars();
 
 
                 } else if (intent.getAction().equals("/retry")) {
                     Log.d("MessageService", "Retry Requested");
+                    clearVars();
 
 
                 }
@@ -115,6 +131,21 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
     public MessageService() {
 
     }
+
+    private void clearVars() {
+        crop_front_value = "";
+        crop_back_value = "";
+        lyrics= "";
+        gain_value= "";
+        echo_value= "";
+        old_name_value= "";
+        new_name_value= "";
+        retry= "";
+        save= "";
+
+
+    }
+
 
 
     private void sendFile(final String path) {
@@ -138,10 +169,10 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
     private void sendMessage(String messageType, String message) {
         //protocal:
         // Message could be the following things
-        // play (asking to play the current file
-        // pause (asking to pause the current file)
-        // retry (empty the current file)
-        // save (we want to keep this file)
+        // /play (asking to play the current file
+        // /pause (asking to pause the current file)
+        // /retry (empty the current file)
+        // /save (we want to keep this file)
             //if it's save, the following parameters may be attached, separated by |
             //1. new_name (may be the same as the old name in the case of an edit)
             //2. crop_front value
@@ -150,7 +181,7 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
             //4. echo value
             //5. lyrics
             //If a parameter was not included, it's space in the string will be None
-            //Example Message save|My new Recording|None|00:15|None|25|I love this song
+            //Example Message |My new Recording|None|00:15|None|25|I love this song
 
         Log.d("SS", "Atempting message send");
         final String message_path = messageType;
@@ -162,6 +193,8 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
                 NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes(mApiClient).await();
                 for (Node node : nodes.getNodes()) {
                     Log.d("NODE FOUND!", node.toString());
+                    Log.d("MessageService", "Sent Message");
+                    Log.d("MessageService", final_message);
                     MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(
                             mApiClient, node.getId(), message_path, final_message.getBytes()).await();
 
