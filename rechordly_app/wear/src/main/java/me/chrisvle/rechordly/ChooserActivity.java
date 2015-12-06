@@ -11,10 +11,10 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class VolumeChooserActivity extends Activity {
+public class ChooserActivity extends Activity {
 
 
-    private TextView volume;
+    private TextView amount;
     private VolumeSliderView slider;
     private RelativeLayout rel_circular;
     private Button doneButton;
@@ -28,14 +28,14 @@ public class VolumeChooserActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                volume = (TextView) findViewById(R.id.Volume);
+                amount = (TextView) findViewById(R.id.Volume);
                 doneButton = (Button) findViewById(R.id.volume_done);
                 slider = (VolumeSliderView) findViewById(R.id.circular);
                 rel_circular = (RelativeLayout) findViewById(R.id.rel_circular);
 
                 String boldfontPath = "fonts/Mission_Gothic_Bold.otf";
                 Typeface tf = Typeface.createFromAsset(getAssets(), boldfontPath);
-                volume.setTypeface(tf);
+                amount.setTypeface(tf);
 
                 doneButton.setOnClickListener(new View.OnClickListener() {
                     @Override

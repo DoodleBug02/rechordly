@@ -20,7 +20,7 @@ import android.widget.RelativeLayout;
  */
 public class EditNavFragment extends Fragment {
 
-    static final int NUM_ITEMS = 6;
+    static final int NUM_ITEMS = 5;
 
     private ViewPagerAdapter mAdapter;
     private ViewPager mPager;
@@ -32,9 +32,8 @@ public class EditNavFragment extends Fragment {
     private final float DONE = 43;
     private final float LYRIC = 66;
     private final float CROP = 89;
-    private final float VOLUME = 112;
-    private final float FILTER = 134;
-    private final float ECHO = (float) 156.5;
+    private final float GAIN = 112;
+    private final float ECHO = 134;
 
 
 
@@ -84,10 +83,8 @@ public class EditNavFragment extends Fragment {
                 case (2):
                     return new CropFragment();
                 case (3):
-                    return new VolumeFragment();
+                    return new GainFragment();
                 case (4):
-                    return new FilterFragment();
-                case (5):
                     return new EchoFragment();
             }
             return new DoneFragment();
@@ -116,19 +113,11 @@ public class EditNavFragment extends Fragment {
                     dots.setLayoutParams(lp);
                     return;
                 case(3):
-                    lp.setMargins((int)(VOLUME*density), 0, 0, 0);
+                    lp.setMargins((int)(GAIN*density), 0, 0, 0);
                     dots.setLayoutParams(lp);
                     return;
                 case(4):
-                    lp.setMargins((int)(FILTER*density), 0, 0, 0);
-                    dots.setLayoutParams(lp);
-                    return;
-                case(5):
                     lp.setMargins((int)(ECHO*density), 0, 0, 0);
-                    dots.setLayoutParams(lp);
-                    return;
-                case(6):
-                    lp.setMargins((int)(FILTER*density), 0, 0, 0);
                     dots.setLayoutParams(lp);
                     return;
 

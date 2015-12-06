@@ -44,6 +44,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_slider_nav">SliderNavActivity</string>
     <string name="title_activity_filter_high_low">FilterHighLow</string>
+    <string name="title_activity_echo_chooser">EchoChooserActivity</string>
 
 </resources>
 

@@ -29,7 +29,7 @@
         android:layout_centerHorizontal="true"
         android:textAllCaps="false"
         android:textSize="30sp"
-        android:text="Volume"/>
+        android:text="Gain"/>
 
     <!--<ImageView-->
         <!--android:layout_width="wrap_content"-->

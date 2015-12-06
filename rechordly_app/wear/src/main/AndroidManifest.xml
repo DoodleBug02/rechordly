@@ -22,7 +22,7 @@
             android:name=".CropFbActivity"
             android:label="@string/title_activity_crop_chooser" />
         <activity
-            android:name=".VolumeChooserActivity"
+            android:name=".ChooserActivity"
             android:label="@string/title_activity_volume_chooser" />
 
         <service
@@ -87,16 +87,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".FilterHighLowActivity"
-            android:label="@string/title_activity_filter_high_low" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
     </application>
 
 </manifest>
