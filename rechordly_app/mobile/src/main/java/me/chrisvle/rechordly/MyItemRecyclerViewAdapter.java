@@ -1,5 +1,6 @@
 package me.chrisvle.rechordly;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
+        public final TextView mCarrot;
         public DummyItem mItem;
 
         public ViewHolder(View view) {
@@ -67,6 +69,11 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
+            mCarrot = (TextView) view.findViewById(R.id.carrot);
+            Typeface font = Typeface.createFromAsset(view.getContext().getAssets(), "font/Mission_Gothic_Regular.ttf");
+            mIdView.setTypeface(font);
+            mContentView.setTypeface(font);
+            mCarrot.setTypeface(font);
         }
 
         @Override

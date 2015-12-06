@@ -8,10 +8,12 @@
         android:id="@+id/id"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_margin="12dp"
+        android:paddingLeft="24dp"
         android:textAppearance="?attr/textAppearanceListItem"
         android:layout_weight="0.9"
-        android:width="300dp" />
+        android:width="300dp"
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/content"
@@ -20,13 +22,15 @@
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem"
         android:layout_weight="0.2"
+        android:textSize="20sp"
         android:width="80dp" />
 
     <TextView
+        android:id="@+id/carrot"
+        android:text=">"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=">"
+        android:textSize="20sp"
         android:layout_margin="16dp"
-        android:textSize="15dp"
-        android:width="25dp"/>
+        android:width="30dp"/>
 </LinearLayout>
