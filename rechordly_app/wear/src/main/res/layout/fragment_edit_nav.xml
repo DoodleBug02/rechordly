@@ -21,16 +21,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dots"
-            android:src="@drawable/dots"
+            android:src="@drawable/dot1"
             />
 
-        <ImageView
-            android:layout_width="11dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/light_dot"
-            android:src="@drawable/light_dot"
-            android:layout_marginLeft="43dp"
-            />
     </RelativeLayout>
 
 
