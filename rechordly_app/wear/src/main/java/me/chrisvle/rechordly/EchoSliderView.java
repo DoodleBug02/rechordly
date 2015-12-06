@@ -1,4 +1,5 @@
 package me.chrisvle.rechordly;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,11 +8,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
-
 /**
- * One time use Circular Slider for the Volume Screen
+ * Circular Slider for the Volume Screen
  */
-public class VolumeSliderView extends CircularSliderView {
+public class EchoSliderView extends CircularSliderView {
     private int mStopX;
     private int mStopY;
     private int mStopXL;
@@ -22,19 +22,19 @@ public class VolumeSliderView extends CircularSliderView {
     private boolean right;
     private Activity context;
 
-    public VolumeSliderView(Context context) {
+    public EchoSliderView(Context context) {
         super(context);
         this.context =(Activity) context;
         init(null, 0);
     }
 
-    public VolumeSliderView(Context context, AttributeSet attrs) {
+    public EchoSliderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = (Activity)context;
         init(attrs, 0);
     }
 
-    public VolumeSliderView(Context context, AttributeSet attrs, int defStyle) {
+    public EchoSliderView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.context = (Activity)context;
         // init(attrs, defStyle);
@@ -195,9 +195,9 @@ public class VolumeSliderView extends CircularSliderView {
         if (mThumbX != mStopX) {
             prevThumbX = mThumbX;
         }
-        TextView volume = (TextView) context.findViewById(R.id.Volume);
+        TextView echo = (TextView) context.findViewById(R.id.echo);
 
-        volume.setText(getVolume() + "");
+        echo.setText(getEcho() + "");
     }
 
     private double angleConvert(double ang) {
@@ -218,7 +218,7 @@ public class VolumeSliderView extends CircularSliderView {
         return ret*(100/6.30);
     }
 
-    public int getVolume() {
+    public int getEcho() {
         return (int)Math.round(angleConvert(mAngle));
     }
 

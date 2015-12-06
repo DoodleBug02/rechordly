@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:id="@+id/rel_circular">
 
-            <me.chrisvle.rechordly.VolumeSliderView
+            <me.chrisvle.rechordly.EchoSliderView
                 android:id="@+id/circular"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
