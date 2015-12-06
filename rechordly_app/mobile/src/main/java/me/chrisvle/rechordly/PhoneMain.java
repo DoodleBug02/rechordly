@@ -103,6 +103,7 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
         Intent info = new Intent(getBaseContext(), InfoActivity.class);
         info.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         info.putExtra("path", "android.resource://" + getPackageName() + "/" + R.raw.completed2);
+        info.putExtra("file_name", item.id);
         startActivity(info);
 
     }
