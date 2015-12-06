@@ -55,7 +55,6 @@ public class PlaybackFragment extends Fragment {
                 play_btn.setVisibility(View.VISIBLE);
                 play_txt.setText("Play");
 
-                //FIXME @Jeremy add play music service logic
 
             }
         });
@@ -71,7 +70,6 @@ public class PlaybackFragment extends Fragment {
                 pause_btn.setVisibility(View.VISIBLE);
                 play_txt.setText("Pause");
 
-                //FIXME @Jeremy add pause music service logic
 
             }
         });

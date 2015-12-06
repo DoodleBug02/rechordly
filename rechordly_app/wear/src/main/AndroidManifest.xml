@@ -22,7 +22,7 @@
             android:name=".CropFbActivity"
             android:label="@string/title_activity_crop_chooser" />
         <activity
-            android:name=".VolumeChooserActivity"
+            android:name=".ChooserActivity"
             android:label="@string/title_activity_volume_chooser" />
 
         <service
@@ -32,10 +32,9 @@
                 <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
             </intent-filter>
         </service>
-
         <service
             android:name=".PhoneListener"
-            android:label="Rechordly">
+            android:label="Rechordly" >
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
             </intent-filter>
@@ -96,15 +95,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FilterHighLowActivity"
-            android:label="@string/title_activity_filter_high_low" >
+            android:name=".SpeechToTextActivity"
+            android:label="@string/title_activity_speech_to_text" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
