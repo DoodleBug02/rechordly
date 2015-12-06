@@ -106,6 +106,7 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
 
                 } else if (intent.getAction().equals("/save")) {
                     Log.d("MessageService", "Save Requested");
+                    checkStrings();
                     String message = new_name_value +
                                     "|" + crop_front_value +
                                     "|" + crop_back_value +
@@ -129,6 +130,23 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
 
 
     public MessageService() {
+
+    }
+
+    private void checkStrings() {
+        if (new_name_value.equals("") ) {
+            new_name_value = "None";
+        } else if (crop_front_value.equals("")) {
+            crop_front_value = "None";
+        } else if (crop_back_value.equals("")) {
+            crop_back_value = "None";
+        } else if (gain_value.equals("")) {
+            gain_value = "None";
+        } else if (echo_value.equals("")) {
+            echo_value = "None";
+        } else if (lyrics.equals("")) {
+            lyrics = "None";
+        }
 
     }
 
