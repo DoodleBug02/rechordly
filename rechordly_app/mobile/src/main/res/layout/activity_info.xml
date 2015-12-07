@@ -21,4 +21,22 @@
         android:focusable="false"
         android:focusableInTouchMode="false" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lyrics"
+        android:id="@+id/lyric"
+        android:layout_below="@+id/playback"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="56dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id="@+id/edit"
+        android:layout_below="@+id/playback"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="200dp" />
+
 </RelativeLayout>
