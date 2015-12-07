@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.chrisvle.rechordly" >
+    package="me.chrisvle.rechordly">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -10,11 +10,11 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar" >
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".PhoneMain"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,15 +25,12 @@
             android:name=".InfoActivity"
             android:label="@string/title_activity_info"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".TranscribingActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".EditActivity" />
 
         <service
             android:name=".PhoneListener"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
             </intent-filter>
@@ -42,29 +39,28 @@
         <activity
             android:name=".CropActivity"
             android:label="@string/title_activity_crop"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LyricActivity"
+            android:label="@string/title_activity_crop"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <service
-            android:name=".PlaybackService"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
         <service
             android:name=".MessageSender"
             android:enabled="true"
-            android:exported="true" >
-        </service>
+            android:exported="true" />
         <service
             android:name=".EchoService"
             android:enabled="true"
-            android:exported="true" >
-        </service>
+            android:exported="true" />
         <service
             android:name=".GainService"
             android:enabled="true"
-            android:exported="true" >
-        </service>
+            android:exported="true" />
+        <service
+            android:name=".PlaybackService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

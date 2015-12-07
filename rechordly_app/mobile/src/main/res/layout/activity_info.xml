@@ -65,44 +65,93 @@
 
 
     <TextView
+        android:id="@+id/duration"
+        android:gravity="center"
+        android:layout_below="@+id/view"
+        android:textSize="45sp"
+        android:text="Duration"
+        android:textColor="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="100dp" />
 
     <ImageView
+        android:id="@+id/wave"
+        android:src="@drawable/wave"
+        android:layout_below="@+id/duration"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="150dp" />
 
     <LinearLayout
+        android:id="@+id/effects_play_button"
+        android:layout_below="@+id/wave"
         android:orientation="horizontal"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/effects"
+            android:layout_gravity="start"
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_width="220dp"
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/vol_val"
+                android:textSize="20sp"
+                android:text="Volume text"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="50dp" />
 
             <TextView
+                android:id="@+id/echo_val"
+                android:layout_gravity="bottom"
+                android:textSize="20sp"
+                android:text="Echo text"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <ToggleButton
+            android:layout_gravity="end"
+            android:id="@+id/playback"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/check"
+        android:textOn=""
+        android:textOff=""
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
     </LinearLayout>
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <Space
+        android:id="@+id/space2"
+        android:layout_below="@+id/effects_play_button"
+        android:layout_width="20dp"
+        android:layout_height="50dp" />
 
-    <ImageButton
+    <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Lyrics"
+        android:id="@+id/lyric"
+        android:textColor="@color/black"
+        android:layout_below="@+id/space2"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="56dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:textColor="@color/black"
+        android:id="@+id/edit"
+        android:layout_below="@+id/space2"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="200dp" />
 
 
     <!--<android.support.v4.view.ViewPager-->
@@ -113,3 +162,23 @@
 
 <!--</android.support.design.widget.CoordinatorLayout>-->
 </RelativeLayout>
+
+<!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Lyrics"-->
+        <!--android:id="@+id/lyric"-->
+        <!--android:layout_below="@+id/playback"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_marginStart="56dp" />-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Edit"-->
+        <!--android:id="@+id/edit"-->
+        <!--android:layout_below="@+id/playback"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_marginStart="200dp" />-->
+
+<!--</RelativeLayout>-->

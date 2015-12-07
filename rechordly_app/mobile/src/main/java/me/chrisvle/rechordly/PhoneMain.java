@@ -58,7 +58,8 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
 
         DummyContent.addItem(new DummyContent.DummyItem("test1", "1234", ""));
         DummyContent.addItem(new DummyContent.DummyItem("test2", "1234", ""));
-
+        savedData.addSong("orchestra.wav", "1", "1", "03:30", "None", "android.resource://" + getPackageName() + "/orchestra"); //+ R.raw.orchestra);
+        DummyContent.addItem(new DummyContent.DummyItem("orchestra.wav", "03:40", ""));
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -135,7 +136,6 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
         Log.d("DUMMY INTERACTION", "");
         Intent info = new Intent(getBaseContext(), InfoActivity.class);
         info.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        info.putExtra("path", "android.resource://" + getPackageName() + "/" + R.raw.completed2);
         info.putExtra("file_name", item.id);
         startActivity(info);
 

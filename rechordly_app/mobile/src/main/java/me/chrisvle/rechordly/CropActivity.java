@@ -61,7 +61,8 @@ public class CropActivity extends AppCompatActivity {
 
         right = (EditText) findViewById(R.id.left);
 
-
+        Intent echo = new Intent(this, EchoService.class);
+        startService(echo);
         Button b = (Button) findViewById(R.id.crop);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,8 +78,16 @@ public class CropActivity extends AppCompatActivity {
 //                Intent play = new Intent("Playback");
 //                play.putExtra("Command", "play");
 //                sendBroadcast(play);
-                Log.d("Play", "playing the song");
-                play();
+//                Log.d("Play", "playing the song");
+//                play();
+
+                File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+                File music = new File(path, "curr.wav");
+
+                Intent intent = new Intent("/echo");
+                intent.putExtra("level", 50.0);
+                intent.putExtra("filePath", music.getAbsolutePath());
+                sendBroadcast(intent);
             }
         });
 
