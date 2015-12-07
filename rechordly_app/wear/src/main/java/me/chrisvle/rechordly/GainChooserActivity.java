@@ -17,6 +17,7 @@ public class GainChooserActivity extends Activity {
     private RelativeLayout rel_circular;
     private Button doneButton;
     private String from;
+    private String totalTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class GainChooserActivity extends Activity {
         slider = (GainSliderView) findViewById(R.id.circular_gain);
         rel_circular = (RelativeLayout) findViewById(R.id.rel_circular_gain);
 
+
         String boldfontPath = "fonts/Mission_Gothic_Bold.otf";
         Typeface tf = Typeface.createFromAsset(getAssets(), boldfontPath);
         amount.setTypeface(tf);
@@ -39,6 +41,9 @@ public class GainChooserActivity extends Activity {
                 sendGain(v);
             }
         });
+
+        totalTime = getIntent().getStringExtra("time");
+
 
     }
 
@@ -51,12 +56,8 @@ public class GainChooserActivity extends Activity {
         sendBroadcast(intent);
         Intent intent2 = new Intent(getBaseContext(), SliderNavActivity.class);
         intent2.putExtra("start", 2);
-        if (from.equalsIgnoreCase("/gain")) {
-            intent2.putExtra("start2", 3);
-        } else {
-            intent2.putExtra("start2", 3);
-
-        }
+        intent2.putExtra("start2", 3);
+        intent2.putExtra("time", totalTime);
         intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent2);
