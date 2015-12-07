@@ -2,7 +2,10 @@ package me.chrisvle.rechordly;
 
 //import android.app.ActionBar;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,6 +42,7 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
     private RecyclerView.LayoutManager mLayoutManager;
     private TextView textview;
     private ImageView mPlus;
+    private MyItemRecyclerViewAdapter mRAdapter;
     private SavedDataList savedData = SavedDataList.getInstance();
 
 
@@ -93,7 +97,9 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
         mLayoutManager = new LinearLayoutManager(this);
         rView.setLayoutManager(mLayoutManager);
 
-        rView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, this));
+        mRAdapter = new MyItemRecyclerViewAdapter(DummyContent.ITEMS, this);
+
+        rView.setAdapter(mRAdapter);
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
         rView.addItemDecoration(itemDecoration);
 
@@ -109,6 +115,18 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
 //        setBackgroundDrawable(new ColorDrawable("FF0000"));
 //        tabLayout.setBackgroundColor(0xD6D6D6);
 //        tabLayout.setSelectedTabIndicatorColor(0x6f37ff);
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("/update_list");
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals("/update_list")) {
+                    mRAdapter.notifyDataSetChanged();
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver, filter);
 
         textview = (TextView) toolbar.findViewById(R.id.mytext);
         Typeface font = Typeface.createFromAsset(toolbar.getContext().getAssets(), "font/Mission_Gothic_Bold.ttf");
