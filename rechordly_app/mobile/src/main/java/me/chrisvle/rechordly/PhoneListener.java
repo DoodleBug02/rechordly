@@ -101,9 +101,6 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                         //handle error
                     }
                 }
-                else {
-                    // Insert logic for if you are sending an edit message from phone to watch
-                }
             }
             // Handles all TRIM
             double left = 0;
