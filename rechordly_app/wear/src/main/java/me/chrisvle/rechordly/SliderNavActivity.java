@@ -14,7 +14,8 @@ import android.support.v4.view.ViewPager;
             RetryFragment.OnFragmentInteractionListener,
             CropFragment.OnFragmentInteractionListener,
             EchoFragment.OnFragmentInteractionListener,
-            GainFragment.OnFragmentInteractionListener
+            GainFragment.OnFragmentInteractionListener,
+            LyricFragment.OnFragmentInteractionListener
 
 
     {

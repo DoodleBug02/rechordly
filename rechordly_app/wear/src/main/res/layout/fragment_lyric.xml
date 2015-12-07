@@ -14,6 +14,8 @@
         android:layout_centerHorizontal="true"
         android:textAllCaps="false"
         android:textSize="25sp"
-        android:text="Add\nLyrics"/>
+        android:text="Add\nLyrics"
+        android:lineSpacingExtra="-8dp"
+        />
 
 </RelativeLayout>
