@@ -9,7 +9,15 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
-public class SliderNavActivity extends FragmentActivity implements RetryFragment.OnFragmentInteractionListener, CropFragment.OnFragmentInteractionListener {
+    public class SliderNavActivity extends FragmentActivity implements
+            EditNavFragment.OnFragmentInteractionListener,
+            RetryFragment.OnFragmentInteractionListener,
+            CropFragment.OnFragmentInteractionListener,
+            EchoFragment.OnFragmentInteractionListener,
+            GainFragment.OnFragmentInteractionListener
+
+
+    {
 
 
     /**
