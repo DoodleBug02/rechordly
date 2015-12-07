@@ -17,7 +17,11 @@ import com.google.android.gms.wearable.Wearable;
 import com.google.android.gms.wearable.WearableListenerService;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 public class PhoneListener extends WearableListenerService implements GoogleApiClient.ConnectionCallbacks, ChannelApi.ChannelListener {
@@ -92,14 +96,15 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             // Handles all FILENAMING
             if (!edits[0].equals("None")) {
                 if (!edits[0].equals(file.getName())) {
-                    file.delete();
-                    file = new File(Environment.getExternalStorageDirectory().getPath(), edits[0] + ".wav");
-                    Log.d("New filename after save", String.valueOf(this.getFilesDir()));
+                    File new_file = new File(Environment.getExternalStorageDirectory().getPath(), edits[0] + ".wav");
                     try {
-                        file.createNewFile();
+                        copy(file, new_file);
                     } catch (IOException e) {
-                        //handle error
+                        e.printStackTrace();
                     }
+                    file.delete();
+                    file = new_file;
+                    Log.d("New filename after save", String.valueOf(this.getFilesDir()));
                 }
             }
             // Handles all TRIM
@@ -202,6 +207,20 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
         Long tsLong = System.currentTimeMillis()/1000;
         String ts = tsLong.toString();
         return ts;
+    }
+
+    public void copy(File src, File dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        OutputStream out = new FileOutputStream(dst);
+
+        // Transfer bytes from in to out
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        in.close();
+        out.close();
     }
 
 }
