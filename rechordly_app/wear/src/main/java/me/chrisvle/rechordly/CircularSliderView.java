@@ -159,8 +159,8 @@ public class CircularSliderView extends View {
 
         // save circle coordinates and radius in fields
         mCircleCenterX = largestCenteredSquareRight / 2 + (w - largestCenteredSquareRight) / 2;
-        mCircleCenterY = largestCenteredSquareBottom / 2 + (h - largestCenteredSquareBottom) / 2;
-        mCircleRadius = smallerDim / 2 - mBorderThickness / 2 - mPadding;
+        mCircleCenterY = largestCenteredSquareBottom / 2 + (h - largestCenteredSquareBottom) / 2 - 9;
+        mCircleRadius = smallerDim / 2 - mBorderThickness / 2 - mPadding-9;
 
         // works well for now, should we call something else here?
         super.onSizeChanged(w, h, oldw, oldh);

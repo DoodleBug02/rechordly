@@ -7,6 +7,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-library android:name="com.google.android.wearable" />
+    <supports-screens
+        android:resizeable="false"
+    android:smallScreens= "false"
+    android:normalScreens="true"
+    android:largeScreens="false"
+    android:xlargeScreens="false"
+    android:anyDensity= "false"
+    />
 
     <application
         android:allowBackup="true"
