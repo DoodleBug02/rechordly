@@ -52,7 +52,7 @@ public class EchoChooserActivity extends Activity {
         Log.d("Done", "Clicked: volume is " + echo);
 
         Intent intent = new Intent(from);
-        intent.putExtra("amount", echo);
+        intent.putExtra("amount",Integer.toString(echo));
         sendBroadcast(intent);
         Intent intent2 = new Intent(getBaseContext(), SliderNavActivity.class);
         intent2.putExtra("start", 2);
