@@ -24,15 +24,15 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
     private GoogleApiClient mApiClient;
     private BroadcastReceiver myReceiver;
     private File audioFile;
-    private String crop_front_value;
-    private String crop_back_value;
-    private String lyrics;
-    private String gain_value;
-    private String echo_value;
-    private String old_name_value;
-    private String new_name_value;
-    private String retry;
-    private String save;
+    static private String crop_front_value;
+    static private String crop_back_value;
+    static private String lyrics;
+    static private String gain_value;
+    static private String echo_value;
+    static private String old_name_value;
+    static private String new_name_value;
+    static private String retry;
+    static private String save;
 
 
     @Override
