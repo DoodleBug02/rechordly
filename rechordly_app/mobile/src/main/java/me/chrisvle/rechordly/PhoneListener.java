@@ -3,6 +3,7 @@ package me.chrisvle.rechordly;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import com.google.android.gms.wearable.WearableListenerService;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+
+import me.chrisvle.rechordly.dummy.DummyContent;
 
 public class PhoneListener extends WearableListenerService implements GoogleApiClient.ConnectionCallbacks, ChannelApi.ChannelListener {
 
@@ -102,6 +105,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                     }
                 }
             }
+
             // Handles all TRIM
             double left = 0;
             double right = 0;
@@ -142,11 +146,24 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 Intent transcription = new Intent("/transcription");
                 sendBroadcast(transcription);
             }
-        }
+            Log.d("SAVE", "Before Saving");
+            MediaPlayer mp = MediaPlayer.create(this, Uri.fromFile(file));
+            int duration = mp.getDuration();
+            mp.release();
+            String dur = String.valueOf(duration);
+
+            SavedDataList saves = SavedDataList.getInstance();
+            saves.addSong(edits[0], String.valueOf(echo_val), String.valueOf(gain_val), dur, edits[5], Uri.fromFile(file).toString());
+            saves.saveToDisk(getApplicationContext());
+            DummyContent.addItem(new DummyContent.DummyItem(edits[0], dur, ""));
+            Log.d("SAVE", "After Saving");
+
+         }
     }
 
     @Override
     public void onChannelOpened(Channel channel) {
+
         Log.d("PhoneListener", "Channel established");
         if (channel.getPath().equals("/new_recording")) {
             file = new File(Environment.getExternalStorageDirectory().getPath(), getTime() + ".wav");

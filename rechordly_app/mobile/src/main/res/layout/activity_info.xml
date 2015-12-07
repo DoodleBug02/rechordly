@@ -1,32 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent" android:layout_height="match_parent">-->
+
+    <!--<ImageView-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:id="@+id/info"-->
+        <!--android:src="@drawable/recording"-->
+        <!--android:clickable="true"/>-->
+
+    <!--<ToggleButton-->
+        <!--android:id="@+id/playback"-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:background="@drawable/check"-->
+        <!--android:layout_marginLeft="225dp"-->
+        <!--android:layout_marginTop="270dp"-->
+        <!--android:textOn=""-->
+        <!--android:textOff=""-->
+        <!--android:focusable="false"-->
+        <!--android:focusableInTouchMode="false" />-->
+<!--</RelativeLayout>-->
+
+<!--<android.support.design.widget.CoordinatorLayout -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:id="@+id/view">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <!--android:background="?attr/colorPrimary"-->
+            <!--app:layout_scrollFlags="scroll|enterAlways"-->
+            <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light">-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:id="@+id/mytext"
+                android:textSize="40sp" />
+
+            <ImageView
+                android:id="@+id/pencil_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/pencil"/>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <TextView
+        android:id="@+id/duration"
+        android:gravity="center"
+        android:layout_below="@+id/view"
+        android:textSize="45sp"
+        android:text="Duration"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
 
     <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/info"
-        android:src="@drawable/recording"
-        android:clickable="true"/>
+        android:id="@+id/wave"
+        android:src="@drawable/wave"
+        android:layout_below="@+id/duration"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
 
-    <ToggleButton
-        android:id="@+id/playback"
+    <LinearLayout
+        android:id="@+id/effects_play_button"
+        android:layout_below="@+id/wave"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/effects"
+            android:layout_gravity="start"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_width="220dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/vol_val"
+                android:textSize="20sp"
+                android:text="Volume text"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/echo_val"
+                android:layout_gravity="bottom"
+                android:textSize="20sp"
+                android:text="Echo text"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <ToggleButton
+            android:layout_gravity="end"
+            android:id="@+id/playback"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="@drawable/check"
-        android:layout_marginLeft="225dp"
-        android:layout_marginTop="270dp"
         android:textOn=""
         android:textOff=""
         android:focusable="false"
         android:focusableInTouchMode="false" />
+    </LinearLayout>
+
+    <Space
+        android:id="@+id/space2"
+        android:layout_below="@+id/effects_play_button"
+        android:layout_width="20dp"
+        android:layout_height="50dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lyrics"
         android:id="@+id/lyric"
-        android:layout_below="@+id/playback"
+        android:textColor="@color/black"
+        android:layout_below="@+id/space2"
         android:layout_alignParentStart="true"
         android:layout_marginStart="56dp" />
 
@@ -34,9 +147,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit"
+        android:textColor="@color/black"
         android:id="@+id/edit"
-        android:layout_below="@+id/playback"
+        android:layout_below="@+id/space2"
         android:layout_alignParentStart="true"
         android:layout_marginStart="200dp" />
 
+
+    <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/viewpager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"  />-->
+
+<!--</android.support.design.widget.CoordinatorLayout>-->
 </RelativeLayout>
+
+<!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Lyrics"-->
+        <!--android:id="@+id/lyric"-->
+        <!--android:layout_below="@+id/playback"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_marginStart="56dp" />-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Edit"-->
+        <!--android:id="@+id/edit"-->
+        <!--android:layout_below="@+id/playback"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_marginStart="200dp" />-->
+
+<!--</RelativeLayout>-->
