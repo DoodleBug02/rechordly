@@ -100,8 +100,6 @@ public class CropSliderViewBack extends CircularSliderView{
         waveDiamIn = waveEnd - waveStart;
         timeToLengthRatio = time/image_width;
         inSecOffset = timeToLengthRatio * waveDiamIn/2;
-
-
     }
 
     @Override
