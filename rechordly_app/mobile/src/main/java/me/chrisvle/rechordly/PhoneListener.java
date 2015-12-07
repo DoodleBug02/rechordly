@@ -83,8 +83,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             }
             Intent trim = new Intent("/trim");
             trim.putExtra("path", file.getAbsolutePath());
-            trim.putExtra("left", left);
-            trim.putExtra("right", right);
+            trim.putExtra("startTime", left);
+            trim.putExtra("endTime", right);
             sendBroadcast(trim);
 
             // Handles all ECHO
@@ -94,7 +94,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             }
             Intent echo = new Intent("/echo");
             echo.putExtra("path", file.getAbsolutePath());
-            echo.putExtra("value", echo_val);
+            echo.putExtra("level", echo_val);
             sendBroadcast(echo);
 
             // Handles all GAIN
@@ -104,7 +104,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             }
             Intent gain = new Intent("/gain");
             gain.putExtra("path", file.getAbsolutePath());
-            gain.putExtra("value", gain_val);
+            gain.putExtra("volume", gain_val);
             sendBroadcast(gain);
 
             // Handles all TRANSCRIPTION
