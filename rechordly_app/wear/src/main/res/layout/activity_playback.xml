@@ -18,7 +18,7 @@
         android:src="@drawable/pause_btn"
         android:id="@+id/pause_btn"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="55dp"
         />
 
     <ImageButton
@@ -30,7 +30,7 @@
         android:src="@drawable/play_btn"
         android:id="@+id/play_btn"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="55dp"
         />
 
     <ImageView
@@ -52,6 +52,7 @@
         android:id="@+id/play_txt"
         android:text="Play"
         android:textSize="28sp"
+        android:textColor="#9be47b"
         />
 
 

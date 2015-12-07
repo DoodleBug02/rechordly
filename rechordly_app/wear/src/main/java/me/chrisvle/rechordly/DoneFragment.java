@@ -26,7 +26,7 @@ public class DoneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_done, container, false);
+        View view = inflater.inflate(R.layout.fragment_done, container, false);
         done_btn = (Button) view.findViewById(R.id.done_btn);
         done_btn.setOnClickListener(new View.OnClickListener() {
             @Override
