@@ -13,6 +13,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
 
+import java.io.File;
+
 public class InfoActivity extends AppCompatActivity {
 
     ToggleButton t;
@@ -31,43 +33,54 @@ public class InfoActivity extends AppCompatActivity {
         ImageView iv = (ImageView)findViewById(R.id.info);
         iv.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        iv.setOnClickListener(new View.OnClickListener() {
+//        iv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent lyrics = new Intent(getBaseContext(), CropActivity.class);
+//                startActivity(lyrics);
+//
+//            }
+//        });
+
+        Button b = (Button) findViewById(R.id.edit);
+        b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent lyrics = new Intent(getBaseContext(), CropActivity.class);
-                startActivity(lyrics);
-
+                Intent edit = new Intent("/edit");
+                edit.putExtra("filePath", "Put real file here");
+                sendBroadcast(edit);
             }
         });
-//        Intent intent = getIntent();
-//        String path = intent.getStringExtra("path");
-//        mp = new MediaPlayer();
-//        Uri uri = Uri.parse(path);
-        mp = MediaPlayer.create(this, R.raw.orchestra);
-        Button b = (Button) findViewById(R.id.playback);
+
+        Button b2 = (Button) findViewById(R.id.lyric);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent lyric = new Intent(getBaseContext(), LyricActivity.class);
+                startActivity(lyric);
+
+                Intent lyric_add = new Intent("/lyric");
+                lyric_add.putExtra("filePath", "Put real file here");
+                sendBroadcast(lyric_add);
+            }
+        });
+
 
         t = (ToggleButton) findViewById(R.id.playback);
         t.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-
-                    play();
+                    Intent play = new Intent("/play");
+                    File f = new File("Put real file here");
+                    sendBroadcast(play);
                 } else {
-
-                    pause();
+                    Intent pause = new Intent("/pause");
+                    sendBroadcast(pause);
                 }
             }
         });
 
 
-    }
-
-    private void play() {
-        mp.start();
-    }
-
-    private void pause() {
-        mp.pause();
     }
 
 
