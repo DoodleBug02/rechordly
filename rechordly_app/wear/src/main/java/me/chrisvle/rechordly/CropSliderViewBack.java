@@ -222,7 +222,6 @@ public class CropSliderViewBack extends CircularSliderView{
         Log.d("time", "inSecOffset is" + inSecOffset);
         Log.d("time", "timeToLengthRatio is" + timeToLengthRatio);
 
-
         if (secondsOffset > inSecOffset) {
             lineOffset =  secondsToXPos(secondsOffset);
             waveOffset = 0;

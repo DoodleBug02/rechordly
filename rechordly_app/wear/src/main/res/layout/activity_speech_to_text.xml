@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/watch_view_stub"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    app:rectLayout="@layout/rect_activity_speech_to_text"
+    app:rectLayout="@layout/round_activity_speech_to_text"
     app:roundLayout="@layout/round_activity_speech_to_text"
     tools:context="me.chrisvle.rechordly.SpeechToTextActivity"
     tools:deviceIds="wear"></android.support.wearable.view.WatchViewStub>
