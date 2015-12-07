@@ -74,9 +74,6 @@ public class Main2Activity extends Activity {
                 time.setTypeface(tf);
 
 
-                final AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
-                startBtn.startAnimation(buttonClick);
-                stopBtn.startAnimation(buttonClick);
 
             }
 
@@ -290,6 +287,8 @@ public class Main2Activity extends Activity {
     }
 
     public void btnClick(View v) {
+        final AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
+        v.startAnimation(buttonClick);
         switch(v.getId()){
             case R.id.btnStart:{
                 stopBtn.bringToFront();
