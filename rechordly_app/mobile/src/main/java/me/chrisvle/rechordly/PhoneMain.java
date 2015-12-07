@@ -58,7 +58,7 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
 
         DummyContent.addItem(new DummyContent.DummyItem("test1", "1234", ""));
         DummyContent.addItem(new DummyContent.DummyItem("test2", "1234", ""));
-
+        DummyContent.addItem(new DummyContent.DummyItem("test2", "1234", ""));
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
