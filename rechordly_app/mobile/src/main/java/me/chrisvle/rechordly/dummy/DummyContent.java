@@ -40,6 +40,12 @@ public class DummyContent {
 //    }
 
     public static void addItem(DummyItem item) {
+        for (int i = 0; i < ITEMS.size(); i++) {
+            if (ITEMS.get(i).id.equals(item.id)) {
+                ITEMS.remove(i);
+                break;
+            }
+        }
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
