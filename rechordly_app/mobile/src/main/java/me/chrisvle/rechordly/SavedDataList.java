@@ -26,17 +26,18 @@ public class SavedDataList  {
 
     public static SavedDataList getInstance() {return holder;}
 
-    public void addSong(String[] songInfo, String dur) {
+    public void addSong(String name, String echo, String gain, String dur, String lyrics, String uri) {
         if (data == null) {
             data = new HashMap<>();
         }
-        if (!data.containsKey(songInfo[0])) {
-            data.put(songInfo[0], new HashMap<String, String>());
+        if (!data.containsKey(name)) {
+            data.put(name, new HashMap<String, String>());
         }
-        data.get(songInfo[0]).put("duration", dur);
-        data.get(songInfo[0]).put("echo", songInfo[3]);
-        data.get(songInfo[0]).put("gain", songInfo[4]);
-        data.get(songInfo[0]).put("lyrics", songInfo[5]);
+        data.get(name).put("duration", dur);
+        data.get(name).put("echo", echo); //songInfo[3]);
+        data.get(name).put("gain", gain); //songInfo[4]);
+        data.get(name).put("lyrics", lyrics); //songInfo[5]);
+        data.get(name).put("path", uri);
 
     }
 
@@ -52,6 +53,34 @@ public class SavedDataList  {
     public String getDuration(String name) {
         if (data.containsKey(name)) {
             return data.get(name).get("duration");
+        }
+        return null;
+    }
+
+    public String getPath(String name) {
+        if (data.containsKey(name)) {
+            return data.get(name).get("path");
+        }
+        return null;
+    }
+
+    public String getGain(String name) {
+        if (data.containsKey(name)) {
+            return data.get(name).get("gain");
+        }
+        return null;
+    }
+
+    public String getEcho(String name) {
+        if (data.containsKey(name)) {
+            return data.get(name).get("echo");
+        }
+        return null;
+    }
+
+    public String getLyrics(String name) {
+        if (data.containsKey(name)) {
+            return data.get(name).get("lyrics");
         }
         return null;
     }

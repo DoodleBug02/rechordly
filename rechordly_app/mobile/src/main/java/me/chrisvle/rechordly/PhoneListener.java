@@ -1,7 +1,10 @@
 package me.chrisvle.rechordly;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,8 +29,13 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
     private static final String PAUSE = "/pause";
     private static final String SAVE = "/save";
     private static final String RETRY = "/retry";
+    private static final String EDIT = "/edit";
+    private static final String LYRIC = "/lyric";
+    private static final String LYRIC_TXT = "/lyric_text";
     public File file;
     public GoogleApiClient mApiClient;
+    private BroadcastReceiver broadcastReceiver;
+
 
     @Override
     public void onCreate() {
@@ -40,7 +48,27 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
 
         mApiClient.connect();
 
-
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("/edit");
+        filter.addAction("/lyric_add");
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(EDIT)) {
+                    String path = intent.getStringExtra("filePath");
+                    file = new File(path);
+                }
+                else if (intent.getAction().equals(LYRIC)) {
+                    String path = intent.getStringExtra("filePath");
+                    file = new File(path);
+                }
+                else if (intent.getAction().equals(LYRIC_TXT)) {
+                    String text = intent.getStringExtra("text");
+                    // ADD TEXT TO file
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver, filter);
     }
 
     @Override
@@ -66,14 +94,15 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
 
             // Handles all FILENAMING
             if (!edits[0].equals("None")) {
-                //FIXME This wont work, also please replace edits[0] with final filename (There should not be None)
-                file.delete();
-                file = new File(Environment.getExternalStorageDirectory().getPath(), edits[0] + ".wav");
-                Log.d("New filename after save", String.valueOf(this.getFilesDir()));
-                try {
-                    file.createNewFile();
-                } catch (IOException e) {
-                    //handle error
+                if (!edits[0].equals(file.getName())) {
+                    file.delete();
+                    file = new File(Environment.getExternalStorageDirectory().getPath(), edits[0] + ".wav");
+                    Log.d("New filename after save", String.valueOf(this.getFilesDir()));
+                    try {
+                        file.createNewFile();
+                    } catch (IOException e) {
+                        //handle error
+                    }
                 }
             }
 
@@ -88,8 +117,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             }
             Intent trim = new Intent("/trim");
             trim.putExtra("path", file.getAbsolutePath());
-            trim.putExtra("left", left);
-            trim.putExtra("right", right);
+            trim.putExtra("startTime", left);
+            trim.putExtra("endTime", right);
             sendBroadcast(trim);
 
             // Handles all ECHO
@@ -99,7 +128,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             }
             Intent echo = new Intent("/echo");
             echo.putExtra("path", file.getAbsolutePath());
-            echo.putExtra("value", echo_val);
+            echo.putExtra("level", echo_val);
             sendBroadcast(echo);
 
             // Handles all GAIN
@@ -109,7 +138,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             }
             Intent gain = new Intent("/gain");
             gain.putExtra("path", file.getAbsolutePath());
-            gain.putExtra("value", gain_val);
+            gain.putExtra("volume", gain_val);
             sendBroadcast(gain);
 
             // Handles all TRANSCRIPTION
@@ -124,7 +153,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             String dur = String.valueOf(duration);
 
             SavedDataList saves = SavedDataList.getInstance();
-            saves.addSong(edits, dur);
+            saves.addSong(edits[0], String.valueOf(echo_val), String.valueOf(gain_val), dur, edits[5], Uri.fromFile(file).toString());
             saves.saveToDisk(getApplicationContext());
             DummyContent.addItem(new DummyContent.DummyItem(edits[0], dur, ""));
             Log.d("SAVE", "After Saving");
