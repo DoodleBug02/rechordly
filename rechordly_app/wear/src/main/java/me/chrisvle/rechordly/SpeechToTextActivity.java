@@ -18,6 +18,8 @@ public class SpeechToTextActivity extends Activity {
     private TextView mTextView;
     private String text;
     private String from;
+    private String totalTime;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class SpeechToTextActivity extends Activity {
         });
         Intent intent = getIntent();
         from = intent.getStringExtra("from");
+        totalTime = getIntent().getStringExtra("time");
         startSpeech();
     }
 
@@ -81,6 +84,7 @@ public class SpeechToTextActivity extends Activity {
             Intent intent2 = new Intent(this, SliderNavActivity.class);
             intent2.putExtra("start", 2);
             intent2.putExtra("start2", 1);
+            intent2.putExtra("time", totalTime);
             intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             intent2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent2);
@@ -94,6 +98,5 @@ public class SpeechToTextActivity extends Activity {
             intent2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent2);
         }
-
     }
 }

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context="me.chrisvle.rechordly.NameActivity"
     tools:deviceIds="wear_round">
 
@@ -14,7 +15,8 @@
         android:layout_marginTop="25dp"
         android:id="@+id/name_txt"
         android:gravity="center"
-        android:textSize="24sp"/>
+        android:lineSpacingExtra="-8dp"
+        android:textSize="28sp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,17 +29,24 @@
         <ImageButton
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/check_btn"
+            android:src="@drawable/check"
             android:id="@+id/check_btn"
-            android:layout_marginLeft="28dp"/>
+            android:scaleType="fitStart"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="25dp"
+            android:background="@android:color/transparent"
+        />
 
         <ImageButton
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:src="@drawable/cross"
             android:id="@+id/cross_btn"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/check_btn"/>
+            android:scaleType="fitStart"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="25dp"
+            android:background="@android:color/transparent"
+            />
 
     </RelativeLayout>
 </RelativeLayout>
