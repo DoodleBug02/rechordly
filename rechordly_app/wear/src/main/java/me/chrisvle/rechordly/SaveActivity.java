@@ -35,6 +35,8 @@ public class SaveActivity extends Activity {
                     }
 
                     public void onFinish() {
+                        Intent saveIntent = new Intent("/save");
+                        sendBroadcast(saveIntent);
                         Intent intent = new Intent(t, Main2Activity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

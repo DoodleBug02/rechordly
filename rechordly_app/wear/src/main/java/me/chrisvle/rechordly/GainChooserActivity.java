@@ -52,7 +52,7 @@ public class GainChooserActivity extends Activity {
         Log.d("Done", "Clicked: gain is " + gain);
 
         Intent intent = new Intent(from);
-        intent.putExtra("amount", gain);
+        intent.putExtra("amount", Integer.toString(gain));
         sendBroadcast(intent);
         Intent intent2 = new Intent(getBaseContext(), SliderNavActivity.class);
         intent2.putExtra("start", 2);

@@ -13,6 +13,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -33,13 +35,31 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private RecyclerView rView;
+    private RecyclerView.LayoutManager mLayoutManager;
     private TextView textview;
     private ImageView mPlus;
+    private SavedDataList savedData = SavedDataList.getInstance();
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        savedData.getFromDisk(getApplicationContext());
+
+        String[] keys = savedData.getNames();
+        if (keys != null) {
+            for (int i = 0; i < keys.length; i++) {
+                Log.d("Key Name: ", "of " + keys[i]);
+                DummyContent.addItem(new DummyContent.DummyItem(keys[i], savedData.getDuration(keys[i]), ""));
+            }
+        }
+
+        DummyContent.addItem(new DummyContent.DummyItem("test1", "1234", ""));
+        DummyContent.addItem(new DummyContent.DummyItem("test2", "1234", ""));
+        savedData.addSong("orchestra.wav", "1", "1", "03:30", "None", "android.resource://" + getPackageName() + "/orchestra"); //+ R.raw.orchestra);
+        DummyContent.addItem(new DummyContent.DummyItem("orchestra.wav", "03:40", ""));
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -67,8 +87,20 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
             }
         });
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
+        rView = (RecyclerView) findViewById(R.id.view3);
+        rView.setHasFixedSize(true);
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        rView.setLayoutManager(mLayoutManager);
+
+        rView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, this));
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
+        rView.addItemDecoration(itemDecoration);
+
+//        viewPager = (ViewPager) findViewById(R.id.viewpager);
+//        setupViewPager(viewPager);
+
+
 //        tabLayout = (TabLayout) findViewById(R.id.tabs);
 
 //        tabLayout.setupWithViewPager(viewPager);
@@ -104,7 +136,7 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
         Log.d("DUMMY INTERACTION", "");
         Intent info = new Intent(getBaseContext(), InfoActivity.class);
         info.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        info.putExtra("path", "android.resource://" + getPackageName() + "/" + R.raw.completed2);
+        info.putExtra("file_name", item.id);
         startActivity(info);
 
     }

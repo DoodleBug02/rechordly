@@ -3,6 +3,7 @@ package me.chrisvle.rechordly;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,8 +18,14 @@ import com.google.android.gms.wearable.Wearable;
 import com.google.android.gms.wearable.WearableListenerService;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+
+import me.chrisvle.rechordly.dummy.DummyContent;
 
 public class PhoneListener extends WearableListenerService implements GoogleApiClient.ConnectionCallbacks, ChannelApi.ChannelListener {
 
@@ -29,7 +36,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
     private static final String EDIT = "/edit";
     private static final String LYRIC = "/lyric";
     private static final String LYRIC_TXT = "/lyric_text";
-    public File file;
+    public static File file;
     public GoogleApiClient mApiClient;
     private BroadcastReceiver broadcastReceiver;
 
@@ -70,6 +77,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
+        Log.d("FIlename333", file.getAbsolutePath());
         if (messageEvent.getPath().equalsIgnoreCase(PLAY)) {
             Log.d("PhoneListener", "Play Request");
             Intent intent = new Intent("/play");
@@ -87,13 +95,29 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
         } else if (messageEvent.getPath().equalsIgnoreCase(SAVE)){
             Log.d("PhoneListener", "Save Request");
             String all = new String(messageEvent.getData(), StandardCharsets.UTF_8);
-            String[] edits = all.split("|");
+            Log.d("Message", all);
+            String[] edits = all.split("\\|");
+            Log.d("EDIts0", edits[0]);
 
-            // Handles all FILENAMING
+            Log.d("EDIts1", edits[1]);
+
+            Log.d("EDIts2", edits[2]);
+
+            // Handles all FILENAMIN
+            Log.d("FIlename333", file.getName());
             if (!edits[0].equals("None")) {
                 if (!edits[0].equals(file.getName())) {
+                    File newfile = new File(Environment.getExternalStorageDirectory().getPath(), edits[0] + ".wav");
+                    try {
+                        copy(file, newfile);
+                    } catch (IOException e) {
+                        Log.d("COPY", "COULD NOT BE COPIED");
+                    }
                     file.delete();
-                    file = new File(Environment.getExternalStorageDirectory().getPath(), edits[0] + ".wav");
+                    file = newfile;
+
+
+
                     Log.d("New filename after save", String.valueOf(this.getFilesDir()));
                     try {
                         file.createNewFile();
@@ -102,9 +126,11 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                     }
                 }
             }
+
             // Handles all TRIM
             double left = 0;
             double right = 0;
+            Log.d("EDITS", edits[1]);
             if (!edits[1].equals("None")) {
                 left = Integer.parseInt(edits[1]);
             }
@@ -142,19 +168,33 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 Intent transcription = new Intent("/transcription");
                 sendBroadcast(transcription);
             }
-        }
+            Log.d("SAVE", "Before Saving");
+            MediaPlayer mp = MediaPlayer.create(this, Uri.fromFile(file));
+            int duration = mp.getDuration();
+            mp.release();
+            String dur = String.valueOf(duration);
+
+            SavedDataList saves = SavedDataList.getInstance();
+            saves.addSong(edits[0], String.valueOf(echo_val), String.valueOf(gain_val), dur, edits[5], Uri.fromFile(file).toString());
+            saves.saveToDisk(getApplicationContext());
+            DummyContent.addItem(new DummyContent.DummyItem(edits[0], dur, ""));
+            Log.d("SAVE", "After Saving");
+
+         }
     }
 
     @Override
     public void onChannelOpened(Channel channel) {
+
         Log.d("PhoneListener", "Channel established");
         if (channel.getPath().equals("/new_recording")) {
             file = new File(Environment.getExternalStorageDirectory().getPath(), getTime() + ".wav");
             Log.d("this", String.valueOf(this.getFilesDir()));
             try {
                 file.createNewFile();
+                Log.d("FIlename", file.getName());
             } catch (IOException e) {
-                //handle error
+                Log.d("ERROR", "FILE COULD NOT BE MADR");
             }
             Log.d("PhoneListener", "Trying to receive file");
 
@@ -178,6 +218,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
     @Override
     public void onChannelClosed(Channel channel, int i0, int i1) {
         Log.d("PhoneListener", "Channel Closed!");
+        Log.d("FIlename", file.getName());
+
     }
 
 
@@ -196,12 +238,27 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
     public void onDestroy() {
         super.onDestroy();
         mApiClient.disconnect();
+        unregisterReceiver(broadcastReceiver);
     }
 
     public String getTime() {
         Long tsLong = System.currentTimeMillis()/1000;
         String ts = tsLong.toString();
         return ts;
+    }
+
+    public void copy(File src, File dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        OutputStream out = new FileOutputStream(dst);
+
+        // Transfer bytes from in to out
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        in.close();
+        out.close();
     }
 
 }
