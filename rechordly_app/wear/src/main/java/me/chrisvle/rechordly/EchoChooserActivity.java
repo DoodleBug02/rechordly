@@ -18,6 +18,8 @@ public class EchoChooserActivity extends Activity {
     private RelativeLayout rel_circular;
     private Button doneButton;
     private String from;
+    private String totalTime;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,8 @@ public class EchoChooserActivity extends Activity {
                         sendEcho(v);
                     }
                 });
+        totalTime = getIntent().getStringExtra("time");
+
 
     }
 
@@ -52,12 +56,9 @@ public class EchoChooserActivity extends Activity {
         sendBroadcast(intent);
         Intent intent2 = new Intent(getBaseContext(), SliderNavActivity.class);
         intent2.putExtra("start", 2);
-        if (from.equalsIgnoreCase("/gain")) {
-            intent2.putExtra("start2", 3);
-        } else {
-            intent2.putExtra("start2", 4);
 
-        }
+        intent2.putExtra("start2", 4);
+        intent2.putExtra("time", totalTime);
         intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent2);
