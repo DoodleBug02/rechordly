@@ -6,5 +6,5 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     app:rectLayout="@layout/round_activity_speech_to_text"
     app:roundLayout="@layout/round_activity_speech_to_text"
-    tools:context="me.chrisvle.rechordly.SpeechToTextActivity"
+    tools:context=".SpeechToTextActivity"
     tools:deviceIds="wear"></android.support.wearable.view.WatchViewStub>
