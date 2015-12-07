@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -19,7 +18,6 @@ public class InfoActivity extends AppCompatActivity {
     private static MediaPlayer mp;
     private TextView name;
     private Toolbar toolbar;
-    private Chronometer time;
     private long whenTimeStopped;
 
     @Override
@@ -52,10 +50,6 @@ public class InfoActivity extends AppCompatActivity {
         name = (TextView) toolbar.findViewById(R.id.mytext);
         name.setText(fName);
         name.setTypeface(tf);
-
-        time = (Chronometer) findViewById(R.id.chronometer);
-        time.setTypeface(tf);
-        time.setText("Chrono");
 
 
 //        iv.setOnClickListener(new View.OnClickListener() {

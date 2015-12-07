@@ -1,6 +1,7 @@
 package me.chrisvle.rechordly;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,6 +17,8 @@ import com.google.android.gms.wearable.WearableListenerService;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+
+import me.chrisvle.rechordly.dummy.DummyContent;
 
 public class PhoneListener extends WearableListenerService implements GoogleApiClient.ConnectionCallbacks, ChannelApi.ChannelListener {
 
@@ -63,6 +66,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
 
             // Handles all FILENAMING
             if (!edits[0].equals("None")) {
+                //FIXME This wont work, also please replace edits[0] with final filename (There should not be None)
                 file.delete();
                 file = new File(Environment.getExternalStorageDirectory().getPath(), edits[0] + ".wav");
                 Log.d("New filename after save", String.valueOf(this.getFilesDir()));
@@ -72,6 +76,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                     //handle error
                 }
             }
+
             // Handles all TRIM
             double left = 0;
             double right = 0;
@@ -112,12 +117,24 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 Intent transcription = new Intent("/transcription");
                 sendBroadcast(transcription);
             }
+            Log.d("SAVE", "Before Saving");
+            MediaPlayer mp = MediaPlayer.create(this, Uri.fromFile(file));
+            int duration = mp.getDuration();
+            mp.release();
+            String dur = String.valueOf(duration);
+
+            SavedDataList saves = SavedDataList.getInstance();
+            saves.addSong(edits, dur);
+            saves.saveToDisk(getApplicationContext());
+            DummyContent.addItem(new DummyContent.DummyItem(edits[0], dur, ""));
+            Log.d("SAVE", "After Saving");
 
          }
     }
 
     @Override
     public void onChannelOpened(Channel channel) {
+
         Log.d("PhoneListener", "Channel established");
         if (channel.getPath().equals("/new_recording")) {
             file = new File(Environment.getExternalStorageDirectory().getPath(), getTime() + ".wav");

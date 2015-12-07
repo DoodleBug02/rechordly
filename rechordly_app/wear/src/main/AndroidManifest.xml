@@ -52,29 +52,14 @@
         <activity
             android:name=".SliderNavActivity"
             android:label="@string/title_activity_slider_nav">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".SaveActivity"
             android:label="@string/title_activity_save">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".NameActivity"
             android:label="@string/title_activity_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".CropFrontActivity"
@@ -88,20 +73,10 @@
         <activity
             android:name=".CropBackActivity"
             android:label="@string/title_activity_crop_back">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".SpeechToTextActivity"
             android:label="@string/title_activity_speech_to_text">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".GainChooserActivity"
