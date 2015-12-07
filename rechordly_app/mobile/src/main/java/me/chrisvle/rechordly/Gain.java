@@ -11,7 +11,6 @@ public class Gain {
         for (int i = 0; i < array.length; i+=2) {
             // convert byte pair to int
             int audioSample = (int) ((audioSamples[i+1] & 0xff) << 8) | (audioSamples[i] & 0xff);
-
             audioSample = (int) (audioSample * volume);
 
             // convert back
