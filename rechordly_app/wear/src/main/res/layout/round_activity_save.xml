@@ -62,6 +62,7 @@
             android:layout_marginStart="56dp"
             android:textSize="26sp"
             android:lineSpacingExtra="-8dp"
+            android:textColor="#af96db"
             />
 
         </RelativeLayout>

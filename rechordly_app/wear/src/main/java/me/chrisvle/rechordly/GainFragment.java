@@ -31,7 +31,7 @@ public class GainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_gain, container, false);
+        View view = inflater.inflate(R.layout.fragment_gain, container, false);
         gain_btn = (Button) view.findViewById(R.id.gain_btn);
         gain_btn.setOnClickListener(new View.OnClickListener() {
             @Override
