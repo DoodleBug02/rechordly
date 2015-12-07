@@ -43,8 +43,13 @@ public class SpeechToTextActivity extends Activity {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
-                "Dictate Lyrics");
+        if (from.equalsIgnoreCase("/lyrics")) {
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                    "Dictate Lyrics");
+        } else {
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                    "\n \n \n Name Recording");
+        }
         try {
             super.startActivityForResult(intent, 100);
         } catch (ActivityNotFoundException a) {

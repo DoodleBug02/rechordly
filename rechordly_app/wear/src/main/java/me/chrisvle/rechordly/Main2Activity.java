@@ -13,7 +13,6 @@ import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -73,13 +72,36 @@ public class Main2Activity extends Activity {
                 text.setTypeface(tf);
                 time.setTypeface(tf);
 
-
+//                buttonEffect(startBtn);
+//                buttonEffect(stopBtn);
 
             }
 
 
         });
     }
+
+//    public static void buttonEffect(View button){
+//        button.setOnTouchListener(new View.OnTouchListener() {
+//
+//            public boolean onTouch(View v, MotionEvent event) {
+//                ImageButton b = (ImageButton) v;
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN: {
+//                        b.getDrawable().setColorFilter(Color.parseColor("#767676"), PorterDuff.Mode.DARKEN);
+//                        b.invalidate();
+//                        break;
+//                    }
+//                    case MotionEvent.ACTION_UP: {
+//                        b.getDrawable().clearColorFilter();
+//                        b.invalidate();
+//                        break;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
+//    }
 
 
 
@@ -286,9 +308,9 @@ public class Main2Activity extends Activity {
         out.write(header, 0, 44);
     }
 
+
+
     public void btnClick(View v) {
-        final AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
-        v.startAnimation(buttonClick);
         switch(v.getId()){
             case R.id.btnStart:{
                 stopBtn.bringToFront();

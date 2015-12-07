@@ -54,11 +54,11 @@
 
         <Button
             android:layout_width="80dp"
-            android:layout_height="30dp"
+            android:layout_height="32dp"
             android:textSize="20sp"
             android:layout_gravity="center"
             android:paddingTop="0dp"
-            android:layout_marginTop="82dp"
+            android:layout_marginTop="81dp"
             android:background="@drawable/gradient"
             android:textAllCaps="false"
             android:text="Done"
