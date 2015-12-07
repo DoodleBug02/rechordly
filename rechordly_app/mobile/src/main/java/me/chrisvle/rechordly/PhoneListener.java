@@ -169,6 +169,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 sendBroadcast(transcription);
             }
             Log.d("SAVE", "Before Saving");
+            Log.d("FILE", file.getName());
+            Log.d("FILE", String.valueOf(file.length()));
             MediaPlayer mp = MediaPlayer.create(this, Uri.fromFile(file));
             long duration = mp.getDuration();
             mp.release();

@@ -64,18 +64,21 @@ public class SpeechToTextActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case 100: {
+            case 100:
                 if (null != data) {
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     text = result.get(0);
 
+                } else{
+                    text = "None";
                 }
                 break;
+            default:
+                text = "None";
             }
 
-        }
         if (from.equalsIgnoreCase("/lyrics")) {
             Intent intent = new Intent("/lyrics");
             if (text != null) {
