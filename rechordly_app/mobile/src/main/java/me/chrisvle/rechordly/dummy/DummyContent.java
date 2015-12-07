@@ -1,5 +1,7 @@
 package me.chrisvle.rechordly.dummy;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +42,7 @@ public class DummyContent {
 //    }
 
     public static void addItem(DummyItem item) {
+        Log.d("ADD ITEM", "ADD ITEM");
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
