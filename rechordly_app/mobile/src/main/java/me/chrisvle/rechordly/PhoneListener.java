@@ -148,14 +148,22 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             }
             Log.d("SAVE", "Before Saving");
             MediaPlayer mp = MediaPlayer.create(this, Uri.fromFile(file));
-            int duration = mp.getDuration();
+            long duration = mp.getDuration();
             mp.release();
-            String dur = String.valueOf(duration);
+
+            int minutes = (int) Math.floor(duration / 1000 / 60);
+            int seconds = (int) ((duration / 1000) - (minutes * 60));
+            String dur = minutes + ":" + String.format("%02d", seconds);
+
+//            String dur = String.valueOf(duration);
 
             SavedDataList saves = SavedDataList.getInstance();
             saves.addSong(edits[0], String.valueOf(echo_val), String.valueOf(gain_val), dur, edits[5], Uri.fromFile(file).toString());
             saves.saveToDisk(getApplicationContext());
             DummyContent.addItem(new DummyContent.DummyItem(edits[0], dur, ""));
+
+            Intent updateList = new Intent("/update_list");
+            sendBroadcast(updateList);
             Log.d("SAVE", "After Saving");
 
          }
