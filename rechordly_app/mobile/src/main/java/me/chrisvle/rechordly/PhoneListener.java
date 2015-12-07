@@ -196,6 +196,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
     public void onDestroy() {
         super.onDestroy();
         mApiClient.disconnect();
+        unregisterReceiver(broadcastReceiver);
     }
 
     public String getTime() {
