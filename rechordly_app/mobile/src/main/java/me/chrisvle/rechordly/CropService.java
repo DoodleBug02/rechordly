@@ -79,12 +79,7 @@ public class CropService extends Service {
         }
         // If the sample file exists, try to trim it
         if (f != null) {
-            Log.d("File", "Orchestra is an actual file!!");
-            trimmedSample = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "curr.wav");
-            if (trimmedSample.isFile()) {
-                Log.d("Deleting", "Deleting because it already exists");
-                trimmedSample.delete();
-            }
+            trimmedSample = new File(path);
 
             // Trim the sample down and write it to file
             try {

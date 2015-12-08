@@ -64,21 +64,28 @@ public class SpeechToTextActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case 100: {
+            case 100:
                 if (null != data) {
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     text = result.get(0);
 
+                } else{
+                    text = "None";
                 }
                 break;
+            default:
+                text = "None";
             }
 
-        }
         if (from.equalsIgnoreCase("/lyrics")) {
             Intent intent = new Intent("/lyrics");
-            intent.putExtra("lyrics", text);
+            if (text != null) {
+                intent.putExtra("lyrics", text);
+            } else {
+                intent.putExtra("lyrics", "");
+            }
             sendBroadcast(intent);
             Log.d("SpeechToText", "Lyrics Sent");
             Intent intent2 = new Intent(this, SliderNavActivity.class);
@@ -90,6 +97,11 @@ public class SpeechToTextActivity extends Activity {
             startActivity(intent2);
         } else if (from.equalsIgnoreCase("/name")) {
             Intent intent = new Intent("/name");
+            if (text != null) {
+                intent.putExtra("name", text);
+            } else {
+                intent.putExtra("name", "");
+            }
             intent.putExtra("name", text);
             sendBroadcast(intent);
             Log.d("SpeechToText", "Name Sent");

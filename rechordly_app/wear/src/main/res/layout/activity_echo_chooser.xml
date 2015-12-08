@@ -51,12 +51,12 @@ android:background="#000000">
         </TextView>
 
         <Button
-            android:layout_width="100dp"
+            android:layout_width="95dp"
             android:layout_height="45dp"
             android:textSize="20sp"
             android:layout_gravity="center"
             android:paddingTop="0dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="0dp"
             android:background="@drawable/gradient"
             android:text="Done"
             android:id="@+id/echo_done"
@@ -64,11 +64,6 @@ android:background="#000000">
             />
 
     </LinearLayout>
-
-
-
-
-
 </RelativeLayout>
 
 

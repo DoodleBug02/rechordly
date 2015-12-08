@@ -50,6 +50,10 @@
             android:enabled="true"
             android:exported="true" />
         <service
+            android:name=".CropService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
             android:name=".EchoService"
             android:enabled="true"
             android:exported="true" />

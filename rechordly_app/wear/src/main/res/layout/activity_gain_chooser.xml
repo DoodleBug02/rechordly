@@ -25,7 +25,6 @@
             circular:border_thickness="20dp"
             circular:thumb_color="#1939cc"
             circular:thumb_size="20dp" />
-
     </RelativeLayout>
 
     <LinearLayout
@@ -49,12 +48,12 @@
         </TextView>
 
         <Button
-            android:layout_width="100dp"
+            android:layout_width="95dp"
             android:layout_height="45dp"
             android:textSize="20sp"
             android:layout_gravity="center"
             android:paddingTop="0dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="0dp"
             android:background="@drawable/gradient"
             android:text="Done"
             android:id="@+id/gain_done"

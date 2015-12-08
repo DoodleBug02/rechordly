@@ -13,6 +13,7 @@ import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -71,6 +72,11 @@ public class Main2Activity extends Activity {
                 Typeface tf = Typeface.createFromAsset(getAssets(), boldfontPath);
                 text.setTypeface(tf);
                 time.setTypeface(tf);
+
+
+                final AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
+                startBtn.startAnimation(buttonClick);
+                stopBtn.startAnimation(buttonClick);
 
             }
 

@@ -28,7 +28,7 @@ tools:deviceIds="wear_round">
     android:src="@drawable/retry_icon"
     android:id="@+id/retry_record"
     android:layout_centerHorizontal="true"
-    android:layout_marginTop="45dp"
+    android:layout_marginTop="55dp"
     />
 
 
@@ -40,17 +40,21 @@ tools:deviceIds="wear_round">
     android:layout_marginTop="8dp"
     android:layout_centerHorizontal="true"
     android:text="Retry"
-    android:textSize="28sp"/>
+    android:textSize="28sp"
+    android:textColor="#cdc2c2"
+
+    />
 
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/retry_time"
     android:layout_above="@id/retry_record"
-    android:layout_marginBottom="-38dp"
+    android:layout_marginBottom="-45dp"
     android:layout_centerHorizontal="true"
     android:text="00:00"
     android:textSize="23sp"
+    android:textColor="#cdc2c2"
     />
 
 

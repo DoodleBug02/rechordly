@@ -32,6 +32,8 @@ public class LyricFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_lyric, container, false);
         lyrics = "";
         Button lyrics_button = (Button) view.findViewById(R.id.lyric_btn);
+
+
         lyrics_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

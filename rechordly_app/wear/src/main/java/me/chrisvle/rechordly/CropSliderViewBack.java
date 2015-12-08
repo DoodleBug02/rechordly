@@ -154,7 +154,7 @@ public class CropSliderViewBack extends CircularSliderView{
         double prevSec = angleToSeconds(priorAngle);
         double sec = angleToSeconds(mAngle);
         float Offset = (float)(sec - prevSec);
-        if (Offset < -50) {
+        if (Offset < -40) {
             //Went across boundary left -> right
             if (secondsOffset < -30 ) {
                 Offset = Offset + 60;
@@ -164,7 +164,7 @@ public class CropSliderViewBack extends CircularSliderView{
                 mAngle = priorAngle;
             }
 
-        } else if (Offset > 40) {
+        } else if (Offset > 50) {
             //Went across boundary left <- right
             Offset = Offset - 60;
 
@@ -221,7 +221,6 @@ public class CropSliderViewBack extends CircularSliderView{
         Log.d("time", "secondsOffset is " + secondsOffset + "");
         Log.d("time", "inSecOffset is" + inSecOffset);
         Log.d("time", "timeToLengthRatio is" + timeToLengthRatio);
-
 
         if (secondsOffset > inSecOffset) {
             lineOffset =  secondsToXPos(secondsOffset);

@@ -93,6 +93,13 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             Intent intent = new Intent("/retry");
             file.delete();
         } else if (messageEvent.getPath().equalsIgnoreCase(SAVE)){
+            Intent cropservice = new Intent(this, CropService.class);
+            startService(cropservice);
+            Intent gainservice = new Intent(this, GainService.class);
+            startService(gainservice);
+            Intent echoservice = new Intent(this, EchoService.class);
+            startService(echoservice);
+
             Log.d("PhoneListener", "Save Request");
             String all = new String(messageEvent.getData(), StandardCharsets.UTF_8);
             Log.d("Message", all);
@@ -127,41 +134,62 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 }
             }
 
+            MediaPlayer song = MediaPlayer.create(this, Uri.fromFile(file));
+            long durationSong = song.getDuration();
+            song.release();
+
             // Handles all TRIM
             double left = 0;
-            double right = 0;
+            double right = durationSong/1000;
             Log.d("EDITS", edits[1]);
             if (!edits[1].equals("None")) {
-                left = Integer.parseInt(edits[1]);
+
+                String[] time = edits[1].split(":");
+                Double min = Double.parseDouble(time[0]) * 60;
+                Double seconds = Double.parseDouble(time[1]);
+                Double t = min + seconds;
+
+//                left = Integer.parseInt(edits[1]);
+                Intent trim = new Intent("/trim");
+                trim.putExtra("file", file.getAbsolutePath());
+                trim.putExtra("startTime", t);
+                trim.putExtra("endTime", right);
+                sendBroadcast(trim);
             }
             if (!edits[2].equals("None")) {
-                right = Integer.parseInt(edits[2]);
-            }
-            Intent trim = new Intent("/trim");
-            trim.putExtra("path", file.getAbsolutePath());
-            trim.putExtra("startTime", left);
-            trim.putExtra("endTime", right);
-            sendBroadcast(trim);
+                String[] time = edits[2].split(":");
+                Double min = Double.parseDouble(time[0]) * 60;
+                Double seconds = Double.parseDouble(time[1]);
+                Double t = min + seconds;
 
-            // Handles all ECHO
-            double echo_val = 1;
-            if (!edits[3].equals("None")) {
-                echo_val = Integer.parseInt(edits[3]);
+//                right = Integer.parseInt(edits[2]);
+                Intent trim = new Intent("/trim");
+                trim.putExtra("file", file.getAbsolutePath());
+                trim.putExtra("startTime", left);
+                trim.putExtra("endTime", t);
+                sendBroadcast(trim);
             }
-            Intent echo = new Intent("/echo");
-            echo.putExtra("path", file.getAbsolutePath());
-            echo.putExtra("level", echo_val);
-            sendBroadcast(echo);
 
             // Handles all GAIN
             double gain_val = 1;
-            if (!edits[4].equals("None")) {
-                gain_val = Integer.parseInt(edits[4]);
+            if (!edits[3].equals("None")) {
+                gain_val = Double.parseDouble(edits[3]);
+                Intent gain = new Intent("/gain");
+                gain.putExtra("filePath", file.getAbsolutePath());
+                gain.putExtra("volume", gain_val);
+                sendBroadcast(gain);
             }
-            Intent gain = new Intent("/gain");
-            gain.putExtra("path", file.getAbsolutePath());
-            gain.putExtra("volume", gain_val);
-            sendBroadcast(gain);
+
+
+            // Handles all ECHO
+            double echo_val = 1;
+            if (!edits[4].equals("None")) {
+                echo_val = Double.parseDouble(edits[4]);
+                Intent echo = new Intent("/echo");
+                echo.putExtra("filePath", file.getAbsolutePath());
+                echo.putExtra("level", echo_val);
+                sendBroadcast(echo);
+            }
 
             // Handles all TRANSCRIPTION
             if (!edits[5].equals("None")) {
@@ -169,6 +197,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 sendBroadcast(transcription);
             }
             Log.d("SAVE", "Before Saving");
+            Log.d("FILE", file.getName());
+            Log.d("FILE", String.valueOf(file.length()));
             MediaPlayer mp = MediaPlayer.create(this, Uri.fromFile(file));
             long duration = mp.getDuration();
             mp.release();
@@ -176,6 +206,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             int minutes = (int) Math.floor(duration / 1000 / 60);
             int seconds = (int) ((duration / 1000) - (minutes * 60));
             String dur = minutes + ":" + String.format("%02d", seconds);
+
+            Log.d("ASKLDJFLKAKLFJ", String.valueOf(seconds));
 
 //            String dur = String.valueOf(duration);
 
