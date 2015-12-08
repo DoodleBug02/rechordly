@@ -61,10 +61,6 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
             }
         }
 
-        DummyContent.addItem(new DummyContent.DummyItem("test1", "1234", ""));
-        DummyContent.addItem(new DummyContent.DummyItem("test2", "1234", ""));
-        savedData.addSong("12345678901234567890", "1", "1", "03:30", "None", "android.resource://" + getPackageName() + "/orchestra"); //+ R.raw.orchestra);
-        DummyContent.addItem(new DummyContent.DummyItem("12345678901234567890", "03:40", ""));
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
