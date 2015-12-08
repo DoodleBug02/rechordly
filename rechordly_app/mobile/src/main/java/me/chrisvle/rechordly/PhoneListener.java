@@ -245,7 +245,6 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             } else {
                 echoStr = String.valueOf(echo_val);
             }
-
             if (edit_mode) {
                 edit_mode = false;
                 if (!edits[0].equals("None")) {
@@ -280,7 +279,6 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 DummyContent.delete(file.getName());
                 Intent updateList = new Intent("/update_list");
                 sendBroadcast(updateList);
-
             } else {
                 String displayName = file.getName();
                 displayName = displayName.substring(0, displayName.lastIndexOf("."));
