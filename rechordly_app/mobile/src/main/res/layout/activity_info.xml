@@ -50,7 +50,7 @@
                 android:gravity="center"
                 android:textColor="#ffffff"
                 android:id="@+id/mytext"
-                android:textSize="40sp" />
+                android:textSize="40sp"/>
 
             <ImageView
                 android:id="@+id/pencil_image"
