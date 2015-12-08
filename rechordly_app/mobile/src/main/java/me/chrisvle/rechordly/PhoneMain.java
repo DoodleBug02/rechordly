@@ -43,8 +43,8 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
     private TextView textview;
     private ImageView mPlus;
     private MyItemRecyclerViewAdapter mRAdapter;
-    BroadcastReceiver broadcastReceiver;
     private SavedDataList savedData = SavedDataList.getInstance();
+    BroadcastReceiver broadcastReceiver;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,6 +211,7 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
+
     }
 
 }
