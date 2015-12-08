@@ -44,6 +44,7 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
     private ImageView mPlus;
     private MyItemRecyclerViewAdapter mRAdapter;
     private SavedDataList savedData = SavedDataList.getInstance();
+    BroadcastReceiver broadcastReceiver;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +119,7 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("/update_list");
-        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals("/update_list")) {
@@ -196,6 +197,13 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+
     }
 
 }
