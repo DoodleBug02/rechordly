@@ -53,10 +53,10 @@ import android.support.v4.view.ViewPager;
         time = intent.getStringExtra("time");
         slide = intent.getIntExtra("start", 1);
         slide2 = intent.getIntExtra("start2", 0);
-                mPager = (ViewPager) findViewById(R.id.pager);
-                mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-                mPager.setCurrentItem(slide);
+        mPager.setCurrentItem(slide);
 
     }
 
