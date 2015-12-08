@@ -47,6 +47,7 @@
     <string name="title_activity_echo_chooser">EchoChooserActivity</string>
     <string name="title_activity_speech_to_text">SpeechToTextActivity</string>
     <string name="title_activity_gain_chooser">GainChooserActivity</string>
+    <string name="title_activity_old_edit">OldEditActivity</string>
 
 </resources>
 
