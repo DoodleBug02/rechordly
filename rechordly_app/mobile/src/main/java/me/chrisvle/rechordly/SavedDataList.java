@@ -55,6 +55,13 @@ public class SavedDataList  {
         }
     }
 
+    public void delete(String name) {
+        if (data.containsKey(name)) {
+            data.remove(name);
+            order.remove(order.indexOf(name));
+        }
+    }
+
     public String[] getNames() {
 //        return data.keySet().toArray(new String[data.keySet().size()]);
         return order.toArray(new String[order.size()]);
