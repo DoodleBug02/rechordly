@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -47,32 +49,33 @@ public class InfoActivity extends AppCompatActivity {
 //            }
 //        });
 
-//        Button b = (Button) findViewById(R.id.edit);
-//        b.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent edit = new Intent("/edit");
-//                edit.putExtra("filePath", "Put real file here");
-//                sendBroadcast(edit);
-//            }
-//        });
+        Button b = (Button) findViewById(R.id.edit);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent edit = new Intent("/edit");
+                edit.putExtra("filePath", "Put real file here");
+                sendBroadcast(edit);
+            }
+        });
+
         Intent intent = getIntent();
         fName = intent.getStringExtra("file_name");
         String shownName = intent.getStringExtra("shown_name");
         Typeface tf = Typeface.createFromAsset(getAssets(), "font/Mission_Gothic_Bold.ttf");
-//
-//        Button b2 = (Button) findViewById(R.id.lyric);
-//        b2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent lyric = new Intent(getBaseContext(), LyricActivity.class);
-//                startActivity(lyric);
-//
-//                Intent lyric_add = new Intent("/lyric");
-//                lyric_add.putExtra("filePath", "Put real file here");
-//                sendBroadcast(lyric_add);
-//            }
-//        });
+
+        Button b2 = (Button) findViewById(R.id.lyric);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent lyric = new Intent(getBaseContext(), LyricActivity.class);
+                startActivity(lyric);
+
+                Intent lyric_add = new Intent("/lyric");
+                lyric_add.putExtra("filePath", "Put real file here");
+                sendBroadcast(lyric_add);
+            }
+        });
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
