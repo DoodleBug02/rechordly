@@ -209,5 +209,4 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
         unregisterReceiver(broadcastReceiver);
 
     }
-
 }

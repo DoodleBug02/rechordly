@@ -3,8 +3,8 @@ package me.chrisvle.rechordly;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,6 +24,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import me.chrisvle.rechordly.dummy.DummyContent;
 
@@ -43,6 +46,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
     private SavedDataList saves = SavedDataList.getInstance();
     public GoogleApiClient mApiClient;
     private BroadcastReceiver broadcastReceiver;
+
+    private Boolean edit_mode = false;
 
 
     @Override
@@ -66,6 +71,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 if (intent.getAction().equals(EDIT)) {
                     String path = intent.getStringExtra("filePath");
                     file = new File(path);
+                    edit_mode = true;
                 }
                 else if (intent.getAction().equals(LYRIC)) {
                     String path = intent.getStringExtra("filePath");
@@ -118,10 +124,23 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
 
             Log.d("EDIts2", edits[2]);
 
-            // Handles all FILENAMIN
-            Log.d("FIlename333", file.getName());
-            Log.d("FILENAME222", edits[0]);
-            if (!edits[0].equals("None")) {
+            if (edit_mode) {
+                if (edits[0].equals("None")) {
+                    File newfile = new File(Environment.getExternalStorageDirectory().getPath(), edits[0] + ".wav");
+                    try {
+                        copy(file, newfile);
+                    } catch (IOException e) {
+                        Log.d("COPY", "COULD NOT BE COPIED");
+                    }
+                    file.delete();
+                    saves.delete(file.getName());
+                    DummyContent.delete(file.getName());
+                    Intent updateList = new Intent("/update_list");
+                    sendBroadcast(updateList);
+                    file = newfile;
+                }
+            }
+            else if (!edits[0].equals("None")) {
                 Log.d("message file name", edits[0]);
                 Log.d("saved file name", file.getName());
                 if (!edits[0].equals(file.getName())) {
@@ -140,9 +159,6 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                     Log.d("file length", String.valueOf(file.length()));
                     Log.d("New filename after save", String.valueOf(this.getFilesDir()));
                 }
-            }
-            else {
-
             }
             MediaPlayer song = MediaPlayer.create(this, Uri.fromFile(file));
             long durationSong = song.getDuration();
@@ -245,6 +261,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             } else {
                 echoStr = String.valueOf(echo_val);
             }
+
             String displayName = file.getName();
             displayName =  displayName.substring(0,displayName.lastIndexOf("."));
             saves.addSong(displayName, echoStr, gainStr, dur, edits[5], Uri.fromFile(file).toString());
@@ -260,10 +277,12 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
 
     @Override
     public void onChannelOpened(Channel channel) {
-
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("hh_mm_ss");
+        String time_date = formatter.format(today);
         Log.d("PhoneListener", "Channel established");
         if (channel.getPath().equals("/new_recording")) {
-            file = new File(Environment.getExternalStorageDirectory().getPath(), getTime() + ".wav");
+            file = new File(Environment.getExternalStorageDirectory().getPath(), "new_recording_" + time_date + ".wav");
             Log.d("this", String.valueOf(this.getFilesDir()));
             try {
                 file.createNewFile();
