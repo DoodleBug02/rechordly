@@ -50,6 +50,17 @@ public class DummyContent {
         ITEM_MAP.put(item.id, item);
     }
 
+    public static void addItemTop(DummyItem item) {
+        for (int i = 0; i < ITEMS.size(); i++) {
+            if (ITEMS.get(i).id.equals(item.id)) {
+                ITEMS.remove(i);
+                break;
+            }
+        }
+        ITEMS.add(0, item);
+        ITEM_MAP.put(item.id, item);
+    }
+
     public static void delete(String name) {
         for (int i = 0; i < ITEMS.size(); i++) {
             if (ITEMS.get(i).id.equals(name)) {
