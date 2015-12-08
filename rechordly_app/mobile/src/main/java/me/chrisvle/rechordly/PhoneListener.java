@@ -122,6 +122,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             Log.d("FIlename333", file.getName());
             Log.d("FILENAME222", edits[0]);
             if (!edits[0].equals("None")) {
+                Log.d("message file name", edits[0]);
+                Log.d("saved file name", file.getName());
                 if (!edits[0].equals(file.getName())) {
                     File newfile = new File(Environment.getExternalStorageDirectory().getPath(), edits[0] + ".wav");
                     try {
@@ -130,20 +132,12 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                         Log.d("COPY", "COULD NOT BE COPIED");
                     }
                     file.delete();
-                    saves.delete(edits[0]);
-                    DummyContent.delete(edits[0]);
                     Intent updateList = new Intent("/update_list");
                     sendBroadcast(updateList);
                     file = newfile;
 
-                    Log.d("New filename after save", String.valueOf(this.getFilesDir()));
-                    try {
-                        copy(file, newfile);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    file.delete();
-                    file = newfile;
+                    Log.d("New filename after save", String.valueOf(file.getName()));
+                    Log.d("file length", String.valueOf(file.length()));
                     Log.d("New filename after save", String.valueOf(this.getFilesDir()));
                 }
             }

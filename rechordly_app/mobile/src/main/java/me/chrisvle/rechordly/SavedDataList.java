@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class SavedDataList  {
     private final String FILE_NAME = "audio_data";
     private HashMap<String, HashMap<String, String>> data;
-    private ArrayList<String> order = new ArrayList<>();
+    private ArrayList<String> order = new ArrayList<String>();
     private static final SavedDataList holder = new SavedDataList();
 
     private SavedDataList() {
