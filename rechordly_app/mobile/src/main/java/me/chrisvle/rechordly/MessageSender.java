@@ -64,7 +64,7 @@ public class MessageSender extends Service {
                 Toast.makeText(this, "Opening Main on Watch", Toast.LENGTH_SHORT).show();
                 sendMessage(START_MAIN, "");
             } else if (start.equalsIgnoreCase("lyrics")) {
-                Toast.makeText(this, "Opening Main on Watch", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Adding Lyrics on Watch", Toast.LENGTH_SHORT).show();
                 sendMessage(START_LYRICS, lyric_message);
             }
         } else {

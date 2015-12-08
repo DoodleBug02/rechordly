@@ -124,23 +124,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
 
             Log.d("EDIts2", edits[2]);
 
-            if (edit_mode) {
-                if (edits[0].equals("None")) {
-                    File newfile = new File(Environment.getExternalStorageDirectory().getPath(), edits[0] + ".wav");
-                    try {
-                        copy(file, newfile);
-                    } catch (IOException e) {
-                        Log.d("COPY", "COULD NOT BE COPIED");
-                    }
-                    file.delete();
-                    saves.delete(file.getName());
-                    DummyContent.delete(file.getName());
-                    Intent updateList = new Intent("/update_list");
-                    sendBroadcast(updateList);
-                    file = newfile;
-                }
-            }
-            else if (!edits[0].equals("None")) {
+            if (!edits[0].equals("None")) {
                 Log.d("message file name", edits[0]);
                 Log.d("saved file name", file.getName());
                 if (!edits[0].equals(file.getName())) {
@@ -262,15 +246,52 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 echoStr = String.valueOf(echo_val);
             }
 
-            String displayName = file.getName();
-            displayName =  displayName.substring(0,displayName.lastIndexOf("."));
-            saves.addSong(displayName, echoStr, gainStr, dur, edits[5], Uri.fromFile(file).toString());
-            saves.saveToDisk(getApplicationContext());
-            DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));
+            if (edit_mode) {
+                edit_mode = false;
+                if (!edits[0].equals("None")) {
+                    if (!edits[3].equals("None") || !edits[3].equals("0")) {
+                        saves.setGain(edits[0], edits[3]);
+                    }
+                    if (!edits[4].equals("None") || !edits[4].equals("0")) {
+                        saves.setEcho(edits[0], edits[4]);
+                    }
+                    if (!edits[5].equals("None")) {
+                        saves.setLyrics(edits[0], edits[5]);
+                    }
+                    saves.setDuration(edits[0], dur);
+                    DummyContent.addItem(new DummyContent.DummyItem(edits[0], dur, ""));
 
-            Intent updateList = new Intent("/update_list");
-            sendBroadcast(updateList);
-            Log.d("SAVE", "After Saving");
+                } else {
+                    saves.setName(file.getName(), edits[0]);
+                    if (!edits[3].equals("None") || !edits[3].equals("0")) {
+                        saves.setGain(file.getName(), edits[3]);
+                    }
+                    if (!edits[4].equals("None") || !edits[4].equals("0")) {
+                        saves.setEcho(file.getName(), edits[4]);
+                    }
+                    if (!edits[5].equals("None")) {
+                        saves.setLyrics(file.getName(), edits[5]);
+                    }
+                    saves.setDuration(file.getName(), dur);
+                    String displayName = file.getName();
+                    displayName = displayName.substring(0, displayName.lastIndexOf("."));
+                    DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));
+                }
+                DummyContent.delete(file.getName());
+                Intent updateList = new Intent("/update_list");
+                sendBroadcast(updateList);
+
+            } else {
+                String displayName = file.getName();
+                displayName = displayName.substring(0, displayName.lastIndexOf("."));
+                saves.addSong(displayName, echoStr, gainStr, dur, edits[5], Uri.fromFile(file).toString());
+                saves.saveToDisk(getApplicationContext());
+                DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));
+
+                Intent updateList = new Intent("/update_list");
+                sendBroadcast(updateList);
+                Log.d("SAVE", "After Saving");
+            }
 
          }
     }
