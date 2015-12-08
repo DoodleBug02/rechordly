@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 
     public class SliderNavActivity extends FragmentActivity implements
             EditNavFragment.OnFragmentInteractionListener,
+            DoneFragment.OnFragmentInteractionListener,
             RetryFragment.OnFragmentInteractionListener,
             CropFragment.OnFragmentInteractionListener,
             EchoFragment.OnFragmentInteractionListener,
@@ -53,10 +54,10 @@ import android.support.v4.view.ViewPager;
         time = intent.getStringExtra("time");
         slide = intent.getIntExtra("start", 1);
         slide2 = intent.getIntExtra("start2", 0);
-                mPager = (ViewPager) findViewById(R.id.pager);
-                mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-                mPager.setCurrentItem(slide);
+        mPager.setCurrentItem(slide);
 
     }
 
@@ -92,6 +93,14 @@ import android.support.v4.view.ViewPager;
     public String getTime(){
         return time;
     }
+
+        /** Fragment Interaction Function to let fragments know if they are an old edit **/
+        public boolean oldEdit() {
+            return false;
+        }
+
+
+
 
 
 }

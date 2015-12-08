@@ -78,6 +78,7 @@ public class GainFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         String getTime();
+        boolean oldEdit();
     }
 
 }

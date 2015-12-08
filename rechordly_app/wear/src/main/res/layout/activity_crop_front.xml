@@ -53,12 +53,12 @@
         </TextView>
 
         <Button
-            android:layout_width="85dp"
-            android:layout_height="35dp"
+            android:layout_width="80dp"
+            android:layout_height="32dp"
             android:textSize="20sp"
             android:layout_gravity="center"
             android:paddingTop="0dp"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="81dp"
             android:background="@drawable/gradient"
             android:textAllCaps="false"
             android:text="Done"
