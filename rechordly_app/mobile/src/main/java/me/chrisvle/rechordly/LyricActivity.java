@@ -34,7 +34,7 @@ public class LyricActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setBackground(getDrawable(R.drawable.blue_gradient));
+        toolbar.setBackground(getDrawable(R.drawable.green_gradient));
 
         name = (TextView) toolbar.findViewById(R.id.mytext);
         name.setText("Lyrics");

@@ -55,6 +55,32 @@ public class SavedDataList  {
         }
     }
 
+    public void setDuration(String name, String dur) {
+        if (data.containsKey(name)) {
+            data.get(name).put("duration", dur);
+        }
+    }
+
+    public void setName(String oldName, String newName) {
+        if (data.containsKey(oldName)) {
+            HashMap<String, String> temp = data.get(oldName);
+            data.remove(oldName);
+            data.put(newName, temp);
+        }
+    }
+
+    public void setGain(String name, String gain) {
+        if (data.containsKey(name)) {
+            data.get(name).put("gain", gain);
+        }
+    }
+
+    public void setEcho(String name, String echo) {
+        if (data.containsKey(name)) {
+            data.get(name).put("echo", echo);
+        }
+    }
+
     public void delete(String name) {
         if (data.containsKey(name)) {
             data.remove(name);
