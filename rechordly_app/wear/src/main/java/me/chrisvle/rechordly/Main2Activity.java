@@ -328,6 +328,11 @@ public class Main2Activity extends Activity {
 //                text.setText("RetryFragment");
 //                time.stop();
 //                parentView.invalidate();
+
+                Intent slideIntent = new Intent(this, SliderNavActivity.class);
+                slideIntent.putExtra("time", time.getText());
+                slideIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(slideIntent);
                 stopRecording();
                 Intent intent = new Intent("/new_recording");
                 File f = new File(filePath);
@@ -340,10 +345,6 @@ public class Main2Activity extends Activity {
                 Log.d("FILE?", String.valueOf(fe.length()));
                 Log.d("EXISTS?", String.valueOf((fe.exists())));
 
-                Intent slideIntent = new Intent(this, SliderNavActivity.class);
-                slideIntent.putExtra("time", time.getText());
-                slideIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(slideIntent);
 
                 break;
                 }
