@@ -18,6 +18,7 @@ import android.widget.ImageView;
  * to handle interaction events.
  */
 public class EditNavFragment extends Fragment implements
+        DoneFragment.OnFragmentInteractionListener,
         EchoFragment.OnFragmentInteractionListener,
         GainFragment.OnFragmentInteractionListener,
         CropFragment.OnFragmentInteractionListener,
@@ -147,7 +148,13 @@ public class EditNavFragment extends Fragment implements
         String getTime();
     }
 
+    /** Fragment Interaction Function */
     public String getTime() {
         return mListener.getTime();
+    }
+
+    /** Fragment Interaction Function to let fragments know if they are an old edit **/
+    public boolean oldEdit() {
+        return false;
     }
 }

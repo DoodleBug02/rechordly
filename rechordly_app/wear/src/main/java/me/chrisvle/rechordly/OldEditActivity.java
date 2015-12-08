@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 public class OldEditActivity extends FragmentActivity implements
+        DoneFragment.OnFragmentInteractionListener,
         EchoFragment.OnFragmentInteractionListener,
         GainFragment.OnFragmentInteractionListener,
         CropFragment.OnFragmentInteractionListener,
@@ -22,8 +23,7 @@ public class OldEditActivity extends FragmentActivity implements
     private PagerAdapter mAdapter;
     private ViewPager mPager;
     private ImageView dots;
-    private int slide;
-    private int slide2;
+    private int start;
     private String time;
 
     public OldEditActivity() {
@@ -43,11 +43,11 @@ public class OldEditActivity extends FragmentActivity implements
         setContentView(R.layout.activity_old_edit);
         Intent intent = getIntent();
         time = intent.getStringExtra("time");
-        slide = intent.getIntExtra("start", 2);
+        start = intent.getIntExtra("start", 2); // Fix this code here
         mPager = (ViewPager) findViewById(R.id.pager);
         mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mAdapter);
-        mPager.setCurrentItem(slide);
+        mPager.setCurrentItem(start);
         dots = (ImageView) findViewById(R.id.dots_edit);
 
     }
@@ -101,7 +101,6 @@ public class OldEditActivity extends FragmentActivity implements
                 case (4):
                     dots.setImageResource(R.drawable.dot5);
                     return;
-
             }
 
         }
@@ -110,6 +109,11 @@ public class OldEditActivity extends FragmentActivity implements
     /** Fragment Interaction Function */
     public String getTime(){
         return time;
+    }
+
+    /** Fragment Interaction Function to let fragments know if they are an old edit **/
+    public boolean oldEdit() {
+        return true;
     }
 
 }

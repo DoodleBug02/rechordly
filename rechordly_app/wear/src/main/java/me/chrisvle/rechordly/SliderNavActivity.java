@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 
     public class SliderNavActivity extends FragmentActivity implements
             EditNavFragment.OnFragmentInteractionListener,
+            DoneFragment.OnFragmentInteractionListener,
             RetryFragment.OnFragmentInteractionListener,
             CropFragment.OnFragmentInteractionListener,
             EchoFragment.OnFragmentInteractionListener,
@@ -92,6 +93,14 @@ import android.support.v4.view.ViewPager;
     public String getTime(){
         return time;
     }
+
+        /** Fragment Interaction Function to let fragments know if they are an old edit **/
+        public boolean oldEdit() {
+            return false;
+        }
+
+
+
 
 
 }
