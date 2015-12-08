@@ -123,16 +123,14 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                     file.delete();
                     file = newfile;
 
-
-
                     Log.d("New filename after save", String.valueOf(this.getFilesDir()));
                     try {
-                        copy(file, new_file);
+                        copy(file, newfile);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     file.delete();
-                    file = new_file;
+                    file = newfile;
                     Log.d("New filename after save", String.valueOf(this.getFilesDir()));
                 }
             }
