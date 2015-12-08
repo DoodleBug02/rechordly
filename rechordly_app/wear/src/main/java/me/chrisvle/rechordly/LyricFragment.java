@@ -25,6 +25,7 @@ public class LyricFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -33,6 +34,9 @@ public class LyricFragment extends Fragment {
         lyrics = "";
         Button lyrics_button = (Button) view.findViewById(R.id.lyric_btn);
 
+        if (mListener.oldLyric()) {
+            lyrics_button.setText("Replace Lyrics");
+        }
 
         lyrics_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +46,8 @@ public class LyricFragment extends Fragment {
                 intent.putExtra("from", "/lyrics");
                 intent.putExtra("time", mListener.getTime());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("oldEdit", mListener.oldEdit());
+                intent.putExtra("oldLyric", mListener.oldLyric());
                 startActivity(intent);
             }
         });
@@ -80,6 +86,7 @@ public class LyricFragment extends Fragment {
         // TODO: Update argument type and name
         String getTime();
         boolean oldEdit();
+        boolean oldLyric();
 
     }
 

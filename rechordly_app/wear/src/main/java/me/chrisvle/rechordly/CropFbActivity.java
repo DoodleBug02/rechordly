@@ -14,6 +14,8 @@ public class CropFbActivity extends Activity {
     private ImageButton mImageButton;
 
     private String time;
+    private boolean oldEdit;
+    private boolean oldLyric;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,11 @@ public class CropFbActivity extends Activity {
         setContentView(R.layout.activity_crop_fb);
 
         time = getIntent().getStringExtra("time");
+        oldEdit = getIntent().getBooleanExtra("oldEdit", false);
+        oldLyric = getIntent().getBooleanExtra("oldLyric", false);
+
+
+
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
@@ -38,6 +45,8 @@ public class CropFbActivity extends Activity {
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("time", time);
+        intent.putExtra("oldEdit", oldEdit);
+        intent.putExtra("oldLyric", oldLyric);
         startActivity(intent);
 
     }
@@ -48,6 +57,9 @@ public class CropFbActivity extends Activity {
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra("time", time);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra("time", time);
+        intent.putExtra("oldEdit", oldEdit);
+        intent.putExtra("oldLyric", oldLyric);
         startActivity(intent);
     }
 }

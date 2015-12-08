@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -129,48 +130,7 @@ public class GainSliderView extends CircularSliderView {
             newAngle = -newAngle;
         }
         double x =  (mCircleCenterX + mCircleRadius * Math.cos(newAngle));
-        double y =  (mCircleCenterY - mCircleRadius * Math.sin(newAngle));
-
-//        if (Math.abs(mThumbX - mStopX)<35 && Math.abs(mThumbY - mStopY)<35) {
-//            if ((x > mStopX) && isLeft()) {
-//                return;
-//            }
-//            if ((x < mStopX) && isRight()){
-//                return;
-//            }
-//        }
-        Log.d("Stop", "mStopX is " + mStopX);
-//        Log.d("Stop", "mStopY is " + mStopY);
-//        Log.d("Stop", "mThumbX is " + mThumbX);
-
-//        Log.d("Stop", "mStopXL is" + mStopXL);
-//        Log.d("Stop", "mStopYL is" + mStopXR);
-//        Log.d("Stop", "mStopXR is" + mStopYL);
-//        Log.d("Stop", "mStopYR is" + mStopYR);
-
-        Log.d("Stop", "x is " + x);
-        Log.d("Stop", "Angle is" + Math.toDegrees(mAngle));
-        Log.d("Stop", "newAngle is" + Math.toDegrees(newAngle));
-        Log.d("Stop", "newAngle diff is " + (Math.abs((Math.toDegrees(newAngle))-90)));
-        Log.d("Stop", "Angle diff is" + (Math.abs((Math.toDegrees(mAngle))-90)));
-        Log.d("Stop", "isLeft is " + isLeft());
-        Log.d("Stop", "x > mStopX" + (x > mStopX));
-
-//        if (Math.abs(mThumbX - mStopXL)<15 && Math.abs(mThumbY - mStopYL)<15) {
-//            if ((x > mStopX) && isLeft()) {
-//                return;
-//            }
-//        }
-//
-//        if (Math.abs(mThumbX - mStopXR)<25 && Math.abs(mThumbY - mStopYR)<25) {
-//            if ((x < mStopX) && isRight()) {
-//                return;
-//            }
-//        }
-
-
-
-        if (Math.abs((Math.toDegrees(mAngle))-90)<15) {
+        if (Math.abs((Math.toDegrees(mAngle)) - 90)<15) {
             if ((x > mStopX) && isLeft()) {
                 return;
             }
@@ -197,7 +157,27 @@ public class GainSliderView extends CircularSliderView {
         }
         TextView gain = (TextView) context.findViewById(R.id.gain);
 
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) gain.getLayoutParams();
+        gain.setLayoutParams(lp);
+
+        if (getGain() == 1) {
+            lp.width = (int) (23 * getResources().getDisplayMetrics().density);
+        } else if (getGain() < 10) {
+            lp.width = (int) (38 * getResources().getDisplayMetrics().density);
+        } else if (getGain() < 20) {
+            lp.width = (int) (57 * getResources().getDisplayMetrics().density);
+        } else if (getGain() < 30) {
+            lp.width = (int) (72 * getResources().getDisplayMetrics().density);
+        } else if (getGain()>= 70 && getGain() < 80) {
+            lp.width = (int) (68 * getResources().getDisplayMetrics().density);
+        } else if (getGain() < 100) {
+            lp.width = (int) (75 * getResources().getDisplayMetrics().density);
+        } else if (getGain() == 100) {
+            lp.width = (int) (90 * getResources().getDisplayMetrics().density);
+        }
+        gain.setLayoutParams(lp);
         gain.setText(getGain() + "");
+
     }
 
     private double angleConvert(double ang) {

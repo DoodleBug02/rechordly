@@ -39,6 +39,8 @@ public class GainFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), GainChooserActivity.class);
                 intent.putExtra("from", "/gain");
                 intent.putExtra("time", mListener.getTime());
+                intent.putExtra("oldEdit", mListener.oldEdit());
+                intent.putExtra("oldLyric", mListener.oldLyric());
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
@@ -79,6 +81,7 @@ public class GainFragment extends Fragment {
         // TODO: Update argument type and name
         String getTime();
         boolean oldEdit();
+        boolean oldLyric();
     }
 
 }

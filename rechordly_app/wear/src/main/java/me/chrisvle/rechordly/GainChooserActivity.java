@@ -18,6 +18,8 @@ public class GainChooserActivity extends Activity {
     private Button doneButton;
     private String from;
     private String totalTime;
+    private boolean oldlyric;
+    private boolean oldEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,8 @@ public class GainChooserActivity extends Activity {
         });
 
         totalTime = getIntent().getStringExtra("time");
-
+        oldlyric = getIntent().getBooleanExtra("lyrics", false);
+        oldEdit = getIntent().getBooleanExtra("oldEdit", false);
 
     }
 
@@ -54,10 +57,18 @@ public class GainChooserActivity extends Activity {
         Intent intent = new Intent(from);
         intent.putExtra("amount", Integer.toString(gain));
         sendBroadcast(intent);
-        Intent intent2 = new Intent(getBaseContext(), SliderNavActivity.class);
-        intent2.putExtra("start", 2);
-        intent2.putExtra("start2", 3);
-        intent2.putExtra("time", totalTime);
+        Intent intent2;
+        if (oldEdit) {
+            intent2 = new Intent(getBaseContext(), OldEditActivity.class);
+            intent2.putExtra("start", 3);
+            intent2.putExtra("time", totalTime);
+            intent2.putExtra("lyrics", oldlyric);
+        } else {
+            intent2 = new Intent(getBaseContext(), SliderNavActivity.class);
+            intent2.putExtra("start", 2);
+            intent2.putExtra("start2", 3);
+            intent2.putExtra("time", totalTime);
+        }
         intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent2);

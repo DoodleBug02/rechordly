@@ -29,7 +29,7 @@
         <activity
             android:name=".OldEditActivity"
             android:label="@string/title_activity_old_edit"
-            />
+            ></activity>
 
         <activity
             android:name=".CropFbActivity"
