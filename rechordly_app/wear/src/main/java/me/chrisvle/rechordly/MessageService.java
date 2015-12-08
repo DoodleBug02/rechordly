@@ -33,6 +33,8 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
     static private String new_name_value;
     static private String retry;
     static private String save;
+    static private Boolean edit;
+    static private String path;
 
 
     @Override
@@ -55,6 +57,7 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
         filter.addAction("/lyrics");
         filter.addAction("/gain");
         filter.addAction("/echo");
+        filter.addAction(("/edit"));
         filter.addAction("/name");
         filter.addAction("/retry");
         filter.addAction("/save");
@@ -108,12 +111,17 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
                 } else if (intent.getAction().equals("/save")) {
                     Log.d("MessageService", "Save Requested");
                     checkStrings();
+
                     String message = new_name_value +
                                     "|" + crop_front_value +
                                     "|" + crop_back_value +
                                     "|" + gain_value +
                                     "|" + echo_value +
                                     "|" + lyrics;
+                    if (edit) {
+                        message = message.concat("|" + path);
+                        edit = false;
+                    }
                     sendMessage("/save", message);
                     clearVars();
 
@@ -123,7 +131,11 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
                     clearVars();
 
 
+                } else if (intent.getAction().equals("/edit")) {
+                    edit = true;
+                    path = intent.getStringExtra("path");
                 }
+
             }
         };
         registerReceiver(myReceiver, filter);

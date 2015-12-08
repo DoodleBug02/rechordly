@@ -44,6 +44,10 @@ public class PhoneListener extends WearableListenerService {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
+            Intent intent2 = new Intent("/edit");
+            intent2.putExtra("path", message[3]);
+            sendBroadcast(intent2);
+
         } else if (messageEvent.getPath().equalsIgnoreCase( START_MAIN )) {
             Intent intent = new Intent(getBaseContext(), Main2Activity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
