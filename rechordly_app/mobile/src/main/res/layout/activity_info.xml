@@ -133,25 +133,21 @@
         android:layout_width="20dp"
         android:layout_height="50dp" />
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lyrics"
         android:id="@+id/lyric"
-        android:textColor="@color/black"
-        android:layout_below="@+id/space2"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="56dp" />
+        android:layout_above="@+id/edit"
+        android:layout_centerHorizontal="true" />
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit"
-        android:textColor="@color/black"
         android:id="@+id/edit"
         android:layout_below="@+id/space2"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="200dp" />
+        android:layout_alignStart="@+id/lyric" />
 
 
     <!--<android.support.v4.view.ViewPager-->

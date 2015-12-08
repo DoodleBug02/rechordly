@@ -15,8 +15,6 @@ import android.widget.Button;
  * Activities that contain this fragment must implement the
  * {@link EchoFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link EchoFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class EchoFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
@@ -78,7 +76,10 @@ public class EchoFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         String getTime();
+        boolean oldEdit();
+
     }
+
 
 
 

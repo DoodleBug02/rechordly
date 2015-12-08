@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.chrisvle.rechordly">
+
     <uses-feature android:name="android.hardware.type.watch" />
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-library android:name="com.google.android.wearable" />
+
     <supports-screens
+        android:anyDensity="false"
+        android:largeScreens="false"
+        android:normalScreens="true"
         android:resizeable="false"
-    android:smallScreens= "false"
-    android:normalScreens="true"
-    android:largeScreens="false"
-    android:xlargeScreens="false"
-    android:anyDensity= "false"
-    />
+        android:smallScreens="false"
+        android:xlargeScreens="false" />
 
     <application
         android:allowBackup="true"
@@ -24,6 +25,11 @@
         android:theme="@style/AppTheme">
 
         <!-- android:theme="@android:style/Theme.DeviceDefault"> -->
+
+        <activity
+            android:name=".OldEditActivity"
+            android:label="@string/title_activity_old_edit"
+            />
 
         <activity
             android:name=".CropFbActivity"
@@ -58,16 +64,13 @@
         </activity>
         <activity
             android:name=".SliderNavActivity"
-            android:label="@string/title_activity_slider_nav">
-        </activity>
+            android:label="@string/title_activity_slider_nav"></activity>
         <activity
             android:name=".SaveActivity"
-            android:label="@string/title_activity_save">
-        </activity>
+            android:label="@string/title_activity_save"></activity>
         <activity
             android:name=".NameActivity"
-            android:label="@string/title_activity_name">
-        </activity>
+            android:label="@string/title_activity_name"></activity>
         <activity
             android:name=".CropFrontActivity"
             android:label="@string/title_activity_main3">
@@ -79,15 +82,14 @@
         </activity>
         <activity
             android:name=".CropBackActivity"
-            android:label="@string/title_activity_crop_back">
-        </activity>
+            android:label="@string/title_activity_crop_back"></activity>
         <activity
             android:name=".SpeechToTextActivity"
-            android:label="@string/title_activity_speech_to_text">
-        </activity>
+            android:label="@string/title_activity_speech_to_text"></activity>
         <activity
             android:name=".GainChooserActivity"
-            android:label="@string/title_activity_gain_chooser"></activity>
+            android:label="@string/title_activity_gain_chooser" />
+
     </application>
 
 </manifest>

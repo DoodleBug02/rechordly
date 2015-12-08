@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 public class LyricActivity extends Activity {
 
@@ -20,13 +21,12 @@ public class LyricActivity extends Activity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
 
-    }
-
-
         Intent add_lyrics = getIntent();
         String text = add_lyrics.getStringExtra("text");
 
+        TextView t = (TextView) findViewById(R.id.myLyrics);
+        t.setText(text);
+    }
 
-        // do text view stuff here
 }
 
