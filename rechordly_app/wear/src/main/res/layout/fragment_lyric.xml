@@ -10,10 +10,12 @@
         android:layout_height="85dp"
         android:id="@+id/lyric_btn"
         android:background="@drawable/gradient"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="70dp"
         android:layout_centerHorizontal="true"
         android:textAllCaps="false"
         android:textSize="25sp"
-        android:text="Add\nLyrics"/>
+        android:text="Add\nLyrics"
+        android:lineSpacingExtra="-8dp"
+        />
 
 </RelativeLayout>

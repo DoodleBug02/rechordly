@@ -24,20 +24,21 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
     private GoogleApiClient mApiClient;
     private BroadcastReceiver myReceiver;
     private File audioFile;
-    private String crop_front_value;
-    private String crop_back_value;
-    private String lyrics;
-    private String gain_value;
-    private String echo_value;
-    private String old_name_value;
-    private String new_name_value;
-    private String retry;
-    private String save;
+    static private String crop_front_value;
+    static private String crop_back_value;
+    static private String lyrics;
+    static private String gain_value;
+    static private String echo_value;
+    static private String old_name_value;
+    static private String new_name_value;
+    static private String retry;
+    static private String save;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
+        clearVars();
         Log.d("MessageService", "Started");
         /* Initialize the googleAPIClient for message passing */
         mApiClient = new GoogleApiClient.Builder(this)
@@ -92,7 +93,7 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
                     lyrics = intent.getStringExtra("lyrics");
 
                 } else if (intent.getAction().equals("/gain")) {
-                    Log.d("MessageService", "Gain Requested");
+                    Log.d("MessageService", "Gain Requested and is" + intent.getStringExtra("amount"));
                     gain_value = intent.getStringExtra("amount");
 
                 } else if (intent.getAction().equals("/echo")) {
@@ -134,19 +135,27 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
     }
 
     private void checkStrings() {
+        Log.d("MessageSender", "CheckStrings");
         if (new_name_value.equals("") ) {
             new_name_value = "None";
-        } else if (crop_front_value.equals("")) {
+        }
+        if (crop_front_value.equals("")) {
             crop_front_value = "None";
-        } else if (crop_back_value.equals("")) {
+        }
+        if (crop_back_value.equals("")) {
             crop_back_value = "None";
-        } else if (gain_value.equals("")) {
+        }
+        if (gain_value.equals("")) {
             gain_value = "None";
-        } else if (echo_value.equals("")) {
+        }
+        if (echo_value.equals("")) {
             echo_value = "None";
-        } else if (lyrics.equals("")) {
+        }
+        if (lyrics.equals("")) {
             lyrics = "None";
         }
+
+        Log.d("echovalue", echo_value);
 
     }
 

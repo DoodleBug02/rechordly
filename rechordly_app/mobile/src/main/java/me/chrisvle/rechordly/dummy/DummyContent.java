@@ -1,5 +1,7 @@
 package me.chrisvle.rechordly.dummy;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,21 +27,27 @@ public class DummyContent {
 
     private static final int COUNT = 25;
 
-    static {
-        // Add some sample items.
-//        for (int i = 1; i <= COUNT; i++) {
-//            addItem(createDummyItem(i));
-//        }
-        addItem(new DummyItem("Favorite Song", "03:32", makeDetails(1)));
-        addItem(new DummyItem("New Lyrics", "02:14", makeDetails(2)));
-        addItem(new DummyItem("Practice", "13:46", makeDetails(3)));
-        addItem(new DummyItem("Beatles Cover", "06:25", makeDetails(4)));
-        addItem(new DummyItem("Favorite Song 2", "03:33", makeDetails(5)));
-        addItem(new DummyItem("Song 3", "01:27", makeDetails(6)));
-//        addItem(new DummyItem("ThisIsATestToSeeHowMuchTextBlah", "1234567890", makeDetails(6)));
-    }
+//    static {
+//        // Add some sample items.
+////        for (int i = 1; i <= COUNT; i++) {
+////            addItem(createDummyItem(i));
+////        }
+//        addItem(new DummyItem("Favorite Song", "03:32", makeDetails(1)));
+//        addItem(new DummyItem("New Lyrics", "02:14", makeDetails(2)));
+//        addItem(new DummyItem("Practice", "13:46", makeDetails(3)));
+//        addItem(new DummyItem("Beatles Cover", "06:25", makeDetails(4)));
+//        addItem(new DummyItem("Favorite Song 2", "03:33", makeDetails(5)));
+//        addItem(new DummyItem("Song 3", "01:27", makeDetails(6)));
+////        addItem(new DummyItem("ThisIsATestToSeeHowMuchTextBlah", "1234567890", makeDetails(6)));
+//    }
 
-    private static void addItem(DummyItem item) {
+    public static void addItem(DummyItem item) {
+        for (int i = 0; i < ITEMS.size(); i++) {
+            if (ITEMS.get(i).id.equals(item.id)) {
+                ITEMS.remove(i);
+                break;
+            }
+        }
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }

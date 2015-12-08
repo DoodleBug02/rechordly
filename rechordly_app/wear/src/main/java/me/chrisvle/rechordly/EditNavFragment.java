@@ -20,7 +20,8 @@ import android.widget.ImageView;
 public class EditNavFragment extends Fragment implements
         EchoFragment.OnFragmentInteractionListener,
         GainFragment.OnFragmentInteractionListener,
-        CropFragment.OnFragmentInteractionListener {
+        CropFragment.OnFragmentInteractionListener,
+        LyricFragment.OnFragmentInteractionListener {
 
     static final int NUM_ITEMS = 5;
 

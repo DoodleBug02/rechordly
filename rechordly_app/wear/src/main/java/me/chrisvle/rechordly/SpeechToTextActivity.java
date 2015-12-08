@@ -18,6 +18,8 @@ public class SpeechToTextActivity extends Activity {
     private TextView mTextView;
     private String text;
     private String from;
+    private String totalTime;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class SpeechToTextActivity extends Activity {
         });
         Intent intent = getIntent();
         from = intent.getStringExtra("from");
+        totalTime = getIntent().getStringExtra("time");
         startSpeech();
     }
 
@@ -61,31 +64,44 @@ public class SpeechToTextActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case 100: {
+            case 100:
                 if (null != data) {
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     text = result.get(0);
 
+                } else{
+                    text = "None";
                 }
                 break;
+            default:
+                text = "None";
             }
 
-        }
         if (from.equalsIgnoreCase("/lyrics")) {
             Intent intent = new Intent("/lyrics");
-            intent.putExtra("lyrics", text);
+            if (text != null) {
+                intent.putExtra("lyrics", text);
+            } else {
+                intent.putExtra("lyrics", "");
+            }
             sendBroadcast(intent);
             Log.d("SpeechToText", "Lyrics Sent");
             Intent intent2 = new Intent(this, SliderNavActivity.class);
             intent2.putExtra("start", 2);
             intent2.putExtra("start2", 1);
+            intent2.putExtra("time", totalTime);
             intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             intent2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent2);
         } else if (from.equalsIgnoreCase("/name")) {
             Intent intent = new Intent("/name");
+            if (text != null) {
+                intent.putExtra("name", text);
+            } else {
+                intent.putExtra("name", "");
+            }
             intent.putExtra("name", text);
             sendBroadcast(intent);
             Log.d("SpeechToText", "Name Sent");
@@ -94,6 +110,5 @@ public class SpeechToTextActivity extends Activity {
             intent2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent2);
         }
-
     }
 }

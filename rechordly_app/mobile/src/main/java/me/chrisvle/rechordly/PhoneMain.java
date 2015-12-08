@@ -2,7 +2,10 @@ package me.chrisvle.rechordly;
 
 //import android.app.ActionBar;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +16,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -33,13 +38,33 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private RecyclerView rView;
+    private RecyclerView.LayoutManager mLayoutManager;
     private TextView textview;
     private ImageView mPlus;
+    private MyItemRecyclerViewAdapter mRAdapter;
+    BroadcastReceiver broadcastReceiver;
+    private SavedDataList savedData = SavedDataList.getInstance();
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        savedData.getFromDisk(getApplicationContext());
+
+        String[] keys = savedData.getNames();
+        if (keys != null) {
+            for (int i = 0; i < keys.length; i++) {
+                Log.d("Key Name: ", "of " + keys[i]);
+                DummyContent.addItem(new DummyContent.DummyItem(keys[i], savedData.getDuration(keys[i]), ""));
+            }
+        }
+
+        DummyContent.addItem(new DummyContent.DummyItem("test1", "1234", ""));
+        DummyContent.addItem(new DummyContent.DummyItem("test2", "1234", ""));
+        savedData.addSong("12345678901234567890", "1", "1", "03:30", "None", "android.resource://" + getPackageName() + "/orchestra"); //+ R.raw.orchestra);
+        DummyContent.addItem(new DummyContent.DummyItem("12345678901234567890", "03:40", ""));
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -67,8 +92,22 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
             }
         });
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
+        rView = (RecyclerView) findViewById(R.id.view3);
+        rView.setHasFixedSize(true);
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        rView.setLayoutManager(mLayoutManager);
+
+        mRAdapter = new MyItemRecyclerViewAdapter(DummyContent.ITEMS, this);
+
+        rView.setAdapter(mRAdapter);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
+        rView.addItemDecoration(itemDecoration);
+
+//        viewPager = (ViewPager) findViewById(R.id.viewpager);
+//        setupViewPager(viewPager);
+
+
 //        tabLayout = (TabLayout) findViewById(R.id.tabs);
 
 //        tabLayout.setupWithViewPager(viewPager);
@@ -77,6 +116,18 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
 //        setBackgroundDrawable(new ColorDrawable("FF0000"));
 //        tabLayout.setBackgroundColor(0xD6D6D6);
 //        tabLayout.setSelectedTabIndicatorColor(0x6f37ff);
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("/update_list");
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals("/update_list")) {
+                    mRAdapter.notifyDataSetChanged();
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver, filter);
 
         textview = (TextView) toolbar.findViewById(R.id.mytext);
         Typeface font = Typeface.createFromAsset(toolbar.getContext().getAssets(), "font/Mission_Gothic_Bold.ttf");
@@ -102,9 +153,17 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
         Log.d("DUMMY INTERACTION", "");
+        String infoName;
+        if (item.id.length() > 12) {
+            infoName = item.id.substring(0, 10);
+            infoName = infoName.concat("...");
+        } else {
+            infoName = item.id;
+        }
         Intent info = new Intent(getBaseContext(), InfoActivity.class);
         info.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        info.putExtra("path", "android.resource://" + getPackageName() + "/" + R.raw.completed2);
+        info.putExtra("file_name", item.id);
+        info.putExtra("shown_name" , infoName);
         startActivity(info);
 
     }
@@ -146,6 +205,12 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
 }

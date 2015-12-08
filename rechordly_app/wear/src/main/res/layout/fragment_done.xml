@@ -27,7 +27,7 @@
         android:layout_height="85dp"
         android:id="@+id/done_btn"
         android:background="@drawable/gradient"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="70dp"
         android:layout_centerHorizontal="true"
         android:textAllCaps="false"
         android:textSize="30sp"
@@ -43,14 +43,15 @@
         <!--android:layout_marginTop="5dp"-->
         <!--/>-->
 
-    <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/left_arrow"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_toLeftOf="@id/done_btn"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--/>-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/left_arrow"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/done_btn"
+        android:layout_marginTop="5dp"
+        />
+
 
 
 </RelativeLayout>
