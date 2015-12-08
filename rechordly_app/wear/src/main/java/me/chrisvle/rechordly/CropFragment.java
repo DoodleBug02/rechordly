@@ -43,6 +43,8 @@ public class CropFragment extends Fragment {
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtra("time", mListener.getTime());
+                intent.putExtra("oldEdit", mListener.oldEdit());
+                intent.putExtra("oldLyric", mListener.oldLyric());
                 startActivity(intent);
             }
         });
@@ -81,6 +83,7 @@ public class CropFragment extends Fragment {
         // TODO: Update argument type and name
         String getTime();
         boolean oldEdit();
+        boolean oldLyric();
 
     }
 }

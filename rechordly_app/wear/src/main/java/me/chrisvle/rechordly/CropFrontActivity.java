@@ -17,6 +17,9 @@ public class CropFrontActivity extends Activity {
     private CropSliderViewFront slider;
     private RelativeLayout rel_circular;
     private Button doneButton;
+    private boolean oldEdit;
+    private boolean oldLyric;
+
 
 
     @Override
@@ -24,6 +27,9 @@ public class CropFrontActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_front);
         totalTime= getIntent().getStringExtra("time");
+        oldEdit = getIntent().getBooleanExtra("oldEdit", false);
+        oldLyric = getIntent().getBooleanExtra("oldLyric", false);
+
 
 
                 time = (TextView) findViewById(R.id.timeF);
@@ -46,14 +52,22 @@ public class CropFrontActivity extends Activity {
                 doneButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent intent2;
+                        if (oldEdit) {
+                            intent2 = new Intent(getBaseContext(), OldEditActivity.class);
+                            intent2.putExtra("start", 2);
+                            intent2.putExtra("time", totalTime);
+                            intent2.putExtra("lyrics", oldLyric);
+                        } else {
+                            intent2 = new Intent(getBaseContext(), SliderNavActivity.class);
+                            intent2.putExtra("start", 2);
+                            intent2.putExtra("start2", 2);
+                            intent2.putExtra("time", totalTime);
+                        }
+                        intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        intent2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent2);
                         sendCropF(v);
-                        Intent intent = new Intent(v.getContext(), SliderNavActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        intent.putExtra("time", totalTime);
-                        intent.putExtra("start", 2);
-                        intent.putExtra("start2", 2);
-                        startActivity(intent);
                     }
                 });
 
