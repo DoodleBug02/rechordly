@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.io.File;
@@ -45,7 +46,16 @@ public class InfoActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         fName = intent.getStringExtra("file_name");
-        final String shownName = intent.getStringExtra("shown_name");
+         String shownName = intent.getStringExtra("shown_name");
+        String infoName;
+        if (shownName.length() > 17) {
+            infoName = shownName.substring(0, 16);
+            infoName = infoName.concat("...");
+        } else {
+            infoName = shownName;
+        }
+        final String displayName = infoName;
+
         Typeface tf = Typeface.createFromAsset(getAssets(), "font/Mission_Gothic_Bold.ttf");
 
         duration = save_data.getDuration(fName);
@@ -73,8 +83,12 @@ public class InfoActivity extends AppCompatActivity {
                 openMain.putExtra("START", "edit");
                 openMain.putExtra("Duration", duration);
                 openMain.putExtra("Lyrics", lyrics_bool);
-                openMain.putExtra("path", shownName);
+                openMain.putExtra("path", displayName);
                 startService(openMain);
+                Toast.makeText(getBaseContext(), "Editing on Watch", Toast.LENGTH_LONG);
+                Intent backToList = new Intent(getBaseContext(), PhoneMain.class);
+                backToList.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(backToList);
             }
         });
 
@@ -117,7 +131,7 @@ public class InfoActivity extends AppCompatActivity {
         toolbar.setBackground(getDrawable(R.drawable.blue_gradient));
 
         name = (TextView) toolbar.findViewById(R.id.mytext);
-        name.setText(shownName);
+        name.setText(displayName);
         name.setTypeface(tf);
 
         TextView echo = (TextView) findViewById(R.id.echo_val);

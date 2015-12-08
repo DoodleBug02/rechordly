@@ -149,17 +149,11 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
         Log.d("DUMMY INTERACTION", "");
-        String infoName;
-        if (item.id.length() > 17) {
-            infoName = item.id.substring(0, 16);
-            infoName = infoName.concat("...");
-        } else {
-            infoName = item.id;
-        }
+
         Intent info = new Intent(getBaseContext(), InfoActivity.class);
         info.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         info.putExtra("file_name", item.id);
-        info.putExtra("shown_name" , infoName);
+        info.putExtra("shown_name" , item.id);
         startActivity(info);
 
     }
