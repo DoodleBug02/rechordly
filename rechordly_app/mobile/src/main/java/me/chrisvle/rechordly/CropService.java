@@ -78,13 +78,9 @@ public class CropService extends Service {
             e.printStackTrace();
         }
         // If the sample file exists, try to trim it
+        Log.d("F NUll?", String.valueOf((f != null)));
         if (f != null) {
-            Log.d("File", "Orchestra is an actual file!!");
-            trimmedSample = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "curr.wav");
-            if (trimmedSample.isFile()) {
-                Log.d("Deleting", "Deleting because it already exists");
-                trimmedSample.delete();
-            }
+            trimmedSample = new File(path);
 
             // Trim the sample down and write it to file
             try {
@@ -122,6 +118,9 @@ public class CropService extends Service {
             } finally {
                 try {
                     if (wavStream != null) wavStream.close();
+                    Log.d("TRIM IS DONE", "DONE");
+                    Intent crop_done = new Intent("/crop_done");
+                    sendBroadcast(crop_done);
                 } catch (IOException e) {
                 }
             }
