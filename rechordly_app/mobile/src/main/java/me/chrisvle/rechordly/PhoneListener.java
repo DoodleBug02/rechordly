@@ -93,6 +93,15 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             Intent intent = new Intent("/retry");
             file.delete();
         } else if (messageEvent.getPath().equalsIgnoreCase(SAVE)){
+
+            Intent cropservice = new Intent(this, CropService.class);
+            Intent gainservice = new Intent(this, GainService.class);
+            Intent echoservice = new Intent(this, EchoService.class);
+
+            startService(cropservice);
+            startService(gainservice);
+            startService(echoservice);
+
             Log.d("PhoneListener", "Save Request");
             String all = new String(messageEvent.getData(), StandardCharsets.UTF_8);
             Log.d("Message", all);
@@ -138,30 +147,31 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 right = Integer.parseInt(edits[2]);
             }
             Intent trim = new Intent("/trim");
-            trim.putExtra("path", file.getAbsolutePath());
+            trim.putExtra("file", file.getAbsolutePath());
             trim.putExtra("startTime", left);
             trim.putExtra("endTime", right);
             sendBroadcast(trim);
 
-            // Handles all ECHO
-            double echo_val = 1;
-            if (!edits[3].equals("None")) {
-                echo_val = Integer.parseInt(edits[3]);
-            }
-            Intent echo = new Intent("/echo");
-            echo.putExtra("path", file.getAbsolutePath());
-            echo.putExtra("level", echo_val);
-            sendBroadcast(echo);
-
             // Handles all GAIN
             double gain_val = 1;
-            if (!edits[4].equals("None")) {
-                gain_val = Integer.parseInt(edits[4]);
+            if (!edits[3].equals("None")) {
+                gain_val = Double.parseDouble(edits[3]);
+                Intent gain = new Intent("/gain");
+                gain.putExtra("filePath", file.getAbsolutePath());
+                gain.putExtra("volume", gain_val);
+                sendBroadcast(gain);
             }
-            Intent gain = new Intent("/gain");
-            gain.putExtra("path", file.getAbsolutePath());
-            gain.putExtra("volume", gain_val);
-            sendBroadcast(gain);
+
+
+            // Handles all ECHO
+            double echo_val = 1;
+            if (!edits[4].equals("None")) {
+                echo_val = Double.parseDouble(edits[4]);
+                Intent echo = new Intent("/echo");
+                echo.putExtra("filePath", file.getAbsolutePath());
+                echo.putExtra("level", echo_val);
+                sendBroadcast(echo);
+            }
 
             // Handles all TRANSCRIPTION
             if (!edits[5].equals("None")) {
