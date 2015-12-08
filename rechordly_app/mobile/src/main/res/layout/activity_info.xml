@@ -87,7 +87,7 @@
         android:orientation="horizontal"
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="90dp">
 
         <LinearLayout
             android:id="@+id/effects"
@@ -103,7 +103,7 @@
                 android:text="Volume text"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp" />
+                android:layout_height="30dp" />
 
             <TextView
                 android:id="@+id/echo_val"
@@ -116,36 +116,45 @@
         </LinearLayout>
 
         <ToggleButton
-            android:layout_gravity="end"
+            android:layout_gravity="end|center_vertical"
             android:id="@+id/playback"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@drawable/check"
-        android:textOn=""
-        android:textOff=""
-        android:focusable="false"
-        android:focusableInTouchMode="false" />
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/check"
+            android:textOn=""
+            android:textOff=""
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
     </LinearLayout>
 
     <Space
         android:id="@+id/space2"
         android:layout_below="@+id/effects_play_button"
         android:layout_width="20dp"
-        android:layout_height="50dp" />
+        android:layout_height="60dp" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
         android:text="Lyrics"
         android:id="@+id/lyric"
+        android:background="@null"
         android:layout_above="@+id/edit"
         android:layout_centerHorizontal="true" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="10dp"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
         android:text="Edit"
         android:id="@+id/edit"
+        android:background="@null"
         android:layout_below="@+id/space2"
         android:layout_alignStart="@+id/lyric" />
 
