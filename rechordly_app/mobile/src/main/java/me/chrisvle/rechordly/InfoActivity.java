@@ -58,6 +58,7 @@ public class InfoActivity extends AppCompatActivity {
 //        });
         Intent intent = getIntent();
         fName = intent.getStringExtra("file_name");
+        String shownName = intent.getStringExtra("shown_name");
         Typeface tf = Typeface.createFromAsset(getAssets(), "font/Mission_Gothic_Bold.ttf");
 //
 //        Button b2 = (Button) findViewById(R.id.lyric);
@@ -85,7 +86,7 @@ public class InfoActivity extends AppCompatActivity {
         toolbar.setBackground(getDrawable(R.drawable.blue_gradient));
 
         name = (TextView) toolbar.findViewById(R.id.mytext);
-        name.setText(fName);
+        name.setText(shownName);
         name.setTypeface(tf);
 
         TextView echo = (TextView) findViewById(R.id.echo_val);

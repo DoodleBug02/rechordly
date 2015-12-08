@@ -141,45 +141,16 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                     }
                 }
             }
+            else {
+
+            }
             MediaPlayer song = MediaPlayer.create(this, Uri.fromFile(file));
             long durationSong = song.getDuration();
             song.release();
 
-            // Handles all TRIM
-            double left = 0;
-            double right = durationSong/1000;
-            Log.d("EDITS", edits[1]);
-            if (!edits[1].equals("None")) {
-
-                String[] time = edits[1].split(":");
-                Double min = Double.parseDouble(time[0]) * 60;
-                Double seconds = Double.parseDouble(time[1]);
-                Double t = min + seconds;
-
-//                left = Integer.parseInt(edits[1]);
-                Intent trim = new Intent("/trim");
-                trim.putExtra("file", file.getAbsolutePath());
-                trim.putExtra("startTime", t);
-                trim.putExtra("endTime", right);
-                sendBroadcast(trim);
-            }
-            if (!edits[2].equals("None")) {
-                String[] time = edits[2].split(":");
-                Double min = Double.parseDouble(time[0]) * 60;
-                Double seconds = Double.parseDouble(time[1]);
-                Double t = min + seconds;
-
-//                right = Integer.parseInt(edits[2]);
-                Intent trim = new Intent("/trim");
-                trim.putExtra("file", file.getAbsolutePath());
-                trim.putExtra("startTime", left);
-                trim.putExtra("endTime", t);
-                sendBroadcast(trim);
-            }
-
             // Handles all GAIN
             double gain_val = 1;
-            if (!edits[3].equals("None")) {
+            if (!edits[3].equals("None") && (!edits[3].equals("0"))) {
                 gain_val = Double.parseDouble(edits[3]);
                 Intent gain = new Intent("/gain");
                 gain.putExtra("filePath", file.getAbsolutePath());
@@ -187,15 +158,57 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 sendBroadcast(gain);
             }
 
-
             // Handles all ECHO
             double echo_val = 1;
-            if (!edits[4].equals("None")) {
+            if (!edits[4].equals("None") && (!edits[4].equals("0"))) {
                 echo_val = Double.parseDouble(edits[4]);
                 Intent echo = new Intent("/echo");
                 echo.putExtra("filePath", file.getAbsolutePath());
                 echo.putExtra("level", echo_val);
                 sendBroadcast(echo);
+            }
+
+            // Handles all TRIM
+            double left = 0;
+            double right = durationSong/1000;
+            Log.d("EDITS", edits[1]);
+
+            Double leftValue = null;
+            Double rightValue = null;
+
+            if (!edits[1].equals("None")) {
+
+                String[] time = edits[1].split(":");
+                Double min = Double.parseDouble(time[0]) * 60;
+                Double seconds = Double.parseDouble(time[1]);
+                leftValue = min + seconds;
+
+            }
+            if (!edits[2].equals("None")) {
+                String[] time = edits[2].split(":");
+                Double min = Double.parseDouble(time[0]) * 60;
+                Double seconds = Double.parseDouble(time[1]);
+                rightValue = min + seconds;
+
+//                right = Integer.parseInt(edits[2]);
+
+            }
+
+            if (leftValue == null) {
+                leftValue = 0.0;
+            }
+            if (rightValue == null) {
+                rightValue = right;
+            }
+            if ((rightValue == right && leftValue == 0.0)) {
+                Log.d("TRIM", "NO need to trim!");
+            } else {
+                Log.d("FILENAME", file.getName());
+                Intent trim = new Intent("/trim");
+                trim.putExtra("file", file.getAbsolutePath());
+                trim.putExtra("startTime", leftValue);
+                trim.putExtra("endTime", rightValue);
+                sendBroadcast(trim);
             }
 
             // Handles all TRANSCRIPTION

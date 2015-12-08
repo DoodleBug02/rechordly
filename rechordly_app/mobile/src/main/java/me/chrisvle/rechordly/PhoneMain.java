@@ -63,8 +63,8 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
 
         DummyContent.addItem(new DummyContent.DummyItem("test1", "1234", ""));
         DummyContent.addItem(new DummyContent.DummyItem("test2", "1234", ""));
-        savedData.addSong("orchestra.wav", "1", "1", "03:30", "None", "android.resource://" + getPackageName() + "/orchestra"); //+ R.raw.orchestra);
-        DummyContent.addItem(new DummyContent.DummyItem("orchestra.wav", "03:40", ""));
+        savedData.addSong("12345678901234567890", "1", "1", "03:30", "None", "android.resource://" + getPackageName() + "/orchestra"); //+ R.raw.orchestra);
+        DummyContent.addItem(new DummyContent.DummyItem("12345678901234567890", "03:40", ""));
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -119,7 +119,7 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("/update_list");
-         broadcastReceiver = new BroadcastReceiver() {
+        broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals("/update_list")) {
@@ -153,9 +153,17 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
         Log.d("DUMMY INTERACTION", "");
+        String infoName;
+        if (item.id.length() > 12) {
+            infoName = item.id.substring(0, 10);
+            infoName = infoName.concat("...");
+        } else {
+            infoName = item.id;
+        }
         Intent info = new Intent(getBaseContext(), InfoActivity.class);
         info.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         info.putExtra("file_name", item.id);
+        info.putExtra("shown_name" , infoName);
         startActivity(info);
 
     }
