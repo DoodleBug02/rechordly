@@ -37,17 +37,12 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
     private static final String SAVE = "/save";
     private static final String RETRY = "/retry";
     private static final String EDIT = "/edit";
-    private static final String LYRIC = "/lyric";
-    private static final String LYRIC_TXT = "/lyric_text";
-    private static Boolean gain_done = false;
-    private static Boolean echo_done = false;
-    private static Boolean crop_done = false;
     public static File file;
     private SavedDataList saves = SavedDataList.getInstance();
     public GoogleApiClient mApiClient;
     private BroadcastReceiver broadcastReceiver;
 
-    private Boolean edit_mode = false;
+    private static Boolean edit_mode = false;
 
 
     @Override
@@ -63,26 +58,15 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("/edit");
-        filter.addAction("/lyric_add");
-        filter.addAction("/crop_done");
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(EDIT)) {
-                    String path = intent.getStringExtra("filePath");
+                    String name = intent.getStringExtra("filePath");
+                    String path = saves.getPath(name);
+                    Log.d("PATH", path);
                     file = new File(path);
                     edit_mode = true;
-                }
-                else if (intent.getAction().equals(LYRIC)) {
-                    String path = intent.getStringExtra("filePath");
-                    file = new File(path);
-                }
-                else if (intent.getAction().equals(LYRIC_TXT)) {
-                    String text = intent.getStringExtra("text");
-                    // ADD TEXT TO file
-                } else if (intent.getAction().equals("/crop_done")) {
-                    Log.d("DONE", "CROP IS DONE");
-                    crop_done = true;
                 }
             }
         };
@@ -91,7 +75,6 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
-        Log.d("FIlename333", file.getAbsolutePath());
         if (messageEvent.getPath().equalsIgnoreCase(PLAY)) {
             Log.d("PhoneListener", "Play Request");
             Intent intent = new Intent("/play");
@@ -123,24 +106,21 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             Log.d("EDIts1", edits[1]);
 
             Log.d("EDIts2", edits[2]);
+            Log.d("ALL LENGTH",String.valueOf(edits.length));
+            if (edits.length == 7) {
+                String name = edits[6];
+                Log.d("NAME", name);
+                String path = saves.getPath(name);
+                Log.d("PATH", path);
 
-            if (edit_mode) {
-                if (edits[0].equals("None")) {
-                    File newfile = new File(Environment.getExternalStorageDirectory().getPath(), edits[0] + ".wav");
-                    try {
-                        copy(file, newfile);
-                    } catch (IOException e) {
-                        Log.d("COPY", "COULD NOT BE COPIED");
-                    }
-                    file.delete();
-                    saves.delete(file.getName());
-                    DummyContent.delete(file.getName());
-                    Intent updateList = new Intent("/update_list");
-                    sendBroadcast(updateList);
-                    file = newfile;
-                }
+                file = new File(path);
+                Log.d("FILE", file.getName());
+                Log.d("FILE LENGTH", String.valueOf(file.length()));
+                edit_mode = true;
             }
-            else if (!edits[0].equals("None")) {
+
+
+            if (!edits[0].equals("None")) {
                 Log.d("message file name", edits[0]);
                 Log.d("saved file name", file.getName());
                 if (!edits[0].equals(file.getName())) {
@@ -160,6 +140,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                     Log.d("New filename after save", String.valueOf(this.getFilesDir()));
                 }
             }
+            Log.d("FIle name", file.getName());
             MediaPlayer song = MediaPlayer.create(this, Uri.fromFile(file));
             long durationSong = song.getDuration();
             song.release();
@@ -261,16 +242,56 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             } else {
                 echoStr = String.valueOf(echo_val);
             }
+            Log.d("EDIT MODE?", String.valueOf(edit_mode));
+            if (edit_mode) {
+                Log.d("EDIT MODE", "ON");
+                edit_mode = false;
+                if (edits[0].equals("None")) {
+                    String fileName = file.getName().replaceAll("%20", " ");
+                    Log.d("Gain", edits[3]);
+                    if (!edits[3].equals("None") && !edits[3].equals("0")) {
+                        saves.setGain(fileName, edits[3]);
+                    }
+                    Log.d("Echo", edits[4]);
+                    if (!edits[4].equals("None") && !edits[4].equals("0")) {
+                        saves.setEcho(fileName, edits[4]);
+                    }
+                    Log.d("Lyrics", edits[5]);
+                    if (!edits[5].equals("None")) {
+                        saves.setLyrics(fileName, edits[5]);
+                    }
+                    saves.setDuration(fileName, dur);
 
-            String displayName = file.getName();
-            displayName =  displayName.substring(0,displayName.lastIndexOf("."));
-            saves.addSong(displayName, echoStr, gainStr, dur, edits[5], Uri.fromFile(file).toString());
-            saves.saveToDisk(getApplicationContext());
-            DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));
+                } else {
+                    saves.setName(file.getName(), edits[0]);
+                    if (!edits[3].equals("None") && !edits[3].equals("0")) {
+                        saves.setGain(edits[0], edits[3]);
+                    }
+                    if (!edits[4].equals("None") && !edits[4].equals("0")) {
+                        saves.setEcho(edits[0], edits[4]);
+                    }
+                    if (!edits[5].equals("None")) {
+                        saves.setLyrics(edits[0], edits[5]);
+                    }
+                    DummyContent.delete(file.getName());
+                    saves.setDuration(edits[0], dur);
+                    String displayName = edits[0];
+                    displayName = displayName.substring(0, edits[0].lastIndexOf("."));
+                    DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));
+                }
+                Intent updateList = new Intent("/update_list");
+                sendBroadcast(updateList);
+            } else {
+                String displayName = file.getName();
+                displayName = displayName.substring(0, displayName.lastIndexOf("."));
+                saves.addSong(displayName, echoStr, gainStr, dur, edits[5], file.getAbsolutePath());
+                saves.saveToDisk(getApplicationContext());
+                DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));
 
-            Intent updateList = new Intent("/update_list");
-            sendBroadcast(updateList);
-            Log.d("SAVE", "After Saving");
+                Intent updateList = new Intent("/update_list");
+                sendBroadcast(updateList);
+                Log.d("SAVE", "After Saving");
+            }
 
          }
     }
@@ -282,7 +303,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
         String time_date = formatter.format(today);
         Log.d("PhoneListener", "Channel established");
         if (channel.getPath().equals("/new_recording")) {
-            file = new File(Environment.getExternalStorageDirectory().getPath(), "new_recording_" + time_date + ".wav");
+            file = new File(Environment.getExternalStorageDirectory().getPath(), "new_" + time_date  + ".wav");
+            Log.d("TEMP PATH", file.getAbsolutePath());
             Log.d("this", String.valueOf(this.getFilesDir()));
             try {
                 file.createNewFile();

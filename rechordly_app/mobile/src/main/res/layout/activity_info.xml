@@ -134,8 +134,6 @@
         android:layout_height="60dp" />
 
     <ImageButton
-        android:layout_width="200dp"
-        android:layout_height="50dp"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:layout_width="250dp"
