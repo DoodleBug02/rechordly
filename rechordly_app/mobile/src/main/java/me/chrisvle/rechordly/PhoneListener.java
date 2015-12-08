@@ -40,6 +40,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
     private static Boolean echo_done = false;
     private static Boolean crop_done = false;
     public static File file;
+    private SavedDataList saves = SavedDataList.getInstance();
     public GoogleApiClient mApiClient;
     private BroadcastReceiver broadcastReceiver;
 
@@ -121,6 +122,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             Log.d("FIlename333", file.getName());
             Log.d("FILENAME222", edits[0]);
             if (!edits[0].equals("None")) {
+                Log.d("message file name", edits[0]);
+                Log.d("saved file name", file.getName());
                 if (!edits[0].equals(file.getName())) {
                     File newfile = new File(Environment.getExternalStorageDirectory().getPath(), edits[0] + ".wav");
                     try {
@@ -129,16 +132,12 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                         Log.d("COPY", "COULD NOT BE COPIED");
                     }
                     file.delete();
+                    Intent updateList = new Intent("/update_list");
+                    sendBroadcast(updateList);
                     file = newfile;
 
-                    Log.d("New filename after save", String.valueOf(this.getFilesDir()));
-                    try {
-                        copy(file, newfile);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    file.delete();
-                    file = newfile;
+                    Log.d("New filename after save", String.valueOf(file.getName()));
+                    Log.d("file length", String.valueOf(file.length()));
                     Log.d("New filename after save", String.valueOf(this.getFilesDir()));
                 }
             }
@@ -234,12 +233,21 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             Log.d("ASKLDJFLKAKLFJ", String.valueOf(seconds));
 
 //            String dur = String.valueOf(duration);
-
+            String gainStr;
+            if (gain_val == 1) {
+                gainStr = "0";
+            } else {
+                gainStr = String.valueOf(gain_val);
+            }
+            String echoStr;
+            if (echo_val == 1) {
+                echoStr = "0";
+            } else {
+                echoStr = String.valueOf(echo_val);
+            }
             String displayName = file.getName();
             displayName =  displayName.substring(0,displayName.lastIndexOf("."));
-            SavedDataList saves = SavedDataList.getInstance();
-            Log.d("URI", Uri.fromFile(file).toString());
-            saves.addSong(displayName, String.valueOf(echo_val), String.valueOf(gain_val), dur, edits[5], Uri.fromFile(file).toString());
+            saves.addSong(displayName, echoStr, gainStr, dur, edits[5], Uri.fromFile(file).toString());
             saves.saveToDisk(getApplicationContext());
             DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));
 

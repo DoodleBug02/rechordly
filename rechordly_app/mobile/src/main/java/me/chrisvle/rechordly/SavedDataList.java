@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
 import java.io.StreamCorruptedException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -18,6 +19,7 @@ import java.util.HashMap;
 public class SavedDataList  {
     private final String FILE_NAME = "audio_data";
     private HashMap<String, HashMap<String, String>> data;
+    private ArrayList<String> order = new ArrayList<String>();
     private static final SavedDataList holder = new SavedDataList();
 
     private SavedDataList() {
@@ -29,9 +31,11 @@ public class SavedDataList  {
     public void addSong(String name, String echo, String gain, String dur, String lyrics, String uri) {
         if (data == null) {
             data = new HashMap<>();
+            order = new ArrayList<>();
         }
         if (!data.containsKey(name)) {
             data.put(name, new HashMap<String, String>());
+            order.add(0, name);
         }
         data.get(name).put("duration", dur);
         data.get(name).put("echo", echo); //songInfo[3]);
@@ -45,9 +49,26 @@ public class SavedDataList  {
         return data;
     }
 
-    public String[] getNames() {
-        return data.keySet().toArray(new String[data.keySet().size()]);
+    public void setLyrics(String name, String lyrics) {
+        if (data.containsKey(name)) {
+            data.get(name).put("lyrics", lyrics);
+        }
+    }
 
+    public void delete(String name) {
+        if (data.containsKey(name)) {
+            data.remove(name);
+            order.remove(order.indexOf(name));
+        }
+    }
+
+    public String[] getNames() {
+//        return data.keySet().toArray(new String[data.keySet().size()]);
+        if (order.size() != 0) {
+            return order.toArray(new String[order.size()]);
+        } else {
+            return new String[0];
+        }
     }
 
     public String getDuration(String name) {
@@ -91,6 +112,7 @@ public class SavedDataList  {
             fos = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
             ObjectOutputStream os = new ObjectOutputStream(fos);
             os.writeObject(data);
+            os.writeObject(order);
             os.close();
             fos.close();
         } catch (FileNotFoundException e) {
@@ -106,11 +128,13 @@ public class SavedDataList  {
             fis = context.openFileInput(FILE_NAME);
             ObjectInputStream is = new ObjectInputStream(fis);
             data = (HashMap<String, HashMap<String, String>>) is.readObject();
+            order = (ArrayList<String>) is.readObject();
             is.close();
             fis.close();
         } catch (FileNotFoundException e) {
 //            e.printStackTrace();
             data = new HashMap<>();
+            order = new ArrayList<>();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (OptionalDataException e) {

@@ -19,8 +19,12 @@ public class MessageSender extends Service {
     }
 
     private GoogleApiClient mApiClient;
-    private static final String START_EDIT = "/start_edit";
+    private static final String START_EDIT = "/edit";
+    private static final String START_LYRICS = "/lyrics";
     private static final String START_MAIN = "/start_main";
+
+    private String duration;
+    private String lyrics_bool;
 
     @Override
     public void onCreate() {
@@ -48,13 +52,20 @@ public class MessageSender extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         //if intent is map send message to phone with /start_map
         String start = intent.getStringExtra("START");
+        duration = intent.getStringExtra("Duration");
+        lyrics_bool = intent.getStringExtra("Lyrics");
+        String edit_message = "crop|" + lyrics_bool + duration;
+        String lyric_message = "lyrics|" + lyrics_bool + duration;
         if (start != null) {
             if (start.equalsIgnoreCase("edit")) {
                 Toast.makeText(this, "Opening Edit On Watch", Toast.LENGTH_SHORT).show();
-                sendMessage(START_EDIT);
+                sendMessage(START_EDIT, edit_message);
             } else if (start.equalsIgnoreCase("main")) {
                 Toast.makeText(this, "Opening Main on Watch", Toast.LENGTH_SHORT).show();
-                sendMessage(START_MAIN);
+                sendMessage(START_MAIN, "");
+            } else if (start.equalsIgnoreCase("lyrics")) {
+                Toast.makeText(this, "Opening Main on Watch", Toast.LENGTH_SHORT).show();
+                sendMessage(START_LYRICS, lyric_message);
             }
         } else {
             Toast.makeText(this, "intent retrieval failed", Toast.LENGTH_SHORT).show();
@@ -70,7 +81,7 @@ public class MessageSender extends Service {
         mApiClient.disconnect();
     }
 
-    private void sendMessage(final String path) {
+    private void sendMessage(final String path, final String message) {
         Log.d("Message", "Sent!");
         new Thread( new Runnable() {
             @Override
@@ -78,7 +89,7 @@ public class MessageSender extends Service {
                 mApiClient.blockingConnect(200, TimeUnit.MILLISECONDS);
                 NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes( mApiClient ).await();
                 for(Node node : nodes.getNodes()) {
-                    Wearable.MessageApi.sendMessage(mApiClient, node.getId(), path, "".getBytes() );
+                    Wearable.MessageApi.sendMessage(mApiClient, node.getId(), path, message.getBytes() );
 //                    MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(
 //                            mApiClient, node.getId(), path, text.getBytes() ).await();
                 }

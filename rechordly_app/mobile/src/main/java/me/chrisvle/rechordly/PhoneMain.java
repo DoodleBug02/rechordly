@@ -154,8 +154,8 @@ public class PhoneMain extends AppCompatActivity implements ItemFragment.OnListF
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
         Log.d("DUMMY INTERACTION", "");
         String infoName;
-        if (item.id.length() > 12) {
-            infoName = item.id.substring(0, 10);
+        if (item.id.length() > 17) {
+            infoName = item.id.substring(0, 16);
             infoName = infoName.concat("...");
         } else {
             infoName = item.id;
