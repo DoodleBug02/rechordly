@@ -93,13 +93,11 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             Intent intent = new Intent("/retry");
             file.delete();
         } else if (messageEvent.getPath().equalsIgnoreCase(SAVE)){
-
             Intent cropservice = new Intent(this, CropService.class);
-            Intent gainservice = new Intent(this, GainService.class);
-            Intent echoservice = new Intent(this, EchoService.class);
-
             startService(cropservice);
+            Intent gainservice = new Intent(this, GainService.class);
             startService(gainservice);
+            Intent echoservice = new Intent(this, EchoService.class);
             startService(echoservice);
 
             Log.d("PhoneListener", "Save Request");
@@ -136,21 +134,41 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 }
             }
 
+            MediaPlayer song = MediaPlayer.create(this, Uri.fromFile(file));
+            long durationSong = song.getDuration();
+            song.release();
+
             // Handles all TRIM
             double left = 0;
-            double right = 0;
+            double right = durationSong/1000;
             Log.d("EDITS", edits[1]);
             if (!edits[1].equals("None")) {
-                left = Integer.parseInt(edits[1]);
+
+                String[] time = edits[1].split(":");
+                Double min = Double.parseDouble(time[0]) * 60;
+                Double seconds = Double.parseDouble(time[1]);
+                Double t = min + seconds;
+
+//                left = Integer.parseInt(edits[1]);
+                Intent trim = new Intent("/trim");
+                trim.putExtra("file", file.getAbsolutePath());
+                trim.putExtra("startTime", t);
+                trim.putExtra("endTime", right);
+                sendBroadcast(trim);
             }
             if (!edits[2].equals("None")) {
-                right = Integer.parseInt(edits[2]);
+                String[] time = edits[2].split(":");
+                Double min = Double.parseDouble(time[0]) * 60;
+                Double seconds = Double.parseDouble(time[1]);
+                Double t = min + seconds;
+
+//                right = Integer.parseInt(edits[2]);
+                Intent trim = new Intent("/trim");
+                trim.putExtra("file", file.getAbsolutePath());
+                trim.putExtra("startTime", left);
+                trim.putExtra("endTime", t);
+                sendBroadcast(trim);
             }
-            Intent trim = new Intent("/trim");
-            trim.putExtra("file", file.getAbsolutePath());
-            trim.putExtra("startTime", left);
-            trim.putExtra("endTime", right);
-            sendBroadcast(trim);
 
             // Handles all GAIN
             double gain_val = 1;
@@ -188,6 +206,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             int minutes = (int) Math.floor(duration / 1000 / 60);
             int seconds = (int) ((duration / 1000) - (minutes * 60));
             String dur = minutes + ":" + String.format("%02d", seconds);
+
+            Log.d("ASKLDJFLKAKLFJ", String.valueOf(seconds));
 
 //            String dur = String.valueOf(duration);
 
