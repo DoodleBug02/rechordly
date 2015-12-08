@@ -78,6 +78,7 @@ public class CropService extends Service {
             e.printStackTrace();
         }
         // If the sample file exists, try to trim it
+        Log.d("F NUll?", String.valueOf((f != null)));
         if (f != null) {
             trimmedSample = new File(path);
 
@@ -117,6 +118,9 @@ public class CropService extends Service {
             } finally {
                 try {
                     if (wavStream != null) wavStream.close();
+                    Log.d("TRIM IS DONE", "DONE");
+                    Intent crop_done = new Intent("/crop_done");
+                    sendBroadcast(crop_done);
                 } catch (IOException e) {
                 }
             }

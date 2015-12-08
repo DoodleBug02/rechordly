@@ -36,6 +36,9 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
     private static final String EDIT = "/edit";
     private static final String LYRIC = "/lyric";
     private static final String LYRIC_TXT = "/lyric_text";
+    private static Boolean gain_done = false;
+    private static Boolean echo_done = false;
+    private static Boolean crop_done = false;
     public static File file;
     public GoogleApiClient mApiClient;
     private BroadcastReceiver broadcastReceiver;
@@ -55,6 +58,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
         IntentFilter filter = new IntentFilter();
         filter.addAction("/edit");
         filter.addAction("/lyric_add");
+        filter.addAction("/crop_done");
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -69,6 +73,9 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 else if (intent.getAction().equals(LYRIC_TXT)) {
                     String text = intent.getStringExtra("text");
                     // ADD TEXT TO file
+                } else if (intent.getAction().equals("/crop_done")) {
+                    Log.d("DONE", "CROP IS DONE");
+                    crop_done = true;
                 }
             }
         };
@@ -112,6 +119,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
 
             // Handles all FILENAMIN
             Log.d("FIlename333", file.getName());
+            Log.d("FILENAME222", edits[0]);
             if (!edits[0].equals("None")) {
                 if (!edits[0].equals(file.getName())) {
                     File newfile = new File(Environment.getExternalStorageDirectory().getPath(), edits[0] + ".wav");
@@ -137,7 +145,6 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             else {
 
             }
-
             MediaPlayer song = MediaPlayer.create(this, Uri.fromFile(file));
             long durationSong = song.getDuration();
             song.release();
@@ -165,6 +172,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             // Handles all TRIM
             double left = 0;
             double right = durationSong/1000;
+            double originalDuration = right;
             Log.d("EDITS", edits[1]);
 
             Double leftValue = null;
@@ -213,22 +221,27 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             Log.d("SAVE", "Before Saving");
             Log.d("FILE", file.getName());
             Log.d("FILE", String.valueOf(file.length()));
-            MediaPlayer mp = MediaPlayer.create(this, Uri.fromFile(file));
-            long duration = mp.getDuration();
-            mp.release();
+            Log.d("ORIG", String.valueOf((originalDuration)));
+            Log.d("LEFT", String.valueOf((leftValue)));
+            Log.d("RIGHT", String.valueOf((rightValue)));
+            double duration = originalDuration - leftValue - (originalDuration - rightValue);
+            Log.d("DURATION", String.valueOf(duration));
 
-            int minutes = (int) Math.floor(duration / 1000 / 60);
-            int seconds = (int) ((duration / 1000) - (minutes * 60));
+            int minutes = (int) Math.floor(duration / 60);
+            int seconds = (int) ((duration ) - (minutes * 60));
             String dur = minutes + ":" + String.format("%02d", seconds);
 
             Log.d("ASKLDJFLKAKLFJ", String.valueOf(seconds));
 
 //            String dur = String.valueOf(duration);
 
+            String displayName = file.getName();
+            displayName =  displayName.substring(0,displayName.lastIndexOf("."));
             SavedDataList saves = SavedDataList.getInstance();
-            saves.addSong(edits[0], String.valueOf(echo_val), String.valueOf(gain_val), dur, edits[5], Uri.fromFile(file).toString());
+            Log.d("URI", Uri.fromFile(file).toString());
+            saves.addSong(displayName, String.valueOf(echo_val), String.valueOf(gain_val), dur, edits[5], Uri.fromFile(file).toString());
             saves.saveToDisk(getApplicationContext());
-            DummyContent.addItem(new DummyContent.DummyItem(edits[0], dur, ""));
+            DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));
 
             Intent updateList = new Intent("/update_list");
             sendBroadcast(updateList);
