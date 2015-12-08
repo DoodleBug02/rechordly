@@ -226,8 +226,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             double duration = originalDuration - leftValue - (originalDuration - rightValue);
             Log.d("DURATION", String.valueOf(duration));
 
-            int minutes = (int) Math.floor(duration / 1000 / 60);
-            int seconds = (int) ((duration / 1000) - (minutes * 60));
+            int minutes = (int) Math.floor(duration / 60);
+            int seconds = (int) ((duration ) - (minutes * 60));
             String dur = minutes + ":" + String.format("%02d", seconds);
 
             Log.d("ASKLDJFLKAKLFJ", String.valueOf(seconds));
