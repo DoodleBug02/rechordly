@@ -42,6 +42,10 @@ public class EchoService extends Service {
 
                     String path = intent.getStringExtra("filePath");
                     Double level = intent.getDoubleExtra("level", 0);
+
+                    Log.d("EchoService PATH", path);
+                    Log.d("EchoService LEVEL", level.toString());
+
                     File file = new File(path);
                     try {
                         b = getBytesFromFile(file);
