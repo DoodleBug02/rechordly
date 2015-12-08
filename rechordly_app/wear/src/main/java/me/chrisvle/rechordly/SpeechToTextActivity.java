@@ -19,6 +19,9 @@ public class SpeechToTextActivity extends Activity {
     private String text;
     private String from;
     private String totalTime;
+    private boolean oldEdit;
+    private boolean oldLyric;
+
 
 
     @Override
@@ -34,6 +37,8 @@ public class SpeechToTextActivity extends Activity {
         Intent intent = getIntent();
         from = intent.getStringExtra("from");
         totalTime = getIntent().getStringExtra("time");
+        oldEdit = getIntent().getBooleanExtra("oldEdit", false);
+        oldLyric = getIntent().getBooleanExtra("oldLyric", false);
         startSpeech();
     }
 
@@ -93,10 +98,19 @@ public class SpeechToTextActivity extends Activity {
             }
             sendBroadcast(intent);
             Log.d("SpeechToText", "Lyrics Sent");
-            Intent intent2 = new Intent(this, SliderNavActivity.class);
-            intent2.putExtra("start", 2);
-            intent2.putExtra("start2", 1);
-            intent2.putExtra("time", totalTime);
+            Intent intent2;
+            if (oldEdit) {
+                intent2 = new Intent(getBaseContext(), OldEditActivity.class);
+                intent2.putExtra("start", 1);
+                intent2.putExtra("time", totalTime);
+                intent2.putExtra("lyrics", true);
+            } else {
+                intent2 = new Intent(getBaseContext(), SliderNavActivity.class);
+                intent2.putExtra("start", 2);
+                intent2.putExtra("start2", 1);
+                intent2.putExtra("time", totalTime);
+                intent.putExtra("lyrics", true);
+            }
             intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             intent2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent2);

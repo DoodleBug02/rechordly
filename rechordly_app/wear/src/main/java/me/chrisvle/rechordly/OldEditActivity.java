@@ -25,13 +25,11 @@ public class OldEditActivity extends FragmentActivity implements
     private ImageView dots;
     private int start;
     private String time;
+    private boolean lyric;
 
     public OldEditActivity() {
         // Required empty public constructor
     }
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +42,12 @@ public class OldEditActivity extends FragmentActivity implements
         Intent intent = getIntent();
         time = intent.getStringExtra("time");
         start = intent.getIntExtra("start", 2); // Fix this code here
+        lyric = intent.getBooleanExtra("lyrics", false);
         mPager = (ViewPager) findViewById(R.id.pager);
         mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mAdapter);
         mPager.setCurrentItem(start);
         dots = (ImageView) findViewById(R.id.dots_edit);
-
     }
 
 
@@ -115,6 +113,11 @@ public class OldEditActivity extends FragmentActivity implements
     public boolean oldEdit() {
         return true;
     }
+
+    public boolean oldLyric() {
+        return lyric;
+    }
+
 
 }
 

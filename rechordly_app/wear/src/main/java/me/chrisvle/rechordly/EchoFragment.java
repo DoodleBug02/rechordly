@@ -36,6 +36,8 @@ public class EchoFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), EchoChooserActivity.class);
                 intent.putExtra("from", "/echo");
                 intent.putExtra("time", mListener.getTime());
+                intent.putExtra("oldEdit", mListener.oldEdit());
+                intent.putExtra("oldLyric", mListener.oldLyric());
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
@@ -77,6 +79,7 @@ public class EchoFragment extends Fragment {
         // TODO: Update argument type and name
         String getTime();
         boolean oldEdit();
+        boolean oldLyric();
 
     }
 
