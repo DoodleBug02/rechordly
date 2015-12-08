@@ -106,12 +106,16 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             Log.d("EDIts1", edits[1]);
 
             Log.d("EDIts2", edits[2]);
-
-            if (all.length() == 6) {
-                String name = edits[5];
+            Log.d("ALL LENGTH",String.valueOf(edits.length));
+            if (edits.length == 7) {
+                String name = edits[6];
+                Log.d("NAME", name);
                 String path = saves.getPath(name);
                 Log.d("PATH", path);
+
                 file = new File(path);
+                Log.d("FILE", file.getName());
+                Log.d("FILE LENGTH", String.valueOf(file.length()));
                 edit_mode = true;
             }
 
@@ -243,35 +247,36 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 Log.d("EDIT MODE", "ON");
                 edit_mode = false;
                 if (edits[0].equals("None")) {
+                    String fileName = file.getName().replaceAll("%20", " ");
                     Log.d("Gain", edits[3]);
                     if (!edits[3].equals("None") && !edits[3].equals("0")) {
-                        saves.setGain(edits[0], edits[3]);
+                        saves.setGain(fileName, edits[3]);
                     }
                     Log.d("Echo", edits[4]);
                     if (!edits[4].equals("None") && !edits[4].equals("0")) {
-                        saves.setEcho(edits[0], edits[4]);
+                        saves.setEcho(fileName, edits[4]);
                     }
                     Log.d("Lyrics", edits[5]);
                     if (!edits[5].equals("None")) {
-                        saves.setLyrics(edits[0], edits[5]);
+                        saves.setLyrics(fileName, edits[5]);
                     }
-                    saves.setDuration(edits[0], dur);
+                    saves.setDuration(fileName, dur);
 
                 } else {
                     saves.setName(file.getName(), edits[0]);
                     if (!edits[3].equals("None") && !edits[3].equals("0")) {
-                        saves.setGain(file.getName(), edits[3]);
+                        saves.setGain(edits[0], edits[3]);
                     }
                     if (!edits[4].equals("None") && !edits[4].equals("0")) {
-                        saves.setEcho(file.getName(), edits[4]);
+                        saves.setEcho(edits[0], edits[4]);
                     }
                     if (!edits[5].equals("None")) {
-                        saves.setLyrics(file.getName(), edits[5]);
+                        saves.setLyrics(edits[0], edits[5]);
                     }
                     DummyContent.delete(file.getName());
-                    saves.setDuration(file.getName(), dur);
-                    String displayName = file.getName();
-                    displayName = displayName.substring(0, displayName.lastIndexOf("."));
+                    saves.setDuration(edits[0], dur);
+                    String displayName = edits[0];
+                    displayName = displayName.substring(0, edits[0].lastIndexOf("."));
                     DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));
                 }
                 Intent updateList = new Intent("/update_list");
@@ -279,7 +284,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             } else {
                 String displayName = file.getName();
                 displayName = displayName.substring(0, displayName.lastIndexOf("."));
-                saves.addSong(displayName, echoStr, gainStr, dur, edits[5], Uri.fromFile(file).toString());
+                saves.addSong(displayName, echoStr, gainStr, dur, edits[5], file.getAbsolutePath());
                 saves.saveToDisk(getApplicationContext());
                 DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));
 
@@ -299,6 +304,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
         Log.d("PhoneListener", "Channel established");
         if (channel.getPath().equals("/new_recording")) {
             file = new File(Environment.getExternalStorageDirectory().getPath(), "new_" + time_date  + ".wav");
+            Log.d("TEMP PATH", file.getAbsolutePath());
             Log.d("this", String.valueOf(this.getFilesDir()));
             try {
                 file.createNewFile();

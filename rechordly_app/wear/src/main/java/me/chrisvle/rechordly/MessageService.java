@@ -33,7 +33,7 @@ public class MessageService extends Service implements GoogleApiClient.Connectio
     static private String new_name_value;
     static private String retry;
     static private String save;
-    static private Boolean edit;
+    static private Boolean edit = false;
     static private String path;
 
 

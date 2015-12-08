@@ -45,7 +45,7 @@ public class InfoActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         fName = intent.getStringExtra("file_name");
-        String shownName = intent.getStringExtra("shown_name");
+        final String shownName = intent.getStringExtra("shown_name");
         Typeface tf = Typeface.createFromAsset(getAssets(), "font/Mission_Gothic_Bold.ttf");
 
         duration = save_data.getDuration(fName);
@@ -73,7 +73,7 @@ public class InfoActivity extends AppCompatActivity {
                 openMain.putExtra("START", "edit");
                 openMain.putExtra("Duration", duration);
                 openMain.putExtra("Lyrics", lyrics_bool);
-                openMain.putExtra("path", save_data.getPath(fName));
+                openMain.putExtra("path", shownName);
                 startService(openMain);
             }
         });
