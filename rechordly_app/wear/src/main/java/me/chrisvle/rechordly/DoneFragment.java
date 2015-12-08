@@ -34,7 +34,12 @@ public class DoneFragment extends Fragment {
         done_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), NameActivity.class);
+                Intent intent;
+                if (mListener.oldEdit()) {
+                    intent = new Intent(getActivity(), SaveActivity.class);
+                } else {
+                    intent = new Intent(getActivity(), NameActivity.class);
+                }
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
