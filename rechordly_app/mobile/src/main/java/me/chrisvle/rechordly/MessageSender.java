@@ -54,8 +54,8 @@ public class MessageSender extends Service {
         String start = intent.getStringExtra("START");
         duration = intent.getStringExtra("Duration");
         lyrics_bool = intent.getStringExtra("Lyrics");
-        String edit_message = "crop|" + lyrics_bool + duration;
-        String lyric_message = "lyrics|" + lyrics_bool + duration;
+        String edit_message = "crop|" + lyrics_bool + "|" + duration;
+        String lyric_message = "lyrics|" + lyrics_bool + "|" + duration;
         if (start != null) {
             if (start.equalsIgnoreCase("edit")) {
                 Toast.makeText(this, "Opening Edit On Watch", Toast.LENGTH_SHORT).show();
