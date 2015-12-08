@@ -37,7 +37,7 @@ public class GainService extends Service {
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(GAIN)) {
                     String path = intent.getStringExtra("filePath");
-                    Double level = intent.getDoubleExtra("volume", 0);
+                    Double level = intent.getDoubleExtra("volume", 0)/4;
                     File file = new File(path);
 
                     Log.d("GainService PATH", path);
