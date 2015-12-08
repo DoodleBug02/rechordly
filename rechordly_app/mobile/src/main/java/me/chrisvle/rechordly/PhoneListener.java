@@ -133,6 +133,9 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                     }
                 }
             }
+            else {
+
+            }
 
             MediaPlayer song = MediaPlayer.create(this, Uri.fromFile(file));
             long durationSong = song.getDuration();
@@ -142,31 +145,42 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             double left = 0;
             double right = durationSong/1000;
             Log.d("EDITS", edits[1]);
+
+            Double leftValue = null;
+            Double rightValue = null;
+
             if (!edits[1].equals("None")) {
 
                 String[] time = edits[1].split(":");
                 Double min = Double.parseDouble(time[0]) * 60;
                 Double seconds = Double.parseDouble(time[1]);
-                Double t = min + seconds;
+                leftValue = min + seconds;
 
-//                left = Integer.parseInt(edits[1]);
-                Intent trim = new Intent("/trim");
-                trim.putExtra("file", file.getAbsolutePath());
-                trim.putExtra("startTime", t);
-                trim.putExtra("endTime", right);
-                sendBroadcast(trim);
             }
             if (!edits[2].equals("None")) {
                 String[] time = edits[2].split(":");
                 Double min = Double.parseDouble(time[0]) * 60;
                 Double seconds = Double.parseDouble(time[1]);
-                Double t = min + seconds;
+                rightValue = min + seconds;
 
 //                right = Integer.parseInt(edits[2]);
+
+            }
+
+            if (leftValue == null) {
+                leftValue = 0.0;
+            }
+            if (rightValue == null) {
+                rightValue = right;
+            }
+            if ((rightValue == right & leftValue == 0.0)) {
+                Log.d("TRIM", "NO need to trim!");
+            } else {
+                Log.d("FILENAME", file.getName());
                 Intent trim = new Intent("/trim");
                 trim.putExtra("file", file.getAbsolutePath());
-                trim.putExtra("startTime", left);
-                trim.putExtra("endTime", t);
+                trim.putExtra("startTime", leftValue);
+                trim.putExtra("endTime", rightValue);
                 sendBroadcast(trim);
             }
 
