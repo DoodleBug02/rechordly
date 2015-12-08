@@ -54,8 +54,9 @@ public class MessageSender extends Service {
         String start = intent.getStringExtra("START");
         duration = intent.getStringExtra("Duration");
         lyrics_bool = intent.getStringExtra("Lyrics");
-        String edit_message = "crop|" + lyrics_bool + "|" + duration;
-        String lyric_message = "lyrics|" + lyrics_bool + "|" + duration;
+        final String path = intent.getStringExtra("path");
+        String edit_message = "crop|" + lyrics_bool + "|" + duration + "|" + path;
+        String lyric_message = "lyrics|" + lyrics_bool + "|" + duration + "|" + path;
         if (start != null) {
             if (start.equalsIgnoreCase("edit")) {
                 Toast.makeText(this, "Opening Edit On Watch", Toast.LENGTH_SHORT).show();
@@ -64,7 +65,7 @@ public class MessageSender extends Service {
                 Toast.makeText(this, "Opening Main on Watch", Toast.LENGTH_SHORT).show();
                 sendMessage(START_MAIN, "");
             } else if (start.equalsIgnoreCase("lyrics")) {
-                Toast.makeText(this, "Opening Main on Watch", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Adding Lyrics on Watch", Toast.LENGTH_SHORT).show();
                 sendMessage(START_LYRICS, lyric_message);
             }
         } else {
