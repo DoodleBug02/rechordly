@@ -64,7 +64,11 @@ public class SavedDataList  {
 
     public String[] getNames() {
 //        return data.keySet().toArray(new String[data.keySet().size()]);
-        return order.toArray(new String[order.size()]);
+        if (order.size() != 0) {
+            return order.toArray(new String[order.size()]);
+        } else {
+            return new String[0];
+        }
     }
 
     public String getDuration(String name) {

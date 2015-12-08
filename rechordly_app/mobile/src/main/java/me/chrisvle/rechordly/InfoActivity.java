@@ -27,8 +27,6 @@ public class InfoActivity extends AppCompatActivity {
     private SavedDataList save_data = SavedDataList.getInstance();
     private String fName;
 
-    private String text;
-
     private String lyrics;
     private String lyrics_bool;
 
@@ -43,6 +41,11 @@ public class InfoActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
+
+        Intent intent = getIntent();
+        fName = intent.getStringExtra("file_name");
+        String shownName = intent.getStringExtra("shown_name");
+        Typeface tf = Typeface.createFromAsset(getAssets(), "font/Mission_Gothic_Bold.ttf");
 
         duration = save_data.getDuration(fName);
         lyrics = save_data.getLyrics(fName);
@@ -60,7 +63,7 @@ public class InfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent edit = new Intent("/edit");
-                edit.putExtra("filePath", "Put real file here");
+                edit.putExtra("filePath", fName);
                 sendBroadcast(edit);
 
                 Intent openMain = new Intent(v.getContext(), MessageSender.class);
@@ -71,10 +74,7 @@ public class InfoActivity extends AppCompatActivity {
             }
         });
 
-        Intent intent = getIntent();
-        fName = intent.getStringExtra("file_name");
-        String shownName = intent.getStringExtra("shown_name");
-        Typeface tf = Typeface.createFromAsset(getAssets(), "font/Mission_Gothic_Bold.ttf");
+
 
         ImageButton b2 = (ImageButton) findViewById(R.id.lyric);
 
@@ -97,7 +97,7 @@ public class InfoActivity extends AppCompatActivity {
                     startService(openMain);
                 } else {
                     Intent lyric_screen = new Intent(getBaseContext(), LyricActivity.class);
-                    lyric_screen.putExtra("text", text);
+                    lyric_screen.putExtra("text", lyrics);
                     startActivity(lyric_screen);
                 }
             }
