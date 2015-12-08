@@ -171,6 +171,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             // Handles all TRIM
             double left = 0;
             double right = durationSong/1000;
+            double originalDuration = right;
             Log.d("EDITS", edits[1]);
 
             Double leftValue = null;
@@ -219,9 +220,11 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             Log.d("SAVE", "Before Saving");
             Log.d("FILE", file.getName());
             Log.d("FILE", String.valueOf(file.length()));
-            MediaPlayer mp = MediaPlayer.create(this, Uri.fromFile(file));
-            long duration = mp.getDuration();
-            mp.release();
+            Log.d("ORIG", String.valueOf((originalDuration)));
+            Log.d("LEFT", String.valueOf((leftValue)));
+            Log.d("RIGHT", String.valueOf((rightValue)));
+            double duration = originalDuration - leftValue - (originalDuration - rightValue);
+            Log.d("DURATION", String.valueOf(duration));
 
             int minutes = (int) Math.floor(duration / 1000 / 60);
             int seconds = (int) ((duration / 1000) - (minutes * 60));
@@ -234,7 +237,8 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             String displayName = file.getName();
             displayName =  displayName.substring(0,displayName.lastIndexOf("."));
             SavedDataList saves = SavedDataList.getInstance();
-            saves.addSong(edits[0], String.valueOf(echo_val), String.valueOf(gain_val), dur, edits[5], Uri.fromFile(file).toString());
+            Log.d("URI", Uri.fromFile(file).toString());
+            saves.addSong(displayName, String.valueOf(echo_val), String.valueOf(gain_val), dur, edits[5], Uri.fromFile(file).toString());
             saves.saveToDisk(getApplicationContext());
             DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));
 
