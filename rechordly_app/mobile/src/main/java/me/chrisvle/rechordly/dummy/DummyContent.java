@@ -1,7 +1,5 @@
 package me.chrisvle.rechordly.dummy;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +48,16 @@ public class DummyContent {
         }
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
+    }
+
+    public static void delete(String name) {
+        for (int i = 0; i < ITEMS.size(); i++) {
+            if (ITEMS.get(i).id.equals(name)) {
+                ITEMS.remove(i);
+                ITEM_MAP.remove(name);
+                break;
+            }
+        }
     }
 
 //    private static DummyItem createDummyItem(int position) {

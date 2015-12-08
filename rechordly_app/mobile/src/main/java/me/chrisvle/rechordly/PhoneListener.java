@@ -40,6 +40,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
     private static Boolean echo_done = false;
     private static Boolean crop_done = false;
     public static File file;
+    private SavedDataList saves = SavedDataList.getInstance();
     public GoogleApiClient mApiClient;
     private BroadcastReceiver broadcastReceiver;
 
@@ -129,6 +130,10 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                         Log.d("COPY", "COULD NOT BE COPIED");
                     }
                     file.delete();
+                    saves.delete(edits[0]);
+                    DummyContent.delete(edits[0]);
+                    Intent updateList = new Intent("/update_list");
+                    sendBroadcast(updateList);
                     file = newfile;
 
                     Log.d("New filename after save", String.valueOf(this.getFilesDir()));
@@ -234,11 +239,7 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             Log.d("ASKLDJFLKAKLFJ", String.valueOf(seconds));
 
 //            String dur = String.valueOf(duration);
-
             String displayName = file.getName();
-            displayName =  displayName.substring(0,displayName.lastIndexOf("."));
-            SavedDataList saves = SavedDataList.getInstance();
-            Log.d("URI", Uri.fromFile(file).toString());
             saves.addSong(displayName, String.valueOf(echo_val), String.valueOf(gain_val), dur, edits[5], Uri.fromFile(file).toString());
             saves.saveToDisk(getApplicationContext());
             DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));
