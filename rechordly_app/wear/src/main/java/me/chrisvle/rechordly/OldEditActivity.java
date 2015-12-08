@@ -49,7 +49,6 @@ public class OldEditActivity extends FragmentActivity implements
         mPager.setAdapter(mAdapter);
         mPager.setCurrentItem(start);
         dots = (ImageView) findViewById(R.id.dots_edit);
-
     }
 
 
@@ -115,6 +114,11 @@ public class OldEditActivity extends FragmentActivity implements
     public boolean oldEdit() {
         return true;
     }
+
+    public boolean oldLyric() {
+        return false;
+    }
+
 
 }
 

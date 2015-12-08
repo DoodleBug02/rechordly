@@ -29,7 +29,7 @@ public class SaveActivity extends Activity {
                 Typeface tf = Typeface.createFromAsset(getAssets(), boldfontPath);
                 save_txt2.setTypeface(tf);
 
-                new CountDownTimer(3000, 1000) {
+                new CountDownTimer(1500, 1000) {
 
                     public void onTick(long millisUntilFinished) {
                     }

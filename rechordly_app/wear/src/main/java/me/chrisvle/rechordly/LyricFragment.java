@@ -33,6 +33,9 @@ public class LyricFragment extends Fragment {
         lyrics = "";
         Button lyrics_button = (Button) view.findViewById(R.id.lyric_btn);
 
+        if (mListener.oldLyric()) {
+            lyrics_button.setText("Replace Lyrics");
+        }
 
         lyrics_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +83,7 @@ public class LyricFragment extends Fragment {
         // TODO: Update argument type and name
         String getTime();
         boolean oldEdit();
+        boolean oldLyric();
 
     }
 

@@ -95,9 +95,16 @@ import android.support.v4.view.ViewPager;
     }
 
         /** Fragment Interaction Function to let fragments know if they are an old edit **/
+
         public boolean oldEdit() {
             return false;
         }
+
+        public boolean oldLyric() {
+            return false;
+        }
+
+
 
 
 
