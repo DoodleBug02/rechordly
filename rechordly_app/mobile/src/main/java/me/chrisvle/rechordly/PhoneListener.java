@@ -251,7 +251,9 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
             } else {
                 echoStr = String.valueOf(echo_val);
             }
+
             String displayName = file.getName();
+            displayName =  displayName.substring(0,displayName.lastIndexOf("."));
             saves.addSong(displayName, echoStr, gainStr, dur, edits[5], Uri.fromFile(file).toString());
             saves.saveToDisk(getApplicationContext());
             DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));

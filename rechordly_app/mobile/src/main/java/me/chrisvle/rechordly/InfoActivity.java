@@ -89,7 +89,7 @@ public class InfoActivity extends AppCompatActivity {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (lyrics.equals("")) {
+                if (lyrics.equals("None")) {
                     Intent openMain = new Intent(v.getContext(), MessageSender.class);
                     openMain.putExtra("START", "lyrics");
                     openMain.putExtra("Duration", duration);
