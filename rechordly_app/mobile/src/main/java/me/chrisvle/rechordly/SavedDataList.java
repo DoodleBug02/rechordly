@@ -38,9 +38,9 @@ public class SavedDataList  {
             order.add(0, name);
         }
         data.get(name).put("duration", dur);
-        data.get(name).put("echo", echo); //songInfo[3]);
-        data.get(name).put("gain", gain); //songInfo[4]);
-        data.get(name).put("lyrics", lyrics); //songInfo[5]);
+        data.get(name).put("echo", echo);
+        data.get(name).put("gain", gain);
+        data.get(name).put("lyrics", lyrics);
         data.get(name).put("path", uri);
 
     }
@@ -89,7 +89,6 @@ public class SavedDataList  {
     }
 
     public String[] getNames() {
-//        return data.keySet().toArray(new String[data.keySet().size()]);
         if (order.size() != 0) {
             return order.toArray(new String[order.size()]);
         } else {
