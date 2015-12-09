@@ -52,11 +52,14 @@ public class MessageSender extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         //if intent is map send message to phone with /start_map
         String start = intent.getStringExtra("START");
+        Log.d("START", start);
+
         duration = intent.getStringExtra("Duration");
         lyrics_bool = intent.getStringExtra("Lyrics");
         final String path = intent.getStringExtra("path");
         String edit_message = "crop|" + lyrics_bool + "|" + duration + "|" + path;
         String lyric_message = "lyrics|" + lyrics_bool + "|" + duration + "|" + path;
+        Log.d("START", lyric_message);
         if (start != null) {
             if (start.equalsIgnoreCase("edit")) {
                 Toast.makeText(this, "Opening Edit On Watch", Toast.LENGTH_SHORT).show();

@@ -15,9 +15,11 @@ public class PhoneListener extends WearableListenerService {
     private static final String START_EDIT = "/edit";
     private static final String START_MAIN = "/start_main";
 
+    private static final String START_LYRICS = "/lyrics";
+
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
-        if ( messageEvent.getPath().equalsIgnoreCase( START_EDIT )) {
+        if ( messageEvent.getPath().equalsIgnoreCase( START_EDIT ) || (messageEvent.getPath().equalsIgnoreCase( START_LYRICS ))) {
             //TODO: Implement this so it takes in a filename and opens the crop activity
 //            Intent intent = new Intent(getBaseContext(), cropChooserActivity.class);
 //            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -47,6 +49,7 @@ public class PhoneListener extends WearableListenerService {
             Intent intent2 = new Intent("/edit");
             intent2.putExtra("path", message[3]);
             sendBroadcast(intent2);
+
 
         } else if (messageEvent.getPath().equalsIgnoreCase( START_MAIN )) {
             Intent intent = new Intent(getBaseContext(), Main2Activity.class);

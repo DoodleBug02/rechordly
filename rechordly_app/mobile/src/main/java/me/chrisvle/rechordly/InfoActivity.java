@@ -85,7 +85,6 @@ public class InfoActivity extends AppCompatActivity {
                 openMain.putExtra("Lyrics", lyrics_bool);
                 openMain.putExtra("path", displayName);
                 startService(openMain);
-                Toast.makeText(getBaseContext(), "Editing on Watch", Toast.LENGTH_LONG);
                 Intent backToList = new Intent(getBaseContext(), PhoneMain.class);
                 backToList.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(backToList);
@@ -116,7 +115,6 @@ public class InfoActivity extends AppCompatActivity {
 
                     startService(openMain);
 
-                    Toast.makeText(getBaseContext(), "Add lyrics on Watch", Toast.LENGTH_LONG);
                     Intent backToList = new Intent(getBaseContext(), PhoneMain.class);
                     backToList.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(backToList);
