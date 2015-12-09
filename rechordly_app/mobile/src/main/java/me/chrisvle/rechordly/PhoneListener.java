@@ -247,8 +247,10 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                 Log.d("EDIT MODE", "ON");
                 edit_mode = false;
                 if (edits[0].equals("None")) {
-                    String fileName = file.getName().replaceAll("%20", " ");
                     Log.d("Gain", edits[3]);
+                    String fileName = file.getName().replaceAll("%20", " ");
+                    fileName = fileName.replace(".wav", "");
+                    Log.d("newfileName", fileName);
                     if (!edits[3].equals("None") && !edits[3].equals("0")) {
                         saves.setGain(fileName, edits[3]);
                     }
@@ -262,31 +264,17 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                     }
                     saves.setDuration(fileName, dur);
 
-                } else {
-                    saves.setName(file.getName(), edits[0]);
-                    if (!edits[3].equals("None") && !edits[3].equals("0")) {
-                        saves.setGain(edits[0], edits[3]);
-                    }
-                    if (!edits[4].equals("None") && !edits[4].equals("0")) {
-                        saves.setEcho(edits[0], edits[4]);
-                    }
-                    if (!edits[5].equals("None")) {
-                        saves.setLyrics(edits[0], edits[5]);
-                    }
-                    DummyContent.delete(file.getName());
-                    saves.setDuration(edits[0], dur);
-                    String displayName = edits[0];
-                    displayName = displayName.substring(0, edits[0].lastIndexOf("."));
-                    DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));
                 }
                 Intent updateList = new Intent("/update_list");
                 sendBroadcast(updateList);
+                saves.saveToDisk(getApplicationContext());
+
             } else {
                 String displayName = file.getName();
                 displayName = displayName.substring(0, displayName.lastIndexOf("."));
                 saves.addSong(displayName, echoStr, gainStr, dur, edits[5], file.getAbsolutePath());
                 saves.saveToDisk(getApplicationContext());
-                DummyContent.addItem(new DummyContent.DummyItem(displayName, dur, ""));
+                DummyContent.addItemTop(new DummyContent.DummyItem(displayName, dur, ""));
 
                 Intent updateList = new Intent("/update_list");
                 sendBroadcast(updateList);
