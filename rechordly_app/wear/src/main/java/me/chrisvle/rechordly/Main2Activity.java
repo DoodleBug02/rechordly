@@ -314,13 +314,20 @@ public class Main2Activity extends Activity {
         switch(v.getId()){
             case R.id.btnStart:{
                 stopBtn.bringToFront();
-//                sliders.setVisibility(View.INVISIBLE);
                 text.setText("Stop");
                 time.setBase(SystemClock.elapsedRealtime());
                     time.start();
                     parentView.invalidate();
                     startRecording();
                     break;
+
+//                Intent intent = new Intent(this, OldEditActivity.class);
+////                intent.putExtra("lyrics", true);
+//                intent.putExtra("time", "01:00");
+//                intent.putExtra("start", "crop");
+//                startActivity(intent);
+//                break;
+
                 }
             case R.id.btnStop:{
 //                retryBtn.bringToFront();

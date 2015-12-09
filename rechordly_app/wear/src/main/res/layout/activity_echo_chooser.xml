@@ -39,12 +39,12 @@ android:background="#000000">
 
         <TextView
             android:id="@+id/echo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_marginTop="45dp"
             android:paddingBottom="0dp"
-            android:text="50"
+            android:text="100"
             android:textColor="#4b96ec"
             android:textSize="30pt"
             >

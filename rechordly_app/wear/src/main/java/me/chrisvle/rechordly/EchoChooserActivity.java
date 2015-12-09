@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -19,6 +18,8 @@ public class EchoChooserActivity extends Activity {
     private Button doneButton;
     private String from;
     private String totalTime;
+    private boolean oldEdit;
+    private boolean oldLyric;
 
 
     @Override
@@ -43,25 +44,34 @@ public class EchoChooserActivity extends Activity {
                     }
                 });
         totalTime = getIntent().getStringExtra("time");
+        oldEdit = getIntent().getBooleanExtra("oldEdit", false);
+        oldLyric = getIntent().getBooleanExtra("oldLyric", false);
 
 
     }
 
     public void sendEcho(View view) {
         int echo = slider.getEcho();
-        Log.d("Done", "Clicked: volume is " + echo);
+        Intent intent2;
+        if (oldEdit) {
+            intent2 = new Intent(getBaseContext(), OldEditActivity.class);
+            intent2.putExtra("start", 4);
+            intent2.putExtra("time", totalTime);
+            intent2.putExtra("lyrics", oldLyric);
+        } else {
+            intent2 = new Intent(getBaseContext(), SliderNavActivity.class);
+            intent2.putExtra("start", 2);
+            intent2.putExtra("start2", 4);
+            intent2.putExtra("time", totalTime);
+        }
+        intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent2);
 
         Intent intent = new Intent(from);
         intent.putExtra("amount",Integer.toString(echo));
         sendBroadcast(intent);
-        Intent intent2 = new Intent(getBaseContext(), SliderNavActivity.class);
-        intent2.putExtra("start", 2);
 
-        intent2.putExtra("start2", 4);
-        intent2.putExtra("time", totalTime);
-        intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        intent2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent2);
 
     }
 }

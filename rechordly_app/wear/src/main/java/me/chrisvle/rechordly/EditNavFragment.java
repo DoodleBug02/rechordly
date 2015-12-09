@@ -157,4 +157,9 @@ public class EditNavFragment extends Fragment implements
     public boolean oldEdit() {
         return false;
     }
+
+    public boolean oldLyric() {
+        return false;
+    }
+
 }

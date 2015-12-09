@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -44,7 +45,7 @@ public class InfoActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         fName = intent.getStringExtra("file_name");
-        String shownName = intent.getStringExtra("shown_name");
+        final String shownName = intent.getStringExtra("shown_name");
         Typeface tf = Typeface.createFromAsset(getAssets(), "font/Mission_Gothic_Bold.ttf");
 
         duration = save_data.getDuration(fName);
@@ -62,6 +63,8 @@ public class InfoActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("ON CLICK", "EDIT");
+                Log.d("FILEPATH", fName);
                 Intent edit = new Intent("/edit");
                 edit.putExtra("filePath", fName);
                 sendBroadcast(edit);
@@ -70,6 +73,7 @@ public class InfoActivity extends AppCompatActivity {
                 openMain.putExtra("START", "edit");
                 openMain.putExtra("Duration", duration);
                 openMain.putExtra("Lyrics", lyrics_bool);
+                openMain.putExtra("path", shownName);
                 startService(openMain);
             }
         });

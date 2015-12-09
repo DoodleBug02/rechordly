@@ -50,6 +50,7 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/done_btn"
         android:layout_marginTop="5dp"
+        android:id="@+id/done_arrow"
         />
 
 

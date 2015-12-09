@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 
 /**
@@ -16,6 +17,7 @@ import android.widget.Button;
 public class DoneFragment extends Fragment {
 
     private Button done_btn;
+    private ImageView arrow;
     private OnFragmentInteractionListener mListener;
 
 
@@ -32,12 +34,21 @@ public class DoneFragment extends Fragment {
         done_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), NameActivity.class);
+                Intent intent;
+                if (mListener.oldEdit()) {
+                    intent = new Intent(getActivity(), SaveActivity.class);
+                } else {
+                    intent = new Intent(getActivity(), NameActivity.class);
+                }
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
             }
         });
+        arrow = (ImageView) view.findViewById(R.id.done_arrow);
+        if (mListener.oldEdit()) {
+            arrow.setVisibility(View.INVISIBLE);
+        }
         return view;
     }
 
@@ -72,6 +83,8 @@ public class DoneFragment extends Fragment {
         // TODO: Update argument type and name
         String getTime();
         boolean oldEdit();
+        boolean oldLyric();
+
 
     }
 
