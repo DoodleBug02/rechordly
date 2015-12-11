@@ -263,11 +263,15 @@ public class PhoneListener extends WearableListenerService implements GoogleApiC
                         saves.setLyrics(fileName, edits[5]);
                     }
                     saves.setDuration(fileName, dur);
+                    DummyContent.delete(fileName);
+                    DummyContent.addItemTop(new DummyContent.DummyItem(fileName, dur, ""));
+
 
                 }
                 Intent updateList = new Intent("/update_list");
                 sendBroadcast(updateList);
                 saves.saveToDisk(getApplicationContext());
+
 
             } else {
                 String displayName = file.getName();
